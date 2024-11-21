@@ -1,5 +1,7 @@
 package com.web.app.dto;
 
+import java.util.List;
+
 public record AlbumAPIResponse(
         Long id,
         String title,
@@ -12,5 +14,6 @@ public record AlbumAPIResponse(
         String md5_image,
         String release_date,
         String tracklist,
-        String type
+        String type,
+        Tracks tracks
 ) {}
