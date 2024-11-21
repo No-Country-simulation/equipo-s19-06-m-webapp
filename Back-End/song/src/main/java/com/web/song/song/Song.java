@@ -4,7 +4,6 @@ package com.web.song.song;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class Cancion {
+public class Song {
     @Id
     private long id;
-    private String nombre;
-    private int duracion;
+    private String name;
+    private int duration;
     @Column(name = "album_id")
     private Long albumId;
     private String url;

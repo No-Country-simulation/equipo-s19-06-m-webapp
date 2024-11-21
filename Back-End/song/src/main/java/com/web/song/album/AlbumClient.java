@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AlbumClient {
 
     @PostMapping
-    void addAlbum(@RequestBody AlbumRequest albumRequest);
+    void createAlbum(@RequestBody AlbumRequest albumRequest);
 }

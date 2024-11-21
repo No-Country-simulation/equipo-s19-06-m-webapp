@@ -6,7 +6,7 @@ import com.web.song.deezer.ContributorAPIResponse;
 
 import java.util.List;
 
-public record CancionAPIResponse(
+public record SongDeezerResponse(
         Long id,
         boolean readable,
         String title,

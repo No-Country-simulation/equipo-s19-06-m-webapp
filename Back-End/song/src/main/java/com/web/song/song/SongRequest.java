@@ -1,6 +1,6 @@
 package com.web.song.song;
 
-public record CancionRequest(
+public record SongRequest(
    Long id
 ) {
 }
