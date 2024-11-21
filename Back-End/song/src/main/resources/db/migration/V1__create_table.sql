@@ -1,7 +1,7 @@
-CREATE TABLE cancion (
+CREATE TABLE song (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    duracion INT,
+    name VARCHAR(255) NOT NULL,
+    duration INT,
     album_id BIGINT,
     url VARCHAR(1023)
 );

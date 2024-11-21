@@ -1,7 +1,7 @@
 CREATE TABLE album (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    fechaLanzamiento DATE,
-    genero VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
+    releaseDate VARCHAR(255),
+    genre VARCHAR(255),
     urlImg VARCHAR(255)
 );
