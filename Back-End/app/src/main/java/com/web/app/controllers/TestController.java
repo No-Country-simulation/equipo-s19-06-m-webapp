@@ -19,7 +19,7 @@ public class TestController {
                 false,
                 200,
                 "OK",
-                "Bienvenido a la API Rest de Reproductor de musica."
+                "Bienvenido a la API Rest de Reproductor de musica. Con security"
                 )
         );
     }
