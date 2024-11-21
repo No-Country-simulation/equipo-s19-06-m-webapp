@@ -1,5 +1,6 @@
 package com.web.app.controllers;
 
+import com.web.app.dto.AlbumRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
