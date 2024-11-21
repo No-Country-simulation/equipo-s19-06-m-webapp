@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "album-service",
-        url = "http://localhost:8060/albums"
+        url = "http://localhost:8070/albums"
 )
 public interface AlbumClient {
 
