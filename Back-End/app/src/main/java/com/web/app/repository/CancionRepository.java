@@ -1,4 +1,7 @@
 package com.web.app.repository;
 
-public class CancionRepository {
+import com.web.app.model.Cancion;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CancionRepository extends JpaRepository<Cancion, Long> {
 }
