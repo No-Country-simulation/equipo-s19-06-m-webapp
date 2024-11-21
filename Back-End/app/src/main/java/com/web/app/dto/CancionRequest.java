@@ -1,4 +1,6 @@
 package com.web.app.dto;
 
-public class CancionRequest {
+public record CancionRequest (
+   Long id
+) {
 }
