@@ -1,6 +1,9 @@
 package com.web.album.album;
 
 import com.web.album.deezer.DeezerApiClient;
+import com.web.album.deezer.Tracks;
+import com.web.album.song.CancionAPIResponse;
+import com.web.album.song.CancionRequest;
 import com.web.album.song.SongClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,29 +17,18 @@ public class AlbumService {
     private final SongClient songClient;
     private final DeezerApiClient deezerApiClient;
 
-    public void anadirAlbum(AlbumRequest request) {
+    public void createAlbum(AlbumRequest request) {
         AlbumAPIResponse albumApi = deezerApiClient.buscarAlbumn(request.id());
 
-        Album album = albumRepository.findById(request.id()).orElse(
-                albumMapper.toAlbum(albumApi));
-        albumRepository.save(album);
+        if(!albumRepository.existsById(request.id())) {
+            Album newAlbum = albumMapper.toAlbum(albumApi);
+            albumRepository.save(newAlbum);
+        }
 
-//        Tracks tracks = albumApi.tracks();
-//        for(CancionAPIResponse cancionApi: tracks.data()) {
-//            Cancion cancion = cancionMapper.toCancion(cancionApi);
-//            cancionRepository.save(cancion);
-//        }
-
-//        if(!albumRepository.existsById(request.id())) {
-//            CancionAPIResponse cancionApi = deezerApiClient.buscarCancion(request.id());
-//            AlbumAPIResponse albumApi = cancionApi.album();
-//
-//            Album album = albumRepository.findById(albumApi.id()).orElse(
-//                    albumMapper.toAlbum(albumApi));
-//            albumRepository.save(album);
-//
-//            Cancion cancion = cancionMapper.toCancion(cancionApi);
-//            cancionRepository.save(cancion);
-//        }
+        Tracks tracks = albumApi.tracks();
+        for(CancionAPIResponse cancionApi: tracks.data()) {
+            CancionRequest cancionRequest = new CancionRequest(cancionApi.id());
+            songClient.createSong(cancionRequest);
+        }
     }
 }

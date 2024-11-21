@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/canciones")
+@RequestMapping("/songs")
 @RequiredArgsConstructor
 public class CancionController {
 
     private final CancionService service;
 
     @PostMapping
-    public void anadirCancion (@RequestBody CancionRequest request) {
-        service.anadirCancion(request);
+    public void createSong (@RequestBody CancionRequest request) {
+        service.createSong(request);
     }
 
 }

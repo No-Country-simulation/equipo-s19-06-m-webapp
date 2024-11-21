@@ -14,8 +14,8 @@ public class AlbumController {
     private final AlbumService service;
 
     @PostMapping
-    public void anadirCancion (@RequestBody AlbumRequest request) {
-        service.anadirAlbum(request);
+    public void createAlbum (@RequestBody AlbumRequest request) {
+        service.createAlbum(request);
     }
 
 }

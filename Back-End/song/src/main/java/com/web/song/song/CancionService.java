@@ -19,7 +19,7 @@ public class CancionService {
     private final AlbumClient albumClient;
     private final DeezerApiClient deezerApiClient;
 
-    public void anadirCancion(CancionRequest request) {
+    public void createSong(CancionRequest request) {
         if(!cancionRepository.existsById(request.id())) {
             CancionAPIResponse cancionApi = deezerApiClient.buscarCancion(request.id());
 //            AlbumAPIResponse albumApi = cancionApi.album();
