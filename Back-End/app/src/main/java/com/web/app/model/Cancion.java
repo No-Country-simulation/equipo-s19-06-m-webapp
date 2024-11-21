@@ -17,8 +17,6 @@ public class Cancion {
     private long id;
     private String nombre;
     private int duracion;
-    private String genero;
-    private String urlImg;
     @ManyToOne
     private Album album;
     private String url;

@@ -16,6 +16,7 @@ public class AlbumMapper {
                 .id(response.id())
                 .nombre(response.title())
                 .fechaLanzamiento(LocalDate.parse(response.release_date(), dtf))
+                .urlImg(response.cover())
                 .build();
     }
 }

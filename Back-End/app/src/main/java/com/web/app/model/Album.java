@@ -19,4 +19,6 @@ public class Album {
     private Long id;
     private String nombre;
     private LocalDate fechaLanzamiento;
+    private String urlImg;
+    private String genero;
 }
