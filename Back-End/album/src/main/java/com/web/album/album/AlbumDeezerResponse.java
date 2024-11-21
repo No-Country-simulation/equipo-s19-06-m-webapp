@@ -2,7 +2,7 @@ package com.web.album.album;
 
 import com.web.album.deezer.Tracks;
 
-public record AlbumAPIResponse(
+public record AlbumDeezerResponse(
         Long id,
         String title,
         String link,

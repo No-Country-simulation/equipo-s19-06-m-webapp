@@ -1,6 +1,6 @@
 package com.web.album.deezer;
 
-public record ContributorAPIResponse(
+public record ContributorDeezerResponse(
         Long id,
         String name,
         String link,

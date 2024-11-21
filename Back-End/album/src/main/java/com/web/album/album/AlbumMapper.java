@@ -6,14 +6,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AlbumMapper {
-//    private final AlbumMapper albumMapper;
 
-    public Album toAlbum(AlbumAPIResponse response){
+    public Album toAlbum(AlbumDeezerResponse response){
         return Album.builder()
                 .id(response.id())
-                .nombre(response.title())
-//                .fechaLanzamiento(response.release_date())
-//                .album(albumMapper.toAlbum(response.album()))
+                .name(response.title())
+                .releaseDate(response.release_date())
                 .urlImg(response.cover())
                 .build();
     }
