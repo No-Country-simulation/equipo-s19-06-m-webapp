@@ -16,6 +16,7 @@ public class CancionMapper {
                 .nombre(response.title())
                 .duracion(response.duration())
                 .album(albumMapper.toAlbum(response.album()))
+                .url(response.preview())
                 .build();
     }
 }

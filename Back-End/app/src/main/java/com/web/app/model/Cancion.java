@@ -21,4 +21,5 @@ public class Cancion {
     private String urlImg;
     @ManyToOne
     private Album album;
+    private String url;
 }
