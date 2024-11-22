@@ -20,6 +20,6 @@ public class Song {
     private String name;
     private int duration;
     @Column(name = "album_id")
+    private String urlPreview;
     private Long albumId;
-    private String url;
 }

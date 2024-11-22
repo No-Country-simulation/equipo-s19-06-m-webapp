@@ -1,6 +1,5 @@
 package com.web.song.album;
 
-import com.web.song.song.TracksDeezerResponse;
 
 public record AlbumDeezerResponse(
         Long id,
@@ -14,6 +13,5 @@ public record AlbumDeezerResponse(
         String md5_image,
         String release_date,
         String tracklist,
-        String type,
-        TracksDeezerResponse tracksDeezerResponse
+        String type
 ) {}

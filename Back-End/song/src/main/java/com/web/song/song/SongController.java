@@ -1,5 +1,6 @@
 package com.web.song.song;
 
+import com.web.song.base.ExtendedBaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +15,8 @@ public class SongController {
     private final SongService service;
 
     @PostMapping
-    public void createSong (@RequestBody SongRequest request) {
-        service.createSong(request);
+    public ExtendedBaseResponse<SongResponse> createDeezerSong (@RequestBody SongRequest request) {
+        return service.createDeezerSong(request);
     }
 
 }
