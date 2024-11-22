@@ -1,5 +1,7 @@
 package com.web.album.album;
 
+import com.web.album.base.BaseResponse;
+import com.web.album.base.ExtendedBaseResponse;
 import com.web.album.deezer.DeezerClient;
 import com.web.album.song.TracksDeezerResponse;
 import com.web.album.song.TrackDeezerResponse;
@@ -17,7 +19,7 @@ public class AlbumService {
     private final SongClient songClient;
     private final DeezerClient deezerClient;
 
-    public void createAlbum(AlbumRequest request) {
+    public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum(AlbumRequest request) {
         AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
 
         if(!albumRepository.existsById(request.id())) {
@@ -30,5 +32,12 @@ public class AlbumService {
             SongRequest songRequest = new SongRequest(response.id());
             songClient.createSong(songRequest);
         }
+
+        AlbumResponse response = albumMapper.toAlbumResponse(albumDeezerResponse);
+
+        return ExtendedBaseResponse.of(
+                BaseResponse.created("Album creado"),
+                response
+        );
     }
 }

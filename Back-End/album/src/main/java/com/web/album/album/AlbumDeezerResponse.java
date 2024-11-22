@@ -1,5 +1,6 @@
 package com.web.album.album;
 
+import com.web.album.genre.GenresDeezerResponse;
 import com.web.album.song.TracksDeezerResponse;
 
 public record AlbumDeezerResponse(
@@ -12,6 +13,7 @@ public record AlbumDeezerResponse(
         String cover_big,
         String cover_xl,
         String md5_image,
+        GenresDeezerResponse genres,
         String release_date,
         String tracklist,
         String type,
