@@ -29,6 +29,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     private String contact;
+    private String userImage;
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     Role role;
