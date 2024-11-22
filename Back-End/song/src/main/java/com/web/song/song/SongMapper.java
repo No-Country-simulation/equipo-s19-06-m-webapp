@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SongMapper {
-    public Song toSong(SongDeezerResponse response){
+    public Song toSong(TrackDeezerResponse response){
         return Song.builder()
                 .id(response.id())
                 .name(response.title())

@@ -1,8 +1,8 @@
 package com.web.album.album;
 
 import com.web.album.deezer.DeezerClient;
-import com.web.album.deezer.Tracks;
-import com.web.album.song.SongDeezerResponse;
+import com.web.album.song.TracksDeezerResponse;
+import com.web.album.song.TrackDeezerResponse;
 import com.web.album.song.SongRequest;
 import com.web.album.song.SongClient;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,15 @@ public class AlbumService {
     private final DeezerClient deezerClient;
 
     public void createAlbum(AlbumRequest request) {
-        AlbumDeezerResponse albumApi = deezerClient.findAlbumById(request.id());
+        AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
 
         if(!albumRepository.existsById(request.id())) {
-            Album newAlbum = albumMapper.toAlbum(albumApi);
+            Album newAlbum = albumMapper.toAlbum(albumDeezerResponse);
             albumRepository.save(newAlbum);
         }
 
-        Tracks tracks = albumApi.tracks();
-        for(SongDeezerResponse response: tracks.data()) {
+        TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
+        for(TrackDeezerResponse response: tracksDeezerResponse.data()) {
             SongRequest songRequest = new SongRequest(response.id());
             songClient.createSong(songRequest);
         }

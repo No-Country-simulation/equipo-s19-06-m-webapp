@@ -6,7 +6,7 @@ import com.web.album.deezer.ContributorDeezerResponse;
 
 import java.util.List;
 
-public record SongDeezerResponse(
+public record TrackDeezerResponse(
         Long id,
         boolean readable,
         String title,

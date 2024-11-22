@@ -1,6 +1,6 @@
 package com.web.song.deezer;
 
-import com.web.song.song.SongDeezerResponse;
+import com.web.song.song.TrackDeezerResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,8 +9,8 @@ public class DeezerClient {
 
     private final String url = "https://api.deezer.com/";
 
-    public SongDeezerResponse findSongById(Long id) {
+    public TrackDeezerResponse findSongById(Long id) {
         RestTemplate template = new RestTemplate();
-        return template.getForObject(url + "track/" + id, SongDeezerResponse.class);
+        return template.getForObject(url + "track/" + id, TrackDeezerResponse.class);
     }
 }

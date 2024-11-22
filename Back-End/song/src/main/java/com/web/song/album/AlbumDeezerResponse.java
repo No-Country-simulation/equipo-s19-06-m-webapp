@@ -1,8 +1,8 @@
 package com.web.song.album;
 
-import com.web.song.deezer.Tracks;
+import com.web.song.song.TracksDeezerResponse;
 
-public record AlbumAPIResponse(
+public record AlbumDeezerResponse(
         Long id,
         String title,
         String link,
@@ -15,5 +15,5 @@ public record AlbumAPIResponse(
         String release_date,
         String tracklist,
         String type,
-        Tracks tracks
+        TracksDeezerResponse tracksDeezerResponse
 ) {}

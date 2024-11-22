@@ -1,12 +1,12 @@
 package com.web.song.song;
 
-import com.web.song.album.AlbumAPIResponse;
-import com.web.song.artist.ArtistaAPIResponse;
-import com.web.song.deezer.ContributorAPIResponse;
+import com.web.song.album.AlbumDeezerResponse;
+import com.web.song.artist.ArtistDeezerResponse;
+import com.web.song.deezer.ContributorDeezerResponse;
 
 import java.util.List;
 
-public record SongDeezerResponse(
+public record TrackDeezerResponse(
         Long id,
         boolean readable,
         String title,
@@ -27,9 +27,9 @@ public record SongDeezerResponse(
         double bpm,
         double gain,
         List<String> available_countries,
-        List<ContributorAPIResponse> contributors,
+        List<ContributorDeezerResponse> contributors,
         String md5_image,
         String track_token,
-        ArtistaAPIResponse artist,
-        AlbumAPIResponse album
+        ArtistDeezerResponse artist,
+        AlbumDeezerResponse album
 ) {}

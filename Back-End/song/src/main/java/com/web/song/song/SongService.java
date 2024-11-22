@@ -14,7 +14,7 @@ public class SongService {
 
     public void createSong(SongRequest request) {
         if(!songRepository.existsById(request.id())) {
-            SongDeezerResponse response = deezerClient.findSongById(request.id());
+            TrackDeezerResponse response = deezerClient.findSongById(request.id());
             Song song = songMapper.toSong(response);
             songRepository.save(song);
         }
