@@ -3,13 +3,11 @@ package com.web.album.album;
 import com.web.album.base.BaseResponse;
 import com.web.album.base.ExtendedBaseResponse;
 import com.web.album.deezer.DeezerClient;
-import com.web.album.song.TracksDeezerResponse;
-import com.web.album.song.TrackDeezerResponse;
-import com.web.album.song.SongRequest;
-import com.web.album.song.SongClient;
+import com.web.album.song.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,20 +29,21 @@ public class AlbumService {
     }
 
     public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum(AlbumRequest request) {
-        AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
+        Album album = albumRepository.findById(request.id()).orElseGet(() -> {
+            AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
 
-        if(!albumRepository.existsById(request.id())) {
-            Album newAlbum = albumMapper.toAlbum(albumDeezerResponse);
-            albumRepository.save(newAlbum);
-        }
+            Album deezerAlbum = albumMapper.toAlbum(albumDeezerResponse);
+            albumRepository.save(deezerAlbum);
 
-        TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
-        for(TrackDeezerResponse response: tracksDeezerResponse.data()) {
-            SongRequest songRequest = new SongRequest(response.id());
-            songClient.createSong(songRequest);
-        }
+            TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
+            for(TrackDeezerResponse response: tracksDeezerResponse.data()) {
+                SongRequest songRequest = new SongRequest(response.id());
+                songClient.createSong(songRequest);
+            }
+            return deezerAlbum;
+        });
 
-        AlbumResponse response = albumMapper.toAlbumResponse(albumDeezerResponse);
+        AlbumResponse response = albumMapper.toAlbumResponse(album);
 
         return ExtendedBaseResponse.of(
                 BaseResponse.created("Album creado"),

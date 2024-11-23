@@ -3,6 +3,7 @@ package com.web.album.song;
 import com.web.album.base.ExtendedBaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,8 +15,8 @@ import java.util.List;
 )
 public interface SongClient {
 
-    @GetMapping("/{albumId}")
-    ExtendedBaseResponse<List<SongResponse>> findSongsByAlbumId(Long albumId);
+    @GetMapping("/album/{albumId}")
+    ExtendedBaseResponse<List<SongResponse>> findSongsByAlbumId(@PathVariable Long albumId);
 
     @PostMapping
     void createSong(@RequestBody SongRequest songRequest);
