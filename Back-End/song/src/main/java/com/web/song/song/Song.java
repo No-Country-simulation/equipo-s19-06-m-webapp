@@ -19,7 +19,8 @@ public class Song {
     private long id;
     private String name;
     private int duration;
-    @Column(name = "album_id")
+    @Column(name = "url_preview")
     private String urlPreview;
+    @Column(name = "album_id")
     private Long albumId;
 }

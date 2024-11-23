@@ -1,6 +1,9 @@
 package com.web.song.album;
 
+import com.web.song.base.ExtendedBaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -10,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 )
 public interface AlbumClient {
 
+    @GetMapping("/{id}")
+    ExtendedBaseResponse<AlbumResponse> findAlbum(@PathVariable Long id);
+
     @PostMapping
-    void createAlbum(@RequestBody AlbumRequest albumRequest);
+    void createDeezerAlbum(@RequestBody AlbumRequest albumRequest);
 }

@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/albums")
@@ -18,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlbumController {
 
     private final AlbumService service;
+
+    @GetMapping("/{id}")
+    public ExtendedBaseResponse<AlbumResponse> findAlbum(@PathVariable Long id) {
+        return service.findAlbum(id);
+    }
 
     @Operation(summary = "Crea un album con la Api Deezer",
             description = "Crea un album de la Api Deezer y todas las canciones del album")

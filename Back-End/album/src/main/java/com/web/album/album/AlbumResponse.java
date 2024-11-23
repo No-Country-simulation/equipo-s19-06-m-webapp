@@ -8,7 +8,7 @@ public record AlbumResponse (
         Long id,
         String name,
         String releaseDate,
-        List<String> genres,
+//        List<String> genres,
         String urlImg,
         List<SongResponse> songs
 ) {

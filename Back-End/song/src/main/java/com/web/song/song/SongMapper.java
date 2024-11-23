@@ -1,6 +1,6 @@
 package com.web.song.song;
 
-import com.web.song.album.AlbumMapper;
+import com.web.song.album.AlbumClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SongMapper {
 
-    private final AlbumMapper albumMapper;
+    private final AlbumClient albumClient;
 
     public Song toSong(TrackDeezerResponse response){
         return Song.builder()
@@ -20,13 +20,14 @@ public class SongMapper {
                 .build();
     }
 
-    public SongResponse toSongResponse(TrackDeezerResponse response) {
+    public SongResponse toSongResponse(Song song) {
         return new SongResponse(
-                response.id(),
-                response.title(),
-                response.duration(),
-                response.preview(),
-                albumMapper.toAlbumResponse(response.album())
+                song.getId(),
+                song.getName(),
+                song.getDuration(),
+                song.getUrlPreview(),
+null
+//                albumClient.findAlbum(song.getAlbumId()).data()
         );
     }
 }

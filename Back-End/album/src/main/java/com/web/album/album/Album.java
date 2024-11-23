@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,6 @@ public class Album {
     private long id;
     private String name;
     private String releaseDate;
-    private String genre;
+//    private List<String> genres;
     private String urlImg;
 }

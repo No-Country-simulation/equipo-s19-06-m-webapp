@@ -3,5 +3,5 @@ CREATE TABLE song (
     name VARCHAR(255) NOT NULL,
     duration INT,
     album_id BIGINT,
-    url VARCHAR(1023)
+    url_preview VARCHAR(1023)
 );
