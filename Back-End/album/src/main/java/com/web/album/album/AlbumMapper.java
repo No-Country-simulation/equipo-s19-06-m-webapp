@@ -33,6 +33,16 @@ public class AlbumMapper {
         );
     }
 
+    public AlbumWithoutTracksResponse toAlbumWithoutTracksResponse(Album album) {
+        return new AlbumWithoutTracksResponse(
+                album.getId(),
+                album.getName(),
+                album.getReleaseDate(),
+//                album.getGenres(),
+                album.getUrlImg()
+        );
+    }
+
     public AlbumResponse toAlbumResponse(AlbumDeezerResponse albumDeezerResponse) {
         return new AlbumResponse(
                 albumDeezerResponse.id(),

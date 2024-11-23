@@ -17,8 +17,8 @@ public class AlbumController {
     private final AlbumService service;
 
     @GetMapping("/{id}")
-    public ExtendedBaseResponse<AlbumResponse> findAlbum(@PathVariable Long id) {
-        return service.findAlbum(id);
+    public ExtendedBaseResponse<AlbumWithoutTracksResponse> findAlbum(@PathVariable Long id) {
+        return service.findAlbumWithoutTracks(id);
     }
 
     @Operation(summary = "Crea un album con la Api Deezer",

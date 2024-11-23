@@ -19,9 +19,12 @@ public class AlbumService {
     private final SongClient songClient;
     private final DeezerClient deezerClient;
 
-    public ExtendedBaseResponse<AlbumResponse> findAlbum(Long id) {
-        Album album = albumRepository.findById(id).orElseThrow();
-        AlbumResponse albumResponse = albumMapper.toAlbumResponse(album);
+    public ExtendedBaseResponse<AlbumWithoutTracksResponse> findAlbumWithoutTracks(Long id) {
+        Album album = albumRepository.findById(id).orElseGet(()-> {
+            AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(id);
+            return albumMapper.toAlbum(albumDeezerResponse);
+        });
+        AlbumWithoutTracksResponse albumResponse = albumMapper.toAlbumWithoutTracksResponse(album);
         return ExtendedBaseResponse.of(
                 BaseResponse.ok("Album encontrado"),
                 albumResponse

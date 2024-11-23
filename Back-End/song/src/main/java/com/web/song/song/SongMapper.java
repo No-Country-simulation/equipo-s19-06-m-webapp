@@ -26,8 +26,7 @@ public class SongMapper {
                 song.getName(),
                 song.getDuration(),
                 song.getUrlPreview(),
-null
-//                albumClient.findAlbum(song.getAlbumId()).data()
+                albumClient.findAlbum(song.getAlbumId()).data()
         );
     }
 }
