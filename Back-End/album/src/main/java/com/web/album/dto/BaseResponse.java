@@ -1,4 +1,4 @@
-package com.web.track.base;
+package com.web.album.dto;
 
 import org.springframework.http.HttpStatus;
 

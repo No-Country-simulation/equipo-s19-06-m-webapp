@@ -1,4 +1,4 @@
-package com.web.track.dto;
+package com.web.track.dto.album;
 
 public record AlbumResponse(
         Long id,

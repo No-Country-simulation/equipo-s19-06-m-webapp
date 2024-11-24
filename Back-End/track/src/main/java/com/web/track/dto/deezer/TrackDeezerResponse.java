@@ -1,4 +1,4 @@
-package com.web.track.dto;
+package com.web.track.dto.deezer;
 
 import java.util.List;
 

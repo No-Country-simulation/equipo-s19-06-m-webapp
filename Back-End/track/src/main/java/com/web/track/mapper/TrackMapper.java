@@ -2,8 +2,8 @@ package com.web.track.mapper;
 
 import com.web.track.client.AlbumClient;
 import com.web.track.model.Track;
-import com.web.track.dto.TrackDeezerResponse;
-import com.web.track.dto.TrackResponse;
+import com.web.track.dto.deezer.TrackDeezerResponse;
+import com.web.track.dto.track.TrackResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

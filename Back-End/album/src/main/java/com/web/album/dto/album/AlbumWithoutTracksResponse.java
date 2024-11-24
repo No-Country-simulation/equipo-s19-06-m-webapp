@@ -1,4 +1,4 @@
-package com.web.album.dto;
+package com.web.album.dto.album;
 
 public record AlbumWithoutTracksResponse (
         Long id,

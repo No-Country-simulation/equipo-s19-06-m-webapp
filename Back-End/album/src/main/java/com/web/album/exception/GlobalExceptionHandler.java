@@ -1,6 +1,6 @@
 package com.web.album.exception;
 
-import com.web.album.base.BaseResponse;
+import com.web.album.dto.BaseResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

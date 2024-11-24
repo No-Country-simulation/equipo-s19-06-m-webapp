@@ -1,6 +1,4 @@
-package com.web.album.dto;
-
-import com.web.album.dto.TrackDeezerResponse;
+package com.web.album.dto.deezer;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.web.album.dto;
+package com.web.album.dto.album;
 
 import jakarta.validation.constraints.NotNull;
 

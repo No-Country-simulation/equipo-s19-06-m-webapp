@@ -1,8 +1,8 @@
 package com.web.album.mapper;
 
-import com.web.album.dto.AlbumDeezerResponse;
-import com.web.album.dto.AlbumResponse;
-import com.web.album.dto.AlbumWithoutTracksResponse;
+import com.web.album.dto.deezer.AlbumDeezerResponse;
+import com.web.album.dto.album.AlbumResponse;
+import com.web.album.dto.album.AlbumWithoutTracksResponse;
 import com.web.album.model.Album;
 import com.web.album.client.TrackClient;
 import lombok.RequiredArgsConstructor;

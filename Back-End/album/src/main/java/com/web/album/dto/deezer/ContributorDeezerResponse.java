@@ -1,4 +1,4 @@
-package com.web.album.dto;
+package com.web.album.dto.deezer;
 
 public record ContributorDeezerResponse(
         Long id,

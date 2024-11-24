@@ -1,8 +1,8 @@
 package com.web.track.client;
 
-import com.web.track.dto.AlbumRequest;
-import com.web.track.dto.AlbumResponse;
-import com.web.track.base.ExtendedBaseResponse;
+import com.web.track.dto.album.AlbumRequest;
+import com.web.track.dto.album.AlbumResponse;
+import com.web.track.dto.ExtendedBaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

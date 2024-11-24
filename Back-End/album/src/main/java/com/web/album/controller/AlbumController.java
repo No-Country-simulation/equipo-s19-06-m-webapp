@@ -1,10 +1,10 @@
 package com.web.album.controller;
 
-import com.web.album.dto.AlbumRequest;
-import com.web.album.dto.AlbumResponse;
+import com.web.album.dto.album.AlbumRequest;
+import com.web.album.dto.album.AlbumResponse;
 import com.web.album.service.AlbumService;
-import com.web.album.dto.AlbumWithoutTracksResponse;
-import com.web.album.base.ExtendedBaseResponse;
+import com.web.album.dto.album.AlbumWithoutTracksResponse;
+import com.web.album.dto.ExtendedBaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

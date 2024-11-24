@@ -1,5 +1,4 @@
-package com.web.track.dto;
-
+package com.web.album.dto.deezer;
 
 public record AlbumDeezerResponse(
         Long id,
@@ -11,7 +10,9 @@ public record AlbumDeezerResponse(
         String cover_big,
         String cover_xl,
         String md5_image,
+        GenresDeezerResponse genres,
         String release_date,
         String tracklist,
-        String type
+        String type,
+        TracksDeezerResponse tracks
 ) {}

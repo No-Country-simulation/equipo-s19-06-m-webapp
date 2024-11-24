@@ -1,6 +1,6 @@
-package com.web.album.dto;
+package com.web.album.dto.album;
 
-import com.web.album.dto.TrackResponse;
+import com.web.album.dto.track.TrackResponse;
 
 import java.util.List;
 

@@ -1,13 +1,16 @@
 package com.web.album.service;
 
-import com.web.album.base.BaseResponse;
-import com.web.album.base.ExtendedBaseResponse;
+import com.web.album.dto.BaseResponse;
+import com.web.album.dto.ExtendedBaseResponse;
 import com.web.album.client.DeezerClient;
-import com.web.album.client.TrackClient;
-import com.web.album.dto.*;
-import com.web.album.mapper.AlbumMapper;
+import com.web.album.dto.album.AlbumRequest;
+import com.web.album.dto.album.AlbumResponse;
+import com.web.album.dto.album.AlbumWithoutTracksResponse;
+import com.web.album.dto.deezer.AlbumDeezerResponse;
+import com.web.album.dto.deezer.TrackDeezerResponse;
+import com.web.album.dto.track.TrackRequest;
+import com.web.album.dto.deezer.TracksDeezerResponse;
 import com.web.album.model.Album;
-import com.web.album.repository.AlbumRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,8 +50,8 @@ public class AlbumService {
             Album deezerAlbum = albumMapper.toAlbum(albumDeezerResponse);
             albumRepository.save(deezerAlbum);
 
-            com.web.album.dto.TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
-            for(com.web.album.dto.TrackDeezerResponse response: tracksDeezerResponse.data()) {
+            TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
+            for(TrackDeezerResponse response: tracksDeezerResponse.data()) {
                 TrackRequest trackRequest = new TrackRequest(response.id());
                 trackClient.createTrack(trackRequest);
             }

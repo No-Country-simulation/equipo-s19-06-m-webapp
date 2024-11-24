@@ -1,4 +1,4 @@
-package com.web.album.base;
+package com.web.album.dto;
 
 public record ExtendedBaseResponse<T>(
         boolean isError,

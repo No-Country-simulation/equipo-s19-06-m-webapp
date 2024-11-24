@@ -1,6 +1,6 @@
 package com.web.track.exception;
 
-import com.web.track.base.BaseResponse;
+import com.web.track.dto.BaseResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

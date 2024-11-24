@@ -1,5 +1,6 @@
-package com.web.track.dto;
+package com.web.track.dto.track;
 
+import  com.web.track.dto.album.AlbumResponse;
 public record TrackResponse(
         long id,
         String name,

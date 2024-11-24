@@ -1,6 +1,6 @@
-package com.web.track.dto;
+package com.web.track.dto.deezer;
 
-public record ArtistDeezerResponse(
+public record ContributorDeezerResponse(
         Long id,
         String name,
         String link,
@@ -12,6 +12,7 @@ public record ArtistDeezerResponse(
         String picture_xl,
         boolean radio,
         String tracklist,
-        String type
+        String type,
+        String role
 ) {}
 

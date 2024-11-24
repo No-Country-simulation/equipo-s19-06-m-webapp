@@ -1,8 +1,8 @@
 package com.web.track.controller;
 
-import com.web.track.base.ExtendedBaseResponse;
-import com.web.track.dto.TrackRequest;
-import com.web.track.dto.TrackResponse;
+import com.web.track.dto.ExtendedBaseResponse;
+import com.web.track.dto.track.TrackRequest;
+import com.web.track.dto.track.TrackResponse;
 import com.web.track.service.TrackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

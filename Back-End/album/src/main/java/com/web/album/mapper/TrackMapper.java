@@ -1,7 +1,7 @@
 package com.web.album.mapper;
 
-import com.web.album.dto.TrackDeezerResponse;
-import com.web.album.dto.TrackResponse;
+import com.web.album.dto.deezer.TrackDeezerResponse;
+import com.web.album.dto.track.TrackResponse;
 import org.springframework.stereotype.Service;
 
 @Service

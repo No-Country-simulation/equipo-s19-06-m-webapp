@@ -1,4 +1,4 @@
-package com.web.track.base;
+package com.web.track.dto;
 
 public record ExtendedBaseResponse<T>(
         boolean isError,

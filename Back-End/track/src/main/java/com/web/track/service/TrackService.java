@@ -1,14 +1,14 @@
 package com.web.track.service;
 
-import com.web.track.base.BaseResponse;
-import com.web.track.base.ExtendedBaseResponse;
+import com.web.track.dto.BaseResponse;
+import com.web.track.dto.ExtendedBaseResponse;
 import com.web.track.client.DeezerClient;
 import com.web.track.mapper.TrackMapper;
 import com.web.track.model.Track;
 import com.web.track.repository.TrackRepository;
-import com.web.track.dto.TrackDeezerResponse;
-import com.web.track.dto.TrackRequest;
-import com.web.track.dto.TrackResponse;
+import com.web.track.dto.deezer.TrackDeezerResponse;
+import com.web.track.dto.track.TrackRequest;
+import com.web.track.dto.track.TrackResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

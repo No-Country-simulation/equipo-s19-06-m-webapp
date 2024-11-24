@@ -1,8 +1,4 @@
-package com.web.album.dto;
-
-import com.web.album.dto.AlbumDeezerResponse;
-import com.web.album.dto.ArtistDeezerResponse;
-import com.web.album.dto.ContributorDeezerResponse;
+package com.web.album.dto.deezer;
 
 import java.util.List;
 

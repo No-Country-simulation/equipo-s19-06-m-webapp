@@ -1,6 +1,6 @@
 package com.web.album.client;
 
-import com.web.album.dto.AlbumDeezerResponse;
+import com.web.album.dto.deezer.AlbumDeezerResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
