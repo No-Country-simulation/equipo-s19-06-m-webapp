@@ -1,8 +1,7 @@
 package com.web.album.album;
 
-import com.web.album.genre.GenreDeezerResponse;
-import com.web.album.song.SongClient;
-import com.web.album.song.SongMapper;
+import com.web.album.track.TrackClient;
+import com.web.album.track.TrackMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AlbumMapper {
 
-    private final SongMapper songMapper;
-    private final SongClient songClient;
+    private final TrackMapper trackMapper;
+    private final TrackClient trackClient;
 
     public Album toAlbum(AlbumDeezerResponse response){
         return Album.builder()
@@ -29,7 +28,7 @@ public class AlbumMapper {
                 album.getReleaseDate(),
 //                album.getGenres(),
                 album.getUrlImg(),
-                songClient.findSongsByAlbumId(album.getId()).data()
+                trackClient.findTracksByAlbumId(album.getId()).data()
         );
     }
 
@@ -50,7 +49,7 @@ public class AlbumMapper {
                 albumDeezerResponse.release_date(),
 //                albumDeezerResponse.genres().data().stream().map(GenreDeezerResponse::name).toList(),
                 albumDeezerResponse.cover(),
-                albumDeezerResponse.tracks().data().stream().map(songMapper::toSongResponse).toList()
+                albumDeezerResponse.tracks().data().stream().map(trackMapper::toTrackResponse).toList()
         );
     }
 }

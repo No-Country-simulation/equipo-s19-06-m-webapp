@@ -1,4 +1,5 @@
-package com.web.album.album;
+package com.web.track.track;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,19 +9,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class Album {
+public class Track {
     @Id
     private long id;
     private String name;
-    private String releaseDate;
-//    private List<String> genres;
-    @Column(length = 1024)
-    private String urlImg;
+    private int duration;
+    @Column(name = "url_preview", length = 1024)
+    private String urlPreview;
+    @Column(name = "album_id")
+    private Long albumId;
 }

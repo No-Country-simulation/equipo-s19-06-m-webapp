@@ -1,6 +1,6 @@
 package com.web.album.album;
 
-import com.web.album.song.SongResponse;
+import com.web.album.track.TrackResponse;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public record AlbumResponse (
         String releaseDate,
 //        List<String> genres,
         String urlImg,
-        List<SongResponse> songs
+        List<TrackResponse> tracks
 ) {
 }

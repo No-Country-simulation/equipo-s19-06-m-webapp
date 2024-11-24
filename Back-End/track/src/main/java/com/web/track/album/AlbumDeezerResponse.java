@@ -1,7 +1,5 @@
-package com.web.album.album;
+package com.web.track.album;
 
-import com.web.album.genre.GenresDeezerResponse;
-import com.web.album.track.TracksDeezerResponse;
 
 public record AlbumDeezerResponse(
         Long id,
@@ -13,9 +11,7 @@ public record AlbumDeezerResponse(
         String cover_big,
         String cover_xl,
         String md5_image,
-        GenresDeezerResponse genres,
         String release_date,
         String tracklist,
-        String type,
-        TracksDeezerResponse tracks
+        String type
 ) {}

@@ -3,13 +3,10 @@ package com.web.album.album;
 import com.web.album.base.BaseResponse;
 import com.web.album.base.ExtendedBaseResponse;
 import com.web.album.deezer.DeezerClient;
-import com.web.album.song.*;
+import com.web.album.track.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +14,7 @@ public class AlbumService {
 
     private final AlbumRepository albumRepository;
     private final AlbumMapper albumMapper;
-    private final SongClient songClient;
+    private final TrackClient trackClient;
     private final DeezerClient deezerClient;
 
     public ExtendedBaseResponse<AlbumWithoutTracksResponse> findAlbumWithoutTracks(Long id) {
@@ -48,8 +45,8 @@ public class AlbumService {
 
             TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
             for(TrackDeezerResponse response: tracksDeezerResponse.data()) {
-                SongRequest songRequest = new SongRequest(response.id());
-                songClient.createSong(songRequest);
+                TrackRequest trackRequest = new TrackRequest(response.id());
+                trackClient.createTrack(trackRequest);
             }
             return deezerAlbum;
         });
