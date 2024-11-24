@@ -4,6 +4,7 @@ import com.web.album.base.BaseResponse;
 import com.web.album.base.ExtendedBaseResponse;
 import com.web.album.deezer.DeezerClient;
 import com.web.album.song.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,15 @@ public class AlbumService {
     public ExtendedBaseResponse<AlbumWithoutTracksResponse> findAlbumWithoutTracks(Long id) {
         Album album = albumRepository.findById(id).orElseGet(()-> {
             AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(id);
+
+            if(albumDeezerResponse.id() == null)
+                throw new EntityNotFoundException("Album no encontrado.");
+
             return albumMapper.toAlbum(albumDeezerResponse);
         });
         AlbumWithoutTracksResponse albumResponse = albumMapper.toAlbumWithoutTracksResponse(album);
         return ExtendedBaseResponse.of(
-                BaseResponse.ok("Album encontrado"),
+                BaseResponse.ok("Album encontrado."),
                 albumResponse
         );
     }
@@ -34,6 +39,9 @@ public class AlbumService {
     public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum(AlbumRequest request) {
         Album album = albumRepository.findById(request.id()).orElseGet(() -> {
             AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
+
+            if(albumDeezerResponse.id() == null)
+                throw new EntityNotFoundException("Album no encontrado.");
 
             Album deezerAlbum = albumMapper.toAlbum(albumDeezerResponse);
             albumRepository.save(deezerAlbum);
@@ -49,7 +57,7 @@ public class AlbumService {
         AlbumResponse response = albumMapper.toAlbumResponse(album);
 
         return ExtendedBaseResponse.of(
-                BaseResponse.created("Album creado"),
+                BaseResponse.created("Album creado."),
                 response
         );
     }

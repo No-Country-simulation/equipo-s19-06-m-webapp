@@ -5,6 +5,7 @@ import com.web.song.album.AlbumResponse;
 import com.web.song.base.BaseResponse;
 import com.web.song.base.ExtendedBaseResponse;
 import com.web.song.deezer.DeezerClient;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +25,23 @@ public class SongService {
                 .stream()
                 .map(songMapper::toSongResponse)
                 .toList();
-        return ExtendedBaseResponse.of(BaseResponse.ok("Canciones encontradas"), songResponses);
+        return ExtendedBaseResponse.of(BaseResponse.ok("Canciones encontradas."), songResponses);
     }
 
     public ExtendedBaseResponse<SongResponse> createDeezerSong(SongRequest request) {
         Song song = songRepository.findById(request.id()).orElseGet(() -> {
             TrackDeezerResponse response = deezerClient.findSongById(request.id());
+
+            if(response.id() == null) {
+                throw new EntityNotFoundException("Cancion no encontrada.");
+            }
+
             Song deezerSong = songMapper.toSong(response);
             songRepository.save(deezerSong);
             return deezerSong;
         });
 
         SongResponse songResponse = songMapper.toSongResponse(song);
-        return ExtendedBaseResponse.of(BaseResponse.created("Cancion creada"), songResponse);
+        return ExtendedBaseResponse.of(BaseResponse.created("Cancion creada."), songResponse);
     }
 }
