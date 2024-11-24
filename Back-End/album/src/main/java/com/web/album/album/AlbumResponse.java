@@ -9,7 +9,7 @@ public record AlbumResponse (
         String name,
         String releaseDate,
 //        List<String> genres,
-        String urlImg,
+        String pictureUrl,
         List<TrackResponse> tracks
 ) {
 }

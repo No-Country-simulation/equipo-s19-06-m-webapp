@@ -4,6 +4,6 @@ public record TrackResponse(
         Long id,
         String name,
         int duration,
-        String urlPreview
+        String previewUrl
 ) {
 }

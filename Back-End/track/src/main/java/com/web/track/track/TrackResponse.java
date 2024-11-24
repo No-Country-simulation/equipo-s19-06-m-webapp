@@ -6,7 +6,7 @@ public record TrackResponse(
         long id,
         String name,
         int duration,
-        String urlPreview,
+        String previewUrl,
         AlbumResponse album
 ) {
 }

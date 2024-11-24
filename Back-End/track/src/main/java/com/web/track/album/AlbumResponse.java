@@ -4,6 +4,6 @@ public record AlbumResponse(
         Long id,
         String name,
         String releaseDate,
-        String urlImg
+        String pictureUrl
 ) {
 }

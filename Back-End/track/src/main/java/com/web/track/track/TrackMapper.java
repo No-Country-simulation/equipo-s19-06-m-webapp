@@ -16,7 +16,7 @@ public class TrackMapper {
                 .name(response.title())
                 .duration(response.duration())
                 .albumId(response.album().id())
-                .urlPreview(response.preview())
+                .previewUrl(response.preview())
                 .build();
     }
 
@@ -25,7 +25,7 @@ public class TrackMapper {
                 track.getId(),
                 track.getName(),
                 track.getDuration(),
-                track.getUrlPreview(),
+                track.getPreviewUrl(),
                 albumClient.findAlbum(track.getAlbumId()).data()
         );
     }

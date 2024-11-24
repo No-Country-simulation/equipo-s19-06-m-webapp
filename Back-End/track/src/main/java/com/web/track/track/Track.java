@@ -19,8 +19,8 @@ public class Track {
     private long id;
     private String name;
     private int duration;
-    @Column(name = "url_preview", length = 1024)
-    private String urlPreview;
+    @Column(name = "preview_url", length = 1024)
+    private String previewUrl;
     @Column(name = "album_id")
     private Long albumId;
 }

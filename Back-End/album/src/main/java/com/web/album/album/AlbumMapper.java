@@ -17,7 +17,7 @@ public class AlbumMapper {
                 .id(response.id())
                 .name(response.title())
                 .releaseDate(response.release_date())
-                .urlImg(response.cover())
+                .pictureUrl(response.cover())
                 .build();
     }
 
@@ -27,7 +27,7 @@ public class AlbumMapper {
                 album.getName(),
                 album.getReleaseDate(),
 //                album.getGenres(),
-                album.getUrlImg(),
+                album.getPictureUrl(),
                 trackClient.findTracksByAlbumId(album.getId()).data()
         );
     }
@@ -38,7 +38,7 @@ public class AlbumMapper {
                 album.getName(),
                 album.getReleaseDate(),
 //                album.getGenres(),
-                album.getUrlImg()
+                album.getPictureUrl()
         );
     }
 
