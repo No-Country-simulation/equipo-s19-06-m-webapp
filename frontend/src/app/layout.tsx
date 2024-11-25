@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Work_Sans } from 'next/font/google';
 import "./globals.css";
+import Header from "@/components/ui/Header";
 
 
 export const metadata: Metadata = {
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${globalFont.className} bg-slate-400`}>
-
+        <Header />
         <main className="container mx-auto ">
           {children}
         </main>
