@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Work_Sans } from 'next/font/google';
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/Header";
-
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "s19-06-webapp",
@@ -18,13 +18,13 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${globalFont.className} bg-slate-400`}>
+      <body
+        className={`${globalFont.className} bg-slate-400 flex flex-col min-h-screen`}
+      >
         <Header />
-        <main className="container mx-auto ">
-          {children}
-        </main>
+        <main className="flex-grow container mx-auto ">{children}</main>
+        <Footer />
       </body>
     </html>
   );
 }
-
