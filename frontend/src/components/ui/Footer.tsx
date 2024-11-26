@@ -24,13 +24,13 @@ const Footer = () => {
         {/* Logo */}
         <div className="flex justify-center order-first md:order-none">
           <Link href="/">
-            <div className="w-32 sm:w-36 lg:w-48">
+            <div className="w-40 sm:w-44 lg:w-56 ">
               <Image
-                src="/logo1.png"
-                alt="Logo Soundbit"
-                layout="responsive"
-                width={0}
-                height={0}
+                src="/logo.png"
+                alt="Soundbit Logo"
+                width={100}
+                height={35}
+                className="w-full"
               />
             </div>
           </Link>
