@@ -24,31 +24,30 @@ const Header = () => {
                 <Link href="/">
                     <div className="w-32 sm:w-36 lg:w-48 xl:w-64">
                         <Image
-                            src="/logo1.png"
+                            src="/logo.png"
                             alt="Logo Soundbit"
-                            layout="responsive"
-                            width={128}
-                            height={128}
+                            width={834}
+                            height={227}
+                            className="object-contain w-full h-auto"
                         />
                     </div>
                 </Link>
-
 
                 <nav className="hidden sm:flex items-center gap-8">
                     {navLinks.map(({ label, href }) => (
                         <Link
                             key={label}
                             href={href}
-                            className="text-white hover:text-primary transition-colors"
+                            className="text-white text-xl hover:text-primary transition-colors"
                         >
                             {label}
                         </Link>
                     ))}
                     <Link
                         href="/profile"
-                        className="text-white hover:text-primary transition-colors"
+                        className="text-white text-3xl hover:text-primary transition-colors"
                     >
-                        <UserCircle className="w-6 h-6" />
+                        <UserCircle className="w-8 h-8" />
                     </Link>
                 </nav>
 
@@ -68,11 +67,11 @@ const Header = () => {
                             <Link href="/">
                                 <div className="w-32 sm:w-36 lg:w-48 xl:w-64">
                                     <Image
-                                        src="/logo1.png"
+                                        src="/logo.png"
                                         alt="Logo Soundbit"
-                                        layout="responsive"
-                                        width={128}
-                                        height={128}
+                                        width={834}
+                                        height={227}
+                                        className="w-full h-auto"
                                     />
                                 </div>
                             </Link>
@@ -84,7 +83,7 @@ const Header = () => {
                                 <X className="w-6 h-6" />
                             </button>
                         </div>
-                        <nav className="flex flex-col items-center gap-8">
+                        <nav className="flex flex-col h-full justify-center items-center gap-12 pb-8">
                             {navLinks.map(({ label, href }) => (
                                 <Link
                                     key={label}
@@ -100,7 +99,7 @@ const Header = () => {
                                 className="text-white hover:text-primary transition-colors"
                                 onClick={toggleMenu}
                             >
-                                <UserCircle className="w-8 h-8" />
+                                <UserCircle className="w-12 h-12" />
                             </Link>
                         </nav>
                     </div>
