@@ -13,13 +13,13 @@ public class TrackMapper {
 
     private final AlbumClient albumClient;
 
-    public Track toTrack(TrackDeezerResponse response){
+    public Track toTrack(TrackDeezerResponse response, String previewUrl){
         return Track.builder()
                 .id(response.id())
                 .name(response.title())
                 .duration(response.duration())
                 .albumId(response.album().id())
-                .previewUrl(response.preview())
+                .previewUrl(previewUrl)
                 .build();
     }
 

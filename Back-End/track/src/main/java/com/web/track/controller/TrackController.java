@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Pistas", description = "Gestionar todos los End-Points de pistas.")
@@ -56,7 +57,7 @@ public class TrackController {
             )
     })
     @PostMapping
-    public ExtendedBaseResponse<TrackResponse> createDeezerTrack(@Valid @RequestBody TrackRequest request) {
+    public ExtendedBaseResponse<TrackResponse> createDeezerTrack(@Valid @RequestBody TrackRequest request) throws IOException {
         return service.createDeezerTrack(request);
     }
 
