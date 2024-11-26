@@ -5,7 +5,7 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
-  title: "Soundbite",
+  title: "Soundbit",
   description: "Música, Reproductor de música, artistas, canciones, álbumes",
 };
 
