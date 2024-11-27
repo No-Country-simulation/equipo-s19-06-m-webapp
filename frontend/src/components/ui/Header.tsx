@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { UserCircle, Menu, X } from 'lucide-react'
 import { NavLink } from '@/types/ui/Header';
+import ActiveNavLink from './ActiveNavLink';
 
 const navLinks: NavLink[] = [
     { label: "Inicio", href: "/" },
@@ -35,13 +36,14 @@ const Header = () => {
 
                 <nav className="hidden sm:flex items-center gap-8">
                     {navLinks.map(({ label, href }) => (
-                        <Link
+                        <ActiveNavLink
                             key={label}
                             href={href}
-                            className="text-white text-xl hover:text-primary transition-colors"
+                            activeClassName="text-primary font-bold"
+                            className="text-white text-xl font-bold hover:text-primary transition-colors"
                         >
                             {label}
-                        </Link>
+                        </ActiveNavLink>
                     ))}
                     <Link
                         href="/profile"
