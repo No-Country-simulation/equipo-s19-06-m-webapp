@@ -6,7 +6,7 @@ import { FooterLink } from "@/types/ui/Footer";
 
 const footerLinks: FooterLink[] = [
   { label: "Sobre nosotros", href: "/sobre-nosotros" },
-  { label: "Política de privacidad", href: "/privacidad" },
+  { label: "Política de privacidad", href: "/politics" },
   { label: "Preguntas frecuentes", href: "/faq" },
 ];
 
