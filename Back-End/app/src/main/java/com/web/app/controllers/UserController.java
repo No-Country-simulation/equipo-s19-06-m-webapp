@@ -3,6 +3,7 @@ package com.web.app.controllers;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.user.DeleteImagesUserDto;
 import com.web.app.dto.user.UpDateImagesUserDto;
+import com.web.app.dto.user.UserDto;
 import com.web.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -76,5 +77,32 @@ public class UserController {
     public ResponseEntity<ExtendedBaseResponse<String>> deleteUserImage(@Valid @RequestBody DeleteImagesUserDto dto) {
         ExtendedBaseResponse<String> datos = userService.deleteImagesUser(dto);
         return ResponseEntity.ok(datos);
+    }
+
+    @Operation(
+            summary = "Buscar usuario por ID",
+            description = "Obtiene los datos de un usuario según su ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuario encontrado exitosamente.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExtendedBaseResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuario no encontrado.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error al buscar el usuario.",
+                    content = @Content
+            )
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<ExtendedBaseResponse<UserDto>> findUserById(@PathVariable Long id) {
+        ExtendedBaseResponse<UserDto> response = userService.findUserById(id);
+        return ResponseEntity.ok(response);
     }
 }

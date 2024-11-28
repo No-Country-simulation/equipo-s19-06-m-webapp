@@ -4,7 +4,9 @@ import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.user.UpDateImagesUserDto;
 import com.web.app.dto.user.DeleteImagesUserDto;
+import com.web.app.dto.user.UserDto;
 import com.web.app.exception.userExc.UserNotFoundException;
+import com.web.app.mapper.UserMapper;
 import com.web.app.model.User;
 import com.web.app.repository.UserRepository;
 import com.web.app.service.UserService;
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final ImageService imageService;
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     @Override
     @Transactional
     public ExtendedBaseResponse<String> upDateImagesUser(UpDateImagesUserDto upDateImagesUser) {
@@ -42,6 +45,15 @@ public class UserServiceImpl implements UserService {
         user.setUserImage(null);
         User savedUser = userRepository.save(user);
         return ExtendedBaseResponse.of(BaseResponse.created("Image Deleted Successfully"), savedUser.getUserImage());
+    }
+
+    @Override
+    @Transactional
+    public ExtendedBaseResponse<UserDto> findUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException("This User Does Not Exist with that Id: " + id));
+        UserDto userDto = userMapper.toDto(user);
+        return ExtendedBaseResponse.of(BaseResponse.created("User Found Successfully"), userDto);
     }
 
 
