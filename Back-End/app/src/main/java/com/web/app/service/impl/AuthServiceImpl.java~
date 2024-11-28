@@ -2,7 +2,10 @@ package com.web.app.service.impl;
 
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
-import com.web.app.dto.user.*;
+import com.web.app.dto.user.AuthResponseDto;
+import com.web.app.dto.user.EmailDto;
+import com.web.app.dto.user.LoginRequestDto;
+import com.web.app.dto.user.RegisterRequestDto;
 import com.web.app.jwt.JwtService;
 import com.web.app.model.Role;
 import com.web.app.model.User;
@@ -92,8 +95,10 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(email.email())
                 .orElseThrow(() -> new IllegalArgumentException("El usuario con ese email no existe."));
 
+        // Generar un token único (en este caso, un UUID)
         String token = UUID.randomUUID().toString();
 
+        // Guardar el token en el usuario para validar más tarde
         user.setResetToken(token);
         userRepository.save(user);
 
@@ -103,12 +108,13 @@ public class AuthServiceImpl implements AuthService {
         );
     }
 
-    public void resetPassword(ResetPasswordRequest request) {
-        User user = userRepository.findByResetToken(request.token())
+    public void resetPassword(String token, String newPassword) {
+        User user = userRepository.findByResetToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Token inválido o expirado."));
 
-        user.setPassword(passwordEncoder.encode(request.newPassword()));
-        user.setResetToken(null);
+        // Actualizar la contraseña
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null); // Eliminar el token después de usarlo
         userRepository.save(user);
     }
 }
