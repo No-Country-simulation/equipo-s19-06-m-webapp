@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Work_Sans } from 'next/font/google';
+import { Roboto } from "next/font/google";
 import "./globals.css";
-
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
-  title: "s19-06-webapp",
+  title: "Soundbit",
   description: "Música, Reproductor de música, artistas, canciones, álbumes",
 };
 
-const globalFont = Work_Sans({ subsets: ["latin"], weight: "400" });
+const globalFont = Roboto({ subsets: ["latin"], weight: "400" });
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -17,13 +18,13 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${globalFont.className} bg-slate-400`}>
-
-        <main className="container mx-auto ">
-          {children}
-        </main>
+      <body
+        className={`${globalFont.className} bg-primary flex flex-col min-h-screen`}
+      >
+        <Header />
+        <main className="flex-grow w-full h-full">{children}</main>
+        <Footer />
       </body>
     </html>
   );
 }
-

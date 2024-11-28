@@ -9,7 +9,10 @@ export default {
   ],
   theme: {
   	extend: {
-  		colors: {},
+  		colors: {
+        primary: '#00FFFF',
+        black:'#333'
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -17,5 +20,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('tailwindcss-animated')],
 } satisfies Config;
