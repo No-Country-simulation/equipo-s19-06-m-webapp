@@ -1,6 +1,6 @@
 package com.web.app.service.impl;
 
-import com.web.app.client.DeezerClient;
+import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.search.SearchDeezerResponse;
