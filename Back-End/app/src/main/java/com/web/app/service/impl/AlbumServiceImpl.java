@@ -32,7 +32,7 @@ public class AlbumServiceImpl implements AlbumService {
     private final TrackService trackService;
 
     // Trae un album con todas las pistas del Api Deezer
-//    @Transactional
+    @Transactional
     public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum(AlbumRequest request) {
         // Busca el album en la Api Deezer
         AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
@@ -49,7 +49,6 @@ public class AlbumServiceImpl implements AlbumService {
         // Busca el album creado
         Album album = albumRepository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException("Album no encontrado para id: " + request.id()));
-        Hibernate.initialize(album.getTracks());
 
         AlbumResponse response = albumTrackMapper.toAlbumResponse(album);
         return ExtendedBaseResponse.of(

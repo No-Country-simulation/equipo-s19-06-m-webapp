@@ -20,9 +20,10 @@ public class Album {
     private String name;
     @Column(name = "release_date")
     private String releaseDate;
-//    private List<String> genres;
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<Genre> genres;
     @Column(name = "picture_url", length = 1024)
     private String pictureUrl;
-    @OneToMany(mappedBy = "album")
-    private List<Track> tracks = new ArrayList<>();;
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<Track> tracks;
 }

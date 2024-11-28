@@ -1,5 +1,6 @@
 package com.web.app.mapper;
 
+import com.web.app.dto.track.ShortTrackResponse;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.model.Track;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,15 @@ public class TrackMapper {
                 track.getDuration(),
                 track.getPreviewUrl(),
                 albumMapper.toAlbumWithoutTracksResponse(track.getAlbum())
+        );
+    }
+
+    public ShortTrackResponse toShortTrackResponse(Track track) {
+        return new ShortTrackResponse(
+                track.getId(),
+                track.getName(),
+                track.getDuration(),
+                track.getPreviewUrl()
         );
     }
 }

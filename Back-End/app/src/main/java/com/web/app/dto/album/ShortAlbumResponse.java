@@ -1,10 +1,12 @@
 package com.web.app.dto.album;
 
-public record AlbumWithoutTracksResponse (
+import java.util.List;
+
+public record ShortAlbumResponse(
         Long id,
         String name,
         String releaseDate,
-//        List<String> genres,
+        List<String> genres,
         String pictureUrl
 ) {
 }

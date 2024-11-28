@@ -3,7 +3,6 @@ package com.web.app.controllers;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.album.AlbumRequest;
 import com.web.app.dto.album.AlbumResponse;
-import com.web.app.dto.album.AlbumWithoutTracksResponse;
 import com.web.app.service.AlbumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
