@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FooterLink } from "@/types/ui/Footer";
+import { usePathname } from "next/navigation";
 
 const footerLinks: FooterLink[] = [
   { label: "Sobre nosotros", href: "/sobre-nosotros" },
@@ -11,6 +12,8 @@ const footerLinks: FooterLink[] = [
 ];
 
 const Footer = () => {
+  const pathname = usePathname();
+
   return (
     <footer className="bg-black text-white p-6">
       <div className="max-w-7xl mx-auto grid gap-4 grid-cols-1 md:grid-cols-3 md:gap-8 items-center">
@@ -42,7 +45,11 @@ const Footer = () => {
             <Link
               key={label}
               href={href}
-              className="text-lg text-white hover:text-primary transition-colors"
+              className={`text-lg transition-colors ${
+                pathname === href
+                  ? "text-primary"
+                  : "text-white hover:text-primary"
+              }`}
             >
               {label}
             </Link>
