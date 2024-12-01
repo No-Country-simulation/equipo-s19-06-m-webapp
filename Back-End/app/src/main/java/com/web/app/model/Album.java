@@ -20,10 +20,12 @@ public class Album {
     private String name;
     @Column(name = "release_date")
     private LocalDate releaseDate;
-    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
-    private List<Genre> genres;
     @Column(name = "picture_url", length = 1024)
     private String pictureUrl;
-    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Genre> genres;
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Track> tracks;
+    @ManyToOne
+    private Artist artist;
 }

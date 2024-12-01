@@ -2,12 +2,18 @@ package com.web.app.service.impl;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
 import com.web.app.dto.deezer.album.ShortAlbumDeezerResponse;
+import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
+import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
+import com.web.app.exception.artistExc.ArtistNotFoundException;
 import com.web.app.exception.trackExc.TrackNotFoundException;
 import com.web.app.mapper.AlbumMapper;
+import com.web.app.mapper.ArtistMapper;
 import com.web.app.mapper.GenreMapper;
 import com.web.app.model.Album;
+import com.web.app.model.Artist;
 import com.web.app.model.Genre;
+import com.web.app.repository.ArtistRepository;
 import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
@@ -20,10 +26,12 @@ import com.web.app.repository.AlbumRepository;
 import com.web.app.repository.TrackRepository;
 import com.web.app.service.TrackService;
 import com.web.app.service.api.CloudinaryService;
+import com.web.app.util.UriUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,26 +41,41 @@ public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;
     private final AlbumRepository albumRepository;
+    private final ArtistRepository artistRepository;
     private final GenreMapper genreMapper;
     private final AlbumMapper albumMapper;
     private final TrackMapper trackMapper;
+    private final ArtistMapper artistMapper;
     private final DeezerClient deezerClient;
     private final CloudinaryService cloudinaryService;
+    private final UriUtil uriUtil;
 
-    // Trae una pista de la Api de Deezer con el album
+    // Trae una pista con el artista y el album de la Api de Deezer
     @Transactional
-    public ExtendedBaseResponse<TrackResponse> createDeezerTrack(TrackRequest request) {
-        // Busca la pista en la base de datos
-        Track track = trackRepository.findById(request.id()).orElseGet(() -> {
-
+    public ExtendedBaseResponse<URI> createDeezerTrack(long id) {
+        // Mira si la pista esta creada en la base de datos
+        if (!artistRepository.existsById(id)) {
             // Si no lo encuentra, busca en la Api Deezer
-            TrackDeezerResponse response = deezerClient.findTrackById(request.id());
+            TrackDeezerResponse response = deezerClient.findTrackById(id);
             if(response.id() == null) {
-                throw new TrackNotFoundException("Pista no encontrada para id: " + request.id());
+                throw new TrackNotFoundException("Pista no encontrada para id: " + id);
             }
 
-            // Sube la pista a cloudinary y guarda su url
-            String previewUrl = cloudinaryService.uploadVideo(response.title(), response.id().toString(), response.preview());
+            // Busca el artista con numeros de fans de la pista en la base de datos
+            long artistId = response.artist().id();
+            Artist artist = artistRepository.findById(artistId).orElseGet(() -> {
+
+                // Si no lo encuentra, busca en la Api Deezer
+                ArtistDeezerResponse artistDeezerResponse = deezerClient.findArtistById(artistId);
+                if(artistDeezerResponse.id() == null)
+                    throw new ArtistNotFoundException("Artista no encontrado para id: " + id);
+
+                // Guarda artista
+                Artist deezerArtist = artistMapper.toArtist(artistDeezerResponse);
+                artistRepository.save(deezerArtist);
+
+                return deezerArtist;
+            });
 
             // Busca el album con los generos de la pista en la base de datos
             long albumId = response.album().id();
@@ -61,7 +84,7 @@ public class TrackServiceImpl implements TrackService {
                 // Si no lo encuentra, busca en la Api Deezer
                 AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(albumId);
                 if(albumDeezerResponse.id() == null)
-                    throw new AlbumNotFoundException("Album no encontrado para id: " + request.id());
+                    throw new AlbumNotFoundException("Album no encontrado para id: " + id);
                 // Quita cancionas de la respuesta con el album para no crear todos
                 ShortAlbumDeezerResponse shortAlbumDeezerResponse = albumMapper.toShortAlbumDeezerResponse(albumDeezerResponse);
 
@@ -74,25 +97,32 @@ public class TrackServiceImpl implements TrackService {
                             return genre;
                         }).toList();
                 deezerAlbum.setGenres(deezerGenres);
+                deezerAlbum.setArtist(artist);
+                albumRepository.save(deezerAlbum);
 
                 return deezerAlbum;
             });
+
+            // Sube la pista a cloudinary y guarda su url
+            String previewUrl = cloudinaryService.uploadVideo(response.title(), response.id().toString(), response.preview());
 
             // Crea la pista y lo asocia a album
             Track deezerTrack = trackMapper.toTrack(response);
             deezerTrack.setPreviewUrl(previewUrl);
             deezerTrack.setAlbum(album);
-            if(album.getTracks() == null)
-                album.setTracks(new ArrayList<>());
-            album.getTracks().add(deezerTrack);
+            trackRepository.save(deezerTrack);
+        }
+        URI response = uriUtil.buildResourceUri("/tracks/" + id);
 
-            // Guarda la pista, el album y los generos
-            albumRepository.save(album);
+        return ExtendedBaseResponse.of(BaseResponse.created("Pista creada."), response);
+    }
 
-            return deezerTrack;
-        });
+    @Override
+    public ExtendedBaseResponse<TrackResponse> findTrack(long id) {
+        Track track = trackRepository.findById(id)
+                .orElseThrow(() -> new TrackNotFoundException("Pista no encontrado para id: " + id));
 
-        TrackResponse trackResponse = trackMapper.toTrackResponse(track);
-        return ExtendedBaseResponse.of(BaseResponse.created("Pista creada."), trackResponse);
+        TrackResponse response = trackMapper.toTrackResponse(track);
+        return ExtendedBaseResponse.of(BaseResponse.ok("Pista encontrada"), response);
     }
 }

@@ -2,6 +2,7 @@ package com.web.app.exception;
 
 import com.web.app.dto.BaseResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
+import com.web.app.exception.artistExc.ArtistNotFoundException;
 import com.web.app.exception.trackExc.TrackNotFoundException;
 import com.web.app.exception.userExc.EmailNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,6 +34,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TrackNotFoundException.class)
     public ResponseEntity<String> handleTrackNotFound(TrackNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ArtistNotFoundException.class)
+    public ResponseEntity<String> handleArtistNotFound(ArtistNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

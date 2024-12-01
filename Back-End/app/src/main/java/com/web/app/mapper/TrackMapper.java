@@ -15,16 +15,16 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = GenreMapper.class,
         componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TrackMapper {
-    public TrackResponse toTrackResponse(Track track) ;
+    TrackResponse toTrackResponse(Track track) ;
 
-    public ShortTrackResponse toShortTrackResponse(Track track);
+    ShortTrackResponse toShortTrackResponse(Track track);
 
     @Mapping(target = "name", source = "title")
-    public Track toTrack(TrackDeezerResponse response);
+    Track toTrack(TrackDeezerResponse response);
 
-    public List<Track> toTracks(List<TrackDeezerResponse> trackDeezerResponses);
+    List<Track> toTracks(List<TrackDeezerResponse> trackDeezerResponses);
 
-    default public List<TrackDeezerResponse> toTrackDeezerResponses(TracksDeezerResponse tracksDeezerResponse) {
+    default List<TrackDeezerResponse> toTrackDeezerResponses(TracksDeezerResponse tracksDeezerResponse) {
         return tracksDeezerResponse.data();
     }
 }

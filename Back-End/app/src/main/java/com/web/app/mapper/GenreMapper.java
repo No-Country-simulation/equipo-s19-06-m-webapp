@@ -11,17 +11,17 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GenreMapper {
-    public Genre toGenre(GenreDeezerResponse response);
+    Genre toGenre(GenreDeezerResponse response);
 
-    public List<String> toStrings(List<Genre> genres);
+    List<String> toStrings(List<Genre> genres);
 
-    default public String toString (Genre genre) {
+    default String toString (Genre genre) {
         return genre.getName();
     };
 
-    public List<Genre> toGenres(List<GenreDeezerResponse> genreDeezerResponse);
+    List<Genre> toGenres(List<GenreDeezerResponse> genreDeezerResponse);
 
-    default public List<GenreDeezerResponse> toGenreDeezerResponses(GenresDeezerResponse genres) {
+    default List<GenreDeezerResponse> toGenreDeezerResponses(GenresDeezerResponse genres) {
         if(genres == null)
             return null;
         return genres.data();
