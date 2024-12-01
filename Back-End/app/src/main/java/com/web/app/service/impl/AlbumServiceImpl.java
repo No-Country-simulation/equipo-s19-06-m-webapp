@@ -11,7 +11,6 @@ import com.web.app.dto.deezer.track.TrackDeezerResponse;
 import com.web.app.dto.deezer.track.TracksDeezerResponse;
 import com.web.app.dto.track.TrackRequest;
 import com.web.app.mapper.AlbumMapper;
-import com.web.app.mapper.AlbumTrackMapper;
 import com.web.app.model.Album;
 import com.web.app.repository.AlbumRepository;
 import com.web.app.service.AlbumService;
@@ -26,7 +25,6 @@ public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumRepository albumRepository;
     private final AlbumMapper albumMapper;
-    private final AlbumTrackMapper albumTrackMapper;
     private final DeezerClient deezerClient;
     private final TrackService trackService;
 
@@ -49,7 +47,7 @@ public class AlbumServiceImpl implements AlbumService {
         Album album = albumRepository.findById(request.id())
                 .orElseThrow(() -> new AlbumNotFoundException("Album no encontrado para id: " + request.id()));
 
-        AlbumResponse response = albumTrackMapper.toAlbumResponse(album);
+        AlbumResponse response = albumMapper.toAlbumResponse(album);
         return ExtendedBaseResponse.of(
                 BaseResponse.created("Album creado."),
                 response
