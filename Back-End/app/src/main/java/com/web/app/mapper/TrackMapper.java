@@ -1,32 +1,30 @@
 package com.web.app.mapper;
 
+import com.web.app.dto.deezer.track.TrackDeezerResponse;
+import com.web.app.dto.deezer.track.TracksDeezerResponse;
 import com.web.app.dto.track.ShortTrackResponse;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.model.Track;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-@Service
-@RequiredArgsConstructor
-public class TrackMapper {
-    private final AlbumMapper albumMapper;
+import java.util.List;
 
-    public TrackResponse toTrackResponse(Track track) {
-        return new TrackResponse(
-                track.getId(),
-                track.getName(),
-                track.getDuration(),
-                track.getPreviewUrl(),
-                albumMapper.toAlbumWithoutTracksResponse(track.getAlbum())
-        );
-    }
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = GenreMapper.class,
+        componentModel = MappingConstants.ComponentModel.SPRING)
+public interface TrackMapper {
+    TrackResponse toTrackResponse(Track track) ;
 
-    public ShortTrackResponse toShortTrackResponse(Track track) {
-        return new ShortTrackResponse(
-                track.getId(),
-                track.getName(),
-                track.getDuration(),
-                track.getPreviewUrl()
-        );
+    ShortTrackResponse toShortTrackResponse(Track track);
+
+    @Mapping(target = "name", source = "title")
+    Track toTrack(TrackDeezerResponse response);
+
+    List<Track> toTracks(List<TrackDeezerResponse> trackDeezerResponses);
+
+    default List<TrackDeezerResponse> toTrackDeezerResponses(TracksDeezerResponse tracksDeezerResponse) {
+        return tracksDeezerResponse.data();
     }
 }

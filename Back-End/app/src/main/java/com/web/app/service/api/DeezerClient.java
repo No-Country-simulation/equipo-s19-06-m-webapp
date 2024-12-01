@@ -1,6 +1,8 @@
 package com.web.app.service.api;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
+import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
+import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
 import com.web.app.dto.search.SearchDeezerResponse;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,11 @@ public class DeezerClient {
     public TrackDeezerResponse findTrackById(Long id) {
         RestTemplate template = new RestTemplate();
         return template.getForObject(url + "track/" + id, TrackDeezerResponse.class);
+    }
+
+    public ArtistDeezerResponse findArtistById(Long id) {
+        RestTemplate template = new RestTemplate();
+        return template.getForObject(url + "artist/" + id, ArtistDeezerResponse.class);
     }
 
     public SearchDeezerResponse searchDeezerAPI(String artist, String track, String album) {

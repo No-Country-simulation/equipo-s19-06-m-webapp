@@ -12,7 +12,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @Tag(name = "Albumes", description = "Gestionar todos los End-Points de albumes.")
 @RestController
@@ -39,9 +42,33 @@ public class AlbumController {
                     content = @Content
             )
     })
-    @PostMapping
-    public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum (@Valid @RequestBody AlbumRequest request) {
-        return service.createDeezerAlbum(request);
+    @PostMapping("/import/{id}")
+    public ResponseEntity<ExtendedBaseResponse<URI>> createDeezerAlbum (@PathVariable long id) {
+        ExtendedBaseResponse<URI> albumResponse = service.createDeezerAlbum(id);
+        return ResponseEntity.status(201).body(albumResponse);
+    }
+
+    @Operation(summary = "Busca un album.",
+            description = "Busca un album por id en la base de datos.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Album encontrado.",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
+                    }),
+
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Album no encontrado.",
+                    content = @Content
+            )
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<ExtendedBaseResponse<AlbumResponse>> findAlbum (@PathVariable long id) {
+        ExtendedBaseResponse<AlbumResponse> albumResponse = service.findAlbum(id);
+        return ResponseEntity.ok(albumResponse);
     }
 
 }

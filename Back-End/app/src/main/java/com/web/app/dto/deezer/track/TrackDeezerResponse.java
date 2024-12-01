@@ -1,6 +1,6 @@
 package com.web.app.dto.deezer.track;
 
-import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
+import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.dto.deezer.album.AlbumDeezerWithoutTracksResponse;
 
 import java.util.List;
@@ -28,6 +28,6 @@ public record TrackDeezerResponse(
         List<String> available_countries,
         String md5_image,
         String track_token,
-        ArtistDeezerResponse artist,
+        ShortArtistDeezerResponse artist,
         AlbumDeezerWithoutTracksResponse album
 ) {}
