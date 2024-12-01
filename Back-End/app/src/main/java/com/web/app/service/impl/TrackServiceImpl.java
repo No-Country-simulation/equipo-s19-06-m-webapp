@@ -2,6 +2,8 @@ package com.web.app.service.impl;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
 import com.web.app.dto.deezer.genre.GenreDeezerResponse;
+import com.web.app.exception.albumExc.AlbumNotFoundException;
+import com.web.app.exception.trackExc.TrackNotFoundException;
 import com.web.app.mapper.GenreMapper;
 import com.web.app.model.Album;
 import com.web.app.model.Genre;
@@ -48,7 +50,7 @@ public class TrackServiceImpl implements TrackService {
             // Si no lo encuentra, busca en la Api Deezer
             TrackDeezerResponse response = deezerClient.findTrackById(request.id());
             if(response.id() == null) {
-                throw new EntityNotFoundException("Pista no encontrada para id: " + request.id());
+                throw new TrackNotFoundException("Pista no encontrada para id: " + request.id());
             }
 
             // Sube la pista a cloudinary y guarda su url
@@ -60,6 +62,8 @@ public class TrackServiceImpl implements TrackService {
 
                 // Si no lo encuentra, busca en la Api Deezer
                 AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(albumId);
+                if(albumDeezerResponse.id() == null)
+                    throw new AlbumNotFoundException("Album no encontrado para id: " + request.id());
 
                 // Crea el album con los generos
                 Album deezerAlbum = albumTrackMapper.toAlbum(albumDeezerResponse);

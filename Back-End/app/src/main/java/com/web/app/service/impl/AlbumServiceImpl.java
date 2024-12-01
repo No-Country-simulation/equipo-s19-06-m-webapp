@@ -1,5 +1,6 @@
 package com.web.app.service.impl;
 
+import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
@@ -15,10 +16,8 @@ import com.web.app.model.Album;
 import com.web.app.repository.AlbumRepository;
 import com.web.app.service.AlbumService;
 import com.web.app.service.TrackService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +36,7 @@ public class AlbumServiceImpl implements AlbumService {
         // Busca el album en la Api Deezer
         AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(request.id());
         if(albumDeezerResponse.id() == null)
-            throw new EntityNotFoundException("Album no encontrado para id: " + request.id());
+            throw new AlbumNotFoundException("Album no encontrado para id: " + request.id());
 
         // Crea todas las pistas del album
         TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
@@ -48,7 +47,7 @@ public class AlbumServiceImpl implements AlbumService {
 
         // Busca el album creado
         Album album = albumRepository.findById(request.id())
-                .orElseThrow(() -> new EntityNotFoundException("Album no encontrado para id: " + request.id()));
+                .orElseThrow(() -> new AlbumNotFoundException("Album no encontrado para id: " + request.id()));
 
         AlbumResponse response = albumTrackMapper.toAlbumResponse(album);
         return ExtendedBaseResponse.of(

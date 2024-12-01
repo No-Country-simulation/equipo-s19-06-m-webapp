@@ -1,6 +1,8 @@
 package com.web.app.exception;
 
 import com.web.app.dto.BaseResponse;
+import com.web.app.exception.albumExc.AlbumNotFoundException;
+import com.web.app.exception.trackExc.TrackNotFoundException;
 import com.web.app.exception.userExc.EmailNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -24,8 +26,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<BaseResponse> handleEntityNotFound(EntityNotFoundException ex) {
-        return new ResponseEntity<>(new BaseResponse(true, 404, "Error", ex.getMessage()), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(AlbumNotFoundException.class)
+    public ResponseEntity<String> handleAlbumNotFound(AlbumNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(TrackNotFoundException.class)
+    public ResponseEntity<String> handleTrackNotFound(TrackNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
