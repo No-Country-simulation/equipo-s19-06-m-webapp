@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Albumes", description = "Gestionar todos los End-Points de albumes.")
@@ -40,8 +41,9 @@ public class AlbumController {
             )
     })
     @PostMapping
-    public ExtendedBaseResponse<AlbumResponse> createDeezerAlbum (@Valid @RequestBody AlbumRequest request) {
-        return service.createDeezerAlbum(request);
+    public ResponseEntity<ExtendedBaseResponse<AlbumResponse>> createDeezerAlbum (@Valid @RequestBody AlbumRequest request) {
+        ExtendedBaseResponse<AlbumResponse> albumResponse = service.createDeezerAlbum(request);
+        return ResponseEntity.status(201).body(albumResponse);
     }
 
 }

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -42,8 +43,9 @@ public class TrackController {
             )
     })
     @PostMapping
-    public ExtendedBaseResponse<TrackResponse> createDeezerTrack(@Valid @RequestBody TrackRequest request) throws IOException {
-        return service.createDeezerTrack(request);
+    public ResponseEntity<ExtendedBaseResponse<TrackResponse>> createDeezerTrack(@Valid @RequestBody TrackRequest request) throws IOException {
+        ExtendedBaseResponse<TrackResponse> trackResponse = service.createDeezerTrack(request);
+        return ResponseEntity.status(201).body(trackResponse);
     }
 
 }
