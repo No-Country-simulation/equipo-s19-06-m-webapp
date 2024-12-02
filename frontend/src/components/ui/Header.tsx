@@ -28,8 +28,8 @@ const Header = () => {
             <Image
               src="/logo.png"
               alt="Logo Soundbit"
-              width={834}
-              height={227}
+              width={188}
+              height={42}
               className="object-contain w-full h-auto"
             />
           </div>
@@ -40,22 +40,20 @@ const Header = () => {
             <Link
               key={label}
               href={href}
-              className={`text-xl transition-colors ${
-                pathname === href
+              className={`text-xl transition-colors ${pathname === href
                   ? "text-primary"
                   : "text-white hover:text-primary"
-              }`}
+                }`}
             >
               {label}
             </Link>
           ))}
           <Link
             href="/profile"
-            className={`text-3xl transition-colors ${
-              pathname === "/profile"
+            className={`text-3xl transition-colors ${pathname === "/profile"
                 ? "text-primary"
                 : "text-white hover:text-primary"
-            }`}
+              }`}
           >
             <UserCircle className="w-8 h-8" />
           </Link>
@@ -79,8 +77,8 @@ const Header = () => {
                   <Image
                     src="/logo.png"
                     alt="Logo Soundbit"
-                    width={834}
-                    height={227}
+                    width={188}
+                    height={42}
                     className="w-full h-auto"
                   />
                 </div>
@@ -98,11 +96,10 @@ const Header = () => {
                 <Link
                   key={label}
                   href={href}
-                  className={`text-2xl transition-colors ${
-                    pathname === href
+                  className={`text-2xl transition-colors ${pathname === href
                       ? "text-primary"
                       : "text-white hover:text-primary"
-                  }`}
+                    }`}
                   onClick={toggleMenu}
                 >
                   {label}
@@ -110,11 +107,10 @@ const Header = () => {
               ))}
               <Link
                 href="/profile"
-                className={`transition-colors ${
-                  pathname === "/profile"
+                className={`transition-colors ${pathname === "/profile"
                     ? "text-primary"
                     : "text-white hover:text-primary"
-                }`}
+                  }`}
                 onClick={toggleMenu}
               >
                 <UserCircle className="w-12 h-12" />
