@@ -2,6 +2,7 @@ package com.web.app.service.api;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.web.app.exception.cloudinaryExc.VideoUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,8 @@ public class CloudinaryService {
 
             Map uploadResult = cloudinary.uploader().upload(videoUrl, uploadParams);
             return uploadResult.get("url").toString();
-        } catch (IOException ex) {
-            throw new RuntimeException("Error subiendo un video", ex);
+        } catch (Exception ex) {
+            throw new VideoUploadException("Error subiendo una pista a Cloudinary: " + ex);
         }
     }
 }

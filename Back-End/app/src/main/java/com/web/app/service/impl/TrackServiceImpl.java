@@ -3,7 +3,6 @@ package com.web.app.service.impl;
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
 import com.web.app.dto.deezer.album.ShortAlbumDeezerResponse;
 import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
-import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.exception.artistExc.ArtistNotFoundException;
 import com.web.app.exception.trackExc.TrackNotFoundException;
@@ -18,7 +17,6 @@ import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
-import com.web.app.dto.track.TrackRequest;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.mapper.TrackMapper;
 import com.web.app.model.Track;
@@ -32,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
