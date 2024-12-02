@@ -31,8 +31,8 @@ const Footer = () => {
               <Image
                 src="/logo.png"
                 alt="Soundbit Logo"
-                width={100}
-                height={35}
+                width={188}
+                height={42}
                 className="w-full"
               />
             </div>
@@ -45,11 +45,10 @@ const Footer = () => {
             <Link
               key={label}
               href={href}
-              className={`text-lg transition-colors ${
-                pathname === href
+              className={`text-lg transition-colors ${pathname === href
                   ? "text-primary"
                   : "text-white hover:text-primary"
-              }`}
+                }`}
             >
               {label}
             </Link>
