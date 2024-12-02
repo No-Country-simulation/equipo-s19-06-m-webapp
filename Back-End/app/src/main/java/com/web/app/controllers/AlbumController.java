@@ -23,18 +23,20 @@ public class AlbumController {
 
     private final AlbumService service;
 
-    @Operation(summary = "Crea un album con la Api Deezer.",
-            description = "Crea un album de la Api Deezer y todas las canciones del album.")
+    @Operation(summary = "Crea un album con su artista y sus pistas con la Api Deezer.",
+            description = "Crea un album con su artista y sus pistas con la Api Deezer.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
                     description = "Album creado exitosamente."
             ),
-
             @ApiResponse(
                     responseCode = "404",
-                    description = "Album no encontrado.",
-                    content = @Content
+                    description = "Album no encontrado."
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error interno del servidor."
             )
     })
     @PostMapping("/import/{id}")
@@ -59,8 +61,7 @@ public class AlbumController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Album no encontrado.",
-                    content = @Content
+                    description = "Album no encontrado."
             )
     })
     @GetMapping("/{id}")

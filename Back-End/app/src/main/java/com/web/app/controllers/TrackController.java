@@ -23,7 +23,8 @@ public class TrackController {
 
     private final TrackService service;
 
-    @Operation(summary = "Crea una pista con la api Deezer.", description = "Crea una pista con la api Deezer.")
+    @Operation(summary = "Crea una pista con su album y su artist con la Api Deezer.",
+            description = "Crea una pista con su album y su artist con la Api Deezer.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
@@ -31,8 +32,11 @@ public class TrackController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Pista no encontrada.",
-                    content = @Content
+                    description = "Pista no encontrada."
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error interno del servidor."
             )
     })
     @PostMapping("/import/{id}")
@@ -49,8 +53,7 @@ public class TrackController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Pista no encontrada.",
-                    content = @Content
+                    description = "Pista no encontrada."
             )
     })
     @GetMapping("/{id}")
