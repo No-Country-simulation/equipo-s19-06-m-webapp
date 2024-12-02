@@ -6,6 +6,8 @@ import com.web.app.service.AlbumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,24 +30,32 @@ public class AlbumController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Album creado exitosamente."
+                    description = "Album creado exitosamente.",
+                    content = @Content(
+                            examples = @ExampleObject(
+                                    value = "{\n" +
+                                            "    \"isError\": false,\n" +
+                                            "    \"code\": 201,\n" +
+                                            "    \"status\": \"Created\",\n" +
+                                            "    \"message\": \"Album creado.\",\n" +
+                                            "    \"data\": \"http://localhost:8080/albums/15103893\"\n" +
+                                            "}" )
+                    )
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Album no encontrado."
+                    description = "Album no encontrado.",
+                    content = @Content
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Error interno del servidor."
+                    description = "Error interno del servidor.",
+                    content = @Content
             )
     })
     @PostMapping("/import/{id}")
     public ResponseEntity<ExtendedBaseResponse<URI>> createDeezerAlbum (
-            @Parameter(
-                    name = "id",
-                    example = "15103893",
-                    required = true
-            )
+            @Parameter(name = "id", example = "15103893", required = true)
             @PathVariable long id
     ) {
         ExtendedBaseResponse<URI> albumResponse = service.createDeezerAlbum(id);
@@ -61,16 +71,13 @@ public class AlbumController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Album no encontrado."
+                    description = "Album no encontrado.",
+                    content = @Content
             )
     })
     @GetMapping("/{id}")
     public ResponseEntity<ExtendedBaseResponse<AlbumResponse>> findAlbum (
-            @Parameter(
-                    name = "id",
-                    example = "15103893",
-                    required = true
-            )
+            @Parameter(name = "id", example = "15103893", required = true)
             @PathVariable long id
     ) {
         ExtendedBaseResponse<AlbumResponse> albumResponse = service.findAlbum(id);
