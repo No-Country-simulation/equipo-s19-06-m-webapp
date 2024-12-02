@@ -43,8 +43,10 @@ public class SearchController {
         return searchService.searchDeezaer(artist,track,album);
     }
 
-    @Operation(summary = "Buscador DB",
-            description ="Al Buscar canciones, album, artist, puede buscar por palabras parciles"
+    @Operation(summary = "Buscador DB http://localhost:8080/search/{busqueda}",
+            description ="Al Buscar canciones, album, artist, puede buscar por " +
+                    "palabras parciles ej: nuev o nueva y te un album, cancion o artista " +
+                    "que coincidan en la DB"
     )
     @ApiResponses( value = {
             @ApiResponse(
@@ -53,7 +55,7 @@ public class SearchController {
     })
     @GetMapping("/{search}")
     public ExtendedBaseResponse<List<SearchDBResponseProjection>> findBySearchDB(
-            @Schema(example = "indi")
+            @Schema(example = "nuev")
             @PathVariable()  String search) {
         return searchService.searchDB(search);
     }
