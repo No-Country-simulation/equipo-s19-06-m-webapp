@@ -41,7 +41,7 @@ public class AuthController {
                     description = "Inicio de sesión exitoso.",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
+                                    schema = @Schema(implementation = AuthResponseDto.class))
                     }),
             @ApiResponse(responseCode = "400", description = "Credenciales inválidas proporcionadas.", content = {@Content}),
             @ApiResponse(responseCode = "401", description = "No autorizado (credenciales incorrectas o expiradas).", content = {@Content}),
@@ -67,7 +67,7 @@ public class AuthController {
                     description = "Registro exitoso.",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
+                                    schema = @Schema(implementation = AuthResponseDto.class))
                     }),
             @ApiResponse(responseCode = "400", description = "El usuario ya existe o entrada no válida.", content = {@Content}),
             @ApiResponse(responseCode = "500", description = "Error del servidor.", content = {@Content})
@@ -93,7 +93,7 @@ public class AuthController {
                     description = "Token de reseteo de contraseña generado exitosamente.",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
+                                    schema = @Schema(example = "token: e0b95e8f-ae13-4f28-b98b-d5530d4ba1e9"))
                     }),
             @ApiResponse(responseCode = "400", description = "Email inválido o no registrado.", content = {@Content}),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado con ese email.", content = {@Content}),
@@ -120,7 +120,7 @@ public class AuthController {
                     description = "Contraseña restablecida exitosamente.",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = BaseResponse.class))
+                                    schema = @Schema(example = "Contraseña restablecida exitosamente."))
                     }),
             @ApiResponse(responseCode = "400", description = "Token inválido o expirado.", content = {@Content}),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado o token no válido.", content = {@Content}),
