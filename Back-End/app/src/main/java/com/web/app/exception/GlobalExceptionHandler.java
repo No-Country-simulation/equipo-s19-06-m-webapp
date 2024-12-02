@@ -3,6 +3,7 @@ package com.web.app.exception;
 import com.web.app.dto.BaseResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.exception.artistExc.ArtistNotFoundException;
+import com.web.app.exception.cloudinaryExc.VideoUploadException;
 import com.web.app.exception.trackExc.TrackNotFoundException;
 import com.web.app.exception.userExc.EmailNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,5 +41,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ArtistNotFoundException.class)
     public ResponseEntity<String> handleArtistNotFound(ArtistNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(VideoUploadException.class)
+    public ResponseEntity<String> handleVideoUpload(VideoUploadException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

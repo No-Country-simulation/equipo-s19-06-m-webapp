@@ -4,12 +4,10 @@ import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
-import com.web.app.dto.album.AlbumRequest;
 import com.web.app.dto.album.AlbumResponse;
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
 import com.web.app.dto.deezer.track.TracksDeezerResponse;
-import com.web.app.dto.track.TrackRequest;
 import com.web.app.mapper.AlbumMapper;
 import com.web.app.model.Album;
 import com.web.app.repository.AlbumRepository;
@@ -43,8 +41,7 @@ public class AlbumServiceImpl implements AlbumService {
         // Crea todas las pistas del album
         TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
         for(TrackDeezerResponse trackDeezerResponse: tracksDeezerResponse.data()) {
-            TrackRequest trackRequest = new TrackRequest(trackDeezerResponse.id());
-            trackService.createDeezerTrack(trackRequest.id());
+            trackService.createDeezerTrack(trackDeezerResponse.id());
         }
 
         URI response = uriUtil.buildResourceUri("/albums/" + id);
