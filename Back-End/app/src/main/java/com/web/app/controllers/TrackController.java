@@ -1,23 +1,19 @@
 package com.web.app.controllers;
 
 import com.web.app.dto.ExtendedBaseResponse;
-import com.web.app.dto.track.TrackRequest;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.service.TrackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 
 @Tag(name = "Pistas", description = "Gestionar todos los End-Points de pistas.")
 @RestController
@@ -31,11 +27,7 @@ public class TrackController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Pista creada.",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
-                    }
+                    description = "Pista creada."
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -53,11 +45,7 @@ public class TrackController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Pista creada.",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
-                    }
+                    description = "Pista creada."
             ),
             @ApiResponse(
                     responseCode = "404",
