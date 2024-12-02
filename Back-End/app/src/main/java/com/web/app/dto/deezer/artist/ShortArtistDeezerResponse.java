@@ -1,6 +1,6 @@
 package com.web.app.dto.deezer.artist;
 
-public record ArtistDeezerResponse(
+public record ShortArtistDeezerResponse(
         Long id,
         String name,
         String link,
@@ -10,8 +10,6 @@ public record ArtistDeezerResponse(
         String picture_medium,
         String picture_big,
         String picture_xl,
-        Long nb_album,
-        Long nb_fan,
         boolean radio,
         String tracklist,
         String type

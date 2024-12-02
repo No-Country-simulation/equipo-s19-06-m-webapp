@@ -7,6 +7,11 @@ import Footer from "@/components/ui/Footer";
 export const metadata: Metadata = {
   title: "Soundbit",
   description: "Música, Reproductor de música, artistas, canciones, álbumes",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 const globalFont = Roboto({ subsets: ["latin"], weight: "400" });

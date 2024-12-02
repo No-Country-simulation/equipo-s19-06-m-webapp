@@ -8,6 +8,7 @@ import com.web.app.model.Role;
 import com.web.app.model.User;
 import com.web.app.repository.UserRepository;
 import com.web.app.service.AuthService;
+import com.web.app.service.api.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public ExtendedBaseResponse<AuthResponseDto> login(LoginRequestDto request) {
         String email = request.email();
@@ -96,6 +98,12 @@ public class AuthServiceImpl implements AuthService {
 
         user.setResetToken(token);
         userRepository.save(user);
+
+        emailService.sendEmail(
+                user.getEmail(),
+                "Restablecimiento de contraseña",
+                "Use este token para restablecer su contraseña: " + token
+        );
 
         return ExtendedBaseResponse.of(
                 BaseResponse.ok("Token generado exitosamente."),
