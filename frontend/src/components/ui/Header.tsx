@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
-  { label: "Explorar", href: "/explorar" },
+  { label: "Explorar", href: "/explore" },
 ];
 
 const Header = () => {
@@ -28,8 +28,8 @@ const Header = () => {
             <Image
               src="/logo.png"
               alt="Logo Soundbit"
-              width={834}
-              height={227}
+              width={188}
+              height={42}
               className="object-contain w-full h-auto"
             />
           </div>
@@ -79,8 +79,8 @@ const Header = () => {
                   <Image
                     src="/logo.png"
                     alt="Logo Soundbit"
-                    width={834}
-                    height={227}
+                    width={188}
+                    height={42}
                     className="w-full h-auto"
                   />
                 </div>
