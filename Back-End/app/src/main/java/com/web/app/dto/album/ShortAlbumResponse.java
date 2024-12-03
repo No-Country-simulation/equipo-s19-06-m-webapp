@@ -21,7 +21,7 @@ public record ShortAlbumResponse(
         @Schema(example = "https://api.deezer.com/album/15103893/image")
         String pictureUrl,
 
-        @ArraySchema(schema = @Schema(examples = {"Electro", "Techno/House", "Dance"}))
+        @ArraySchema(schema = @Schema(example = "Electro"))
         List<String> genres,
 
         ShortArtistResponse artist
