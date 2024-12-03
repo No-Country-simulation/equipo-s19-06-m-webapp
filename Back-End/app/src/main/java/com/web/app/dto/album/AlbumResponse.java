@@ -1,7 +1,7 @@
 package com.web.app.dto.album;
 
-import com.web.app.dto.artist.ShortArtistResponse;
-import com.web.app.dto.track.ShortTrackResponse;
+import com.web.app.dto.artist.ArtistSummaryResponse;
+import com.web.app.dto.track.TrackSummaryResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -21,11 +21,11 @@ public record AlbumResponse (
         @Schema(example = "https://api.deezer.com/album/15103893/image")
         String pictureUrl,
 
-        @ArraySchema(schema = @Schema(examples = {"Electro", "Techno/House", "Dance"}))
+        @ArraySchema(schema = @Schema(example = "Electro"))
         List<String> genres,
 
-        ShortArtistResponse artist,
+        ArtistSummaryResponse artist,
 
-        List<ShortTrackResponse> tracks
+        List<TrackSummaryResponse> tracks
 ) {
 }

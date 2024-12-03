@@ -2,7 +2,7 @@ package com.web.app.dto.deezer.album;
 
 import com.web.app.dto.deezer.genre.GenresDeezerResponse;
 
-public record AlbumDeezerWithoutTracksResponse(
+public record AlbumDeezerSummaryResponse(
         Long id,
         String title,
         String link,

@@ -2,7 +2,7 @@ package com.web.app.dto.track;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record ShortTrackResponse(
+public record TrackSummaryResponse(
         @Schema(example = "140295501")
         long id,
 
