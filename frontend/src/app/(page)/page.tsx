@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 import React from "react";
 
 const HomePage = () => {
@@ -15,7 +16,9 @@ const HomePage = () => {
                     <h3>Descubre una experiencia musical inmersiva como nunca antes. </h3>
                 </div>
                 <div>
-                    <Button>Explorar</Button>
+                    <Link href='/explore'>
+                        <Button>Explorar</Button>
+                    </Link>
                 </div>
                 <div>
                     <h3>No solo escuches la música, vívela en 8D.</h3>
