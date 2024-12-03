@@ -1,7 +1,6 @@
 package com.web.app.dto.track;
 
-import com.web.app.dto.album.ShortAlbumResponse;
-import com.web.app.dto.artist.ShortArtistResponse;
+import com.web.app.dto.album.AlbumSummaryResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record TrackResponse(
@@ -17,6 +16,6 @@ public record TrackResponse(
         @Schema(example = "http://res.cloudinary.com/dcfondn1f/video/upload/v1732652495/tracks/140295501.mp3")
         String previewUrl,
 
-        ShortAlbumResponse album
+        AlbumSummaryResponse album
 ) {
 }

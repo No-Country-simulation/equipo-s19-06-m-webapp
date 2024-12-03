@@ -2,7 +2,7 @@ package com.web.app.mapper;
 
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
 import com.web.app.dto.deezer.track.TracksDeezerResponse;
-import com.web.app.dto.track.ShortTrackResponse;
+import com.web.app.dto.track.TrackSummaryResponse;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.model.Track;
 import org.mapstruct.Mapper;
@@ -17,7 +17,7 @@ import java.util.List;
 public interface TrackMapper {
     TrackResponse toTrackResponse(Track track) ;
 
-    ShortTrackResponse toShortTrackResponse(Track track);
+    TrackSummaryResponse toTrackSummaryResponse(Track track);
 
     @Mapping(target = "name", source = "title")
     Track toTrack(TrackDeezerResponse response);

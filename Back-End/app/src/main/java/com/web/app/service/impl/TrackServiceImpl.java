@@ -1,7 +1,7 @@
 package com.web.app.service.impl;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
-import com.web.app.dto.deezer.album.ShortAlbumDeezerResponse;
+import com.web.app.dto.deezer.album.AlbumDeezerSummaryResponse;
 import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.exception.artistExc.ArtistNotFoundException;
@@ -104,10 +104,10 @@ public class TrackServiceImpl implements TrackService {
                 throw new AlbumNotFoundException("Album not found for id: " + albumId);
             }
             // Quita las pistas para no crear todas las pistas
-            ShortAlbumDeezerResponse shortAlbumDeezerResponse = albumMapper.toShortAlbumDeezerResponse(albumDeezerResponse);
+            AlbumDeezerSummaryResponse albumDeezerSummaryResponse = albumMapper.toAlbumDeezerSummaryResponse(albumDeezerResponse);
 
             // Crea el album y lo asocia las pistas y generos
-            Album album = albumMapper.toAlbum(shortAlbumDeezerResponse);
+            Album album = albumMapper.toAlbum(albumDeezerSummaryResponse);
             List<Genre> genres = albumDeezerResponse.genres().data().stream()
                     .map(deezerGenre -> {
                         Genre genre = genreMapper.toGenre(deezerGenre);

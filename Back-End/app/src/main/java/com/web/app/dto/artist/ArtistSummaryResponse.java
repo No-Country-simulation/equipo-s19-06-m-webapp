@@ -2,7 +2,7 @@ package com.web.app.dto.artist;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record ShortArtistResponse(
+public record ArtistSummaryResponse(
         @Schema(example = "4999707")
         Long id,
 
