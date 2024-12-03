@@ -1,4 +1,3 @@
-// SongItem.tsx
 import React from "react";
 import Image from "next/image";
 import { Heart } from "lucide-react";
@@ -27,16 +26,14 @@ const SongItem: React.FC<SongItemProps> = ({
     <div
       onClick={onPlay}
       className={`
-        p-4 rounded-[15px] bg-black
-        hover:bg-primary/10 transition-colors cursor-pointer
-        ${isSelected ? "border border-primary" : ""}
-        mb-3
-        h-[72px]
+        mb-2 px-4 py-3
+        transition-colors cursor-pointer
+        ${isSelected ? "border-2 border-primary bg-black" : "bg-black"}
+        rounded-xl
       `}
     >
-      <div className="flex items-center gap-4 h-full">
-        {/* Imagen de la canción */}
-        <div className="w-16 h-16 bg-black rounded-md overflow-hidden relative flex-shrink-0">
+      <div className="grid grid-cols-[48px_40px_1fr_auto] sm:grid-cols-[78px_100px_2fr_180px_100px] items-center gap-2">
+        <div className="h-12 w-12 rounded overflow-hidden relative">
           <Image
             src="/bg-4.jpg"
             alt="Album art"
@@ -45,31 +42,37 @@ const SongItem: React.FC<SongItemProps> = ({
           />
         </div>
 
-        {/* Corazón para marcar favorito */}
-        <Heart
-          className={`w-5 h-5 cursor-pointer transition-colors border-primary ${
-            isFavorite ? "fill-primary" : "text-primary"
-          }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onFavoriteToggle();
-          }}
-        />
+        <div className="flex justify-center">
+          <Heart
+            className={`w-5 h-5 cursor-pointer transition-colors
+              ${
+                isFavorite
+                  ? "text-primary fill-primary"
+                  : "text-primary/60 hover:text-primary"
+              }
+            `}
+            onClick={(e) => {
+              e.stopPropagation();
+              onFavoriteToggle();
+            }}
+          />
+        </div>
 
-        {/* Contenedor de la canción */}
-        <div className="flex flex-1 items-center justify-between h-full">
-          {/* Título de la canción */}
-          <div className="flex-1">
-            <h3 className="text-white font-bold truncate">{title}</h3>
+        <div className="min-w-0">
+          <div className="text-white text-sm sm:text-lg font-bold truncate">
+            {title}
           </div>
-
-          {/* Género */}
-          <div className="text-white text-center font-bold w-[100px]">
+          <div className="block sm:hidden text-white text-xs font-medium truncate">
             {genre}
           </div>
+        </div>
 
-          {/* Duración */}
-          <div className="text-white font-bold w-[60px]">{duration}</div>
+        <div className="hidden sm:block text-white font-bold text-lg truncate">
+          {genre}
+        </div>
+
+        <div className="text-white font-bold text-right text-sm sm:text-lg">
+          {duration}
         </div>
       </div>
     </div>

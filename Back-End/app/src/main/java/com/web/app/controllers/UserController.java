@@ -87,7 +87,7 @@ public class UserController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Usuario encontrado exitosamente.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExtendedBaseResponse.class))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))
             ),
             @ApiResponse(
                     responseCode = "404",
