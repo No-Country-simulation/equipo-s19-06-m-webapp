@@ -38,7 +38,7 @@ public class AlbumServiceImpl implements AlbumService {
         if(albumDeezerResponse.id() == null)
             throw new AlbumNotFoundException("Album no encontrado para id: " + id);
 
-        // Crea todas las pistas del album
+        // Crea todas las pistas del album con el artista y el album
         TracksDeezerResponse tracksDeezerResponse = albumDeezerResponse.tracks();
         for(TrackDeezerResponse trackDeezerResponse: tracksDeezerResponse.data()) {
             trackService.createDeezerTrack(trackDeezerResponse.id());
