@@ -6,7 +6,7 @@ import { FooterLink } from "@/types/ui/Footer";
 import { usePathname } from "next/navigation";
 
 const footerLinks: FooterLink[] = [
-  { label: "Sobre nosotros", href: "/sobre-nosotros" },
+  { label: "Sobre nosotros", href: "/about" },
   { label: "Política de privacidad", href: "/politics" },
   { label: "Preguntas frecuentes", href: "/faq" },
 ];
@@ -46,8 +46,8 @@ const Footer = () => {
               key={label}
               href={href}
               className={`text-lg transition-colors ${pathname === href
-                  ? "text-primary"
-                  : "text-white hover:text-primary"
+                ? "text-primary"
+                : "text-white hover:text-primary"
                 }`}
             >
               {label}
