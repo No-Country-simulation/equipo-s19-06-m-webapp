@@ -39,6 +39,7 @@ public class PlaylistServiceImpl implements PlaylistService {
                 .name(dto.getName())
                 .user(user)
                 .createdAt(LocalDateTime.now())
+                .isPublic(dto.isPublic())
                 .build();
 
         Playlist savedPlaylist = playlistRepository.save(playlist);

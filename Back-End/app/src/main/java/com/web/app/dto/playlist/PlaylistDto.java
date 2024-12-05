@@ -8,4 +8,5 @@ public class PlaylistDto {
     private Long id;
     private String name;
     private Long userId;
+    private Boolean isPublic;
 }

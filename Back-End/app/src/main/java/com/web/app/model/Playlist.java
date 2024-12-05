@@ -25,6 +25,9 @@ public class Playlist {
     private String name;
 
     @Column(nullable = false)
+    private boolean isPublic;
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column
