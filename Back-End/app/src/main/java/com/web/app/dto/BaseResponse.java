@@ -12,6 +12,10 @@ public record BaseResponse(
         this(isError, HttpStatus.valueOf(code), message);
     }
 
+    public static Object badRequest(String message) {
+        return new BaseResponse(true, HttpStatus.BAD_REQUEST, message);
+    }
+
     public int getStatusCode() {
         return status.value();
     }
