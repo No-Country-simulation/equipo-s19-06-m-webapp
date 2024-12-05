@@ -2,7 +2,7 @@ package com.web.app.controllers;
 
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.search.SearchDeezerResponse;
-import com.web.app.dto.search.db.SearchDBResponseProjection;
+import com.web.app.dto.search.db.SearchDBResultDTO;
 import com.web.app.service.impl.SearchServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -54,7 +54,7 @@ public class SearchController {
                     description = "Busqueda por DB.")
     })
     @GetMapping("/{search}")
-    public ExtendedBaseResponse<List<SearchDBResponseProjection>> findBySearchDB(
+    public ExtendedBaseResponse<List<SearchDBResultDTO>> findBySearchDB(
             @Schema(example = "nuev")
             @PathVariable()  String search) {
         return searchService.searchDB(search);
