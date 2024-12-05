@@ -9,13 +9,9 @@ export interface Song {
     artist: Artist;
     album: Album;
     isFavorite: boolean;
-    genre: string;
-    imageUrl: string; 
 }
 
-export interface Genre {
-    name: string;
-}
+
 
 export interface Artist {
     id: string;
@@ -38,4 +34,5 @@ export interface Album {
     cover_xl: string;
     md5_image: string;
     tracklist: string;
+    genres: string | null;
 }

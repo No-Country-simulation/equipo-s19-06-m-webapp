@@ -10,7 +10,8 @@ interface SongItemProps {
   preview: string;
   md5_image: string;
   artist: string;
-  genre: string;
+  artistImage: string;
+  genres: string;
 
   isSelected: boolean;
   isFavorite: boolean;
@@ -21,7 +22,8 @@ interface SongItemProps {
 
 const SongItem: React.FC<SongItemProps> = ({
   title,
-  genre,
+  genres,
+  artistImage,
   duration,
   isSelected,
   isFavorite,
@@ -41,9 +43,9 @@ const SongItem: React.FC<SongItemProps> = ({
       <div className="grid grid-cols-[48px_40px_1fr_auto] sm:grid-cols-[78px_100px_2fr_180px_100px] items-center gap-2">
         <div className="h-12 w-12 rounded overflow-hidden relative">
           <Image
-            src="/bg-4.jpg"
+            src={artistImage}
             alt="Album art"
-            fill
+            layout="fill"
             className="object-cover"
           />
         </div>
@@ -69,12 +71,12 @@ const SongItem: React.FC<SongItemProps> = ({
             {title}
           </div>
           <div className="block sm:hidden text-white text-xs font-medium truncate">
-            {genre}
+            {genres}
           </div>
         </div>
 
         <div className="hidden sm:block text-white font-bold text-lg truncate">
-          {genre}
+          {genres}
         </div>
 
         <div className="text-white font-bold text-right text-sm sm:text-lg">

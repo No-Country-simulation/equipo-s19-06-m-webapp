@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { formatDuration } from "@/app/utils/formatDuration";
+import { formatDuration } from "@/utils/formatDuration";
 import {
   SkipBack,
   Rewind,
@@ -18,10 +18,11 @@ interface PlayerProps {
     title: string;
     artist: string;
     duration: string;
-    genre: string;
     preview: string;
     isFavorite: boolean;
   };
+  genres: string;
+  artistImage: string;
   isPlaying: boolean;
   onPlayPause: () => void;
   onNext?: () => void;
@@ -32,6 +33,8 @@ interface PlayerProps {
 
 const Player: React.FC<PlayerProps> = ({
   currentSong,
+  genres,
+  artistImage,
   isPlaying,
   onPlayPause,
   onNext,
@@ -90,14 +93,6 @@ const Player: React.FC<PlayerProps> = ({
     }
   }, [isPlaying, currentSong]);
 
-  const updateProgress = () => {
-    if (!audioRef.current) return;
-    const duration = audioRef.current.duration;
-    const currentTime = audioRef.current.currentTime;
-    const progressPercent = (currentTime / duration) * 100;
-    setProgress(progressPercent);
-    setCurrentTime(formatTime(currentTime));
-  };
   //Para que el player se mueva con el scroll y no pase a cubrir el footer
   useEffect(() => {
     const handleScroll = () => {
@@ -117,6 +112,15 @@ const Player: React.FC<PlayerProps> = ({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const updateProgress = () => {
+    if (!audioRef.current) return;
+    const duration = audioRef.current.duration;
+    const currentTime = audioRef.current.currentTime;
+    const progressPercent = (currentTime / duration) * 100;
+    setProgress(progressPercent);
+    setCurrentTime(formatTime(currentTime));
+  };
 
   const handleSongEnd = () => {
     setProgress(0);
@@ -161,6 +165,15 @@ const Player: React.FC<PlayerProps> = ({
     );
   };
 
+  const handleStop = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setProgress(0);
+      setCurrentTime("00:00");
+    }
+  };
+
   const formatTime = (time: number): string => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -178,10 +191,10 @@ const Player: React.FC<PlayerProps> = ({
     >
       <div className="w-1/8 mx-auto flex justify-center items-center">
         <Image
-          src="/bg-4.jpg"
+          src={artistImage}
           alt="Album art"
-          width={200}
-          height={250}
+          width={150}
+          height={150}
           className="object-cover rounded-md"
         />
       </div>
@@ -191,6 +204,7 @@ const Player: React.FC<PlayerProps> = ({
           <div>
             <h3 className="text-primary font-medium">{currentSong.title}</h3>
             <p className="text-primary/60 text-sm">{currentSong.artist}</p>
+            <p className="text-primary/60 text-sm">{genres}</p>
           </div>
           <Heart
             className={`w-6 h-6 cursor-pointer transition-colors
@@ -238,7 +252,7 @@ const Player: React.FC<PlayerProps> = ({
             className="text-primary cursor-pointer"
             size={47}
             style={{ strokeWidth: 2, fill: "currentColor" }}
-            onClick={onPlayPause}
+            onClick={handleStop} // Cambia a handleStop
           />
           <FastForward
             className="text-primary cursor-pointer"
