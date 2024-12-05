@@ -7,7 +7,7 @@ interface GenreButtonsProps {
 
 const genres = [
   "Todos",
-  "Electronica",
+  "Electrónica",
   "Pop",
   "Rock",
   "Rap",

@@ -3,12 +3,18 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 
 interface SongItemProps {
+  id: string;
   title: string;
+  title_short: string;
+  duration: string;
+  preview: string;
+  md5_image: string;
   artist: string;
   genre: string;
-  duration: string;
+
   isSelected: boolean;
   isFavorite: boolean;
+
   onFavoriteToggle: () => void;
   onPlay: () => void;
 }
