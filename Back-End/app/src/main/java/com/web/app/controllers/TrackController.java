@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 @Tag(name = "Pistas", description = "Gestionar todos los End-Points de pistas.")
 @RestController
@@ -44,16 +45,8 @@ public class TrackController {
                             )
                     )
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Pista no encontrada.",
-                    content = @Content
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Error interno del servidor.",
-                    content = @Content
-            )
+            @ApiResponse(responseCode = "404", description = "Pista no encontrada.", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content)
     })
     @PostMapping("/import/{id}")
     public ResponseEntity<ExtendedBaseResponse<URI>> createDeezerTrack(
@@ -66,15 +59,8 @@ public class TrackController {
 
     @Operation(summary = "Busca una pista.", description = "Busca una pista por id en la base de datos.")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Pista creada."
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Pista no encontrada.",
-                    content = @Content
-            )
+            @ApiResponse(responseCode = "200", description = "Pista creada."),
+            @ApiResponse(responseCode = "404", description = "Pista no encontrada.", content = @Content)
     })
     @GetMapping("/{id}")
     public ResponseEntity<ExtendedBaseResponse<TrackResponse>> findTrack(
@@ -83,6 +69,26 @@ public class TrackController {
     ) throws IOException {
         ExtendedBaseResponse<TrackResponse> trackResponse = service.findTrack(id);
         return ResponseEntity.ok(trackResponse);
+    }
+
+    @Operation(summary = "Obtiene todas las pistas o filtra por género",
+            description = "Obtiene todas las pistas o las filtra por género si se proporciona un parámetro de género.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pistas encontradas"),
+            @ApiResponse(responseCode = "404", description = "No se encontraron pistas", content = @Content),
+    })
+    @GetMapping
+    public ResponseEntity<ExtendedBaseResponse<List<TrackResponse>>> getTracks(
+            @Parameter(description = "Género para filtrar las pistas (opcional)")
+            @RequestParam(required = false) String genre
+    ) {
+        ExtendedBaseResponse<List<TrackResponse>> response;
+        if (genre != null && !genre.isEmpty()) {
+            response = service.getTracksByGenre(genre);
+        } else {
+            response = service.getAllTracks();
+        }
+        return ResponseEntity.ok(response);
     }
 
 }

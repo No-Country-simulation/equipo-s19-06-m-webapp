@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -129,5 +130,31 @@ public class TrackServiceImpl implements TrackService {
 
         TrackResponse response = trackMapper.toTrackResponse(track);
         return ExtendedBaseResponse.of(BaseResponse.ok("Pista encontrada"), response);
+    }
+
+    @Override
+    public ExtendedBaseResponse<List<TrackResponse>> getAllTracks() {
+        List<Track> tracks = trackRepository.findAll();
+        List<TrackResponse> trackResponses = tracks.stream()
+                .map(trackMapper::toTrackResponse)
+                .collect(Collectors.toList());
+        return ExtendedBaseResponse.of(BaseResponse.ok("Todas las pistas encontradas"), trackResponses);
+    }
+
+    public ExtendedBaseResponse<List<TrackResponse>> getTracksByGenre(String genre) {
+        List<Album> albums = albumRepository.findByGenres_NameIgnoreCase(genre);
+
+        List<Track> tracks = albums.stream()
+                .flatMap(album -> album.getTracks().stream())
+                .collect(Collectors.toList());
+
+        List<TrackResponse> trackResponses = tracks.stream()
+                .map(trackMapper::toTrackResponse)
+                .collect(Collectors.toList());
+
+        return ExtendedBaseResponse.of(
+                BaseResponse.ok("Pistas encontradas por género: " + genre),
+                trackResponses
+        );
     }
 }
