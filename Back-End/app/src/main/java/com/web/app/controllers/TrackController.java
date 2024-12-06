@@ -77,7 +77,7 @@ public class TrackController {
             @ApiResponse(responseCode = "200", description = "Pistas encontradas"),
             @ApiResponse(responseCode = "404", description = "No se encontraron pistas", content = @Content),
     })
-    @GetMapping("/filter")
+    @GetMapping
     public ResponseEntity<ExtendedBaseResponse<List<TrackResponse>>> getTracks(
             @Parameter(description = "Género para filtrar las pistas (opcional)")
             @RequestParam(required = false) String genre
