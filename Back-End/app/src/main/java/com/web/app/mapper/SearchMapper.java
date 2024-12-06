@@ -20,8 +20,8 @@ public class SearchMapper {
                 SearchDBResultDTO dto = new SearchDBResultDTO(
                         (Long) row[0],
                         (String) row[1],
-                        (String) row[2],
-                        (Integer) row[3],
+                        (Integer) row[2],
+                        (String) row[3],
                         new ArtistDTO(
                                 (Long) row[4],
                                 (String) row[5],

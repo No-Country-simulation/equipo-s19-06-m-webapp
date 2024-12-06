@@ -24,8 +24,8 @@ public class SearchServiceImpl {
         return ExtendedBaseResponse.of(BaseResponse.ok("Busqueda por Deezer Exitoso"), response);
     }
 
-    public ExtendedBaseResponse<List<SearchDBResultDTO>> searchDB(String data) {
-        List<Object[]> response = trackRepository.findMusicBySearchTerm(data);
+    public ExtendedBaseResponse<List<SearchDBResultDTO>> searchDB(String data,Integer page, Integer size) {
+        List<Object[]> response = trackRepository.findMusicBySearchTerm(data, page, size);
         return ExtendedBaseResponse.of(BaseResponse.ok("Busqueda por Base de Datos Exitosa")
                 , searchMapper.mapToSearchDBResultDTO(response));
     }
