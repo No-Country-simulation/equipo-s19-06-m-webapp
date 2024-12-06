@@ -63,8 +63,8 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
             SELECT
             	t.id,
                 t.name AS title,
-                t.preview_url AS preview,
                 t.duration,
+                t.preview_url AS preview,
                
                 ar.id AS artist_id,
                 ar.name AS artist_name,
@@ -81,7 +81,10 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
             		JOIN
             	Genre g ON g.album_id = al.id
             WHERE
-                t.name LIKE %:searchTerm%;
+                t.name LIKE %:searchTerm%
+            LIMIT :limit OFFSET :offset
             """, nativeQuery = true)
-    List<Object[]> findMusicBySearchTerm(@Param("searchTerm") String searchTerm);
+    List<Object[]> findMusicBySearchTerm(@Param("searchTerm") String searchTerm,
+                                         @Param("offset") Integer offset,
+                                         @Param("limit") Integer limit);
 }

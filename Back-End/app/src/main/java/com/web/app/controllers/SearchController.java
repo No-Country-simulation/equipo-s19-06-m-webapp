@@ -53,10 +53,15 @@ public class SearchController {
                     responseCode = "200",
                     description = "Busqueda por DB.")
     })
-    @GetMapping("/{search}")
+    @GetMapping("/")
     public ExtendedBaseResponse<List<SearchDBResultDTO>> findBySearchDB(
             @Schema(example = "nuev")
-            @PathVariable()  String search) {
-        return searchService.searchDB(search);
+            @RequestParam()  String track,
+            @Schema(example = "0")
+            @RequestParam(required = false) Integer page,
+            @Schema(example = "15")
+            @RequestParam() Integer size)
+    {
+        return searchService.searchDB(track, page, size);
     }
 }
