@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SongItem from "./SongItem";
 import Player from "@/components/ui/Player";
-import { fetchSongs } from "@/utils/fetchSongs";
+import {
+  fetchSongsByGenre,
+  fetchSongsBySearchTerm,
+  fetchSongs,
+} from "@/utils/fetchSongs";
 import { useFilterSongs } from "@/hooks/useFilterSongs";
 import { Song } from "@/types/ui/Song";
 import { formatDuration } from "@/utils/formatDuration";
-import { mockSongs } from "@/data/mockSongs"; // Importa los datos hardcodeados
+//import { mockSongs } from "@/data/mockSongs";
 
 interface SongListProps {
   searchTerm?: string;
@@ -18,27 +22,70 @@ export default function SongList({
 }: SongListProps) {
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [songs, setSongs] = useState<Song[]>([]); // Inicializar vacío
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [initialSongs, setInitialSongs] = useState<Song[]>([]);
+
+  useEffect(() => {
+    const genres = [
+      "pop",
+      "rock",
+      "electronica",
+      "clasica",
+      "hip-hop",
+      "rap",
+      "k-pop",
+    ];
+
+    const loadInitialSongs = async () => {
+      try {
+        const promises = genres.map((genre) => fetchSongsByGenre(genre));
+        const results = await Promise.all(promises);
+        const allSongs = results.flat();
+
+        const randomFetchedSongs = await fetchSongs("");
+
+        const combinedSongs: Song[] = [];
+        const maxLength = Math.max(allSongs.length, randomFetchedSongs.length);
+        for (let i = 0; i < maxLength; i++) {
+          if (i < allSongs.length) {
+            combinedSongs.push(allSongs[i]);
+          }
+          if (i < randomFetchedSongs.length) {
+            combinedSongs.push(randomFetchedSongs[i]);
+          }
+        }
+
+        setInitialSongs(combinedSongs);
+      } catch (error) {
+        console.error("Error fetching initial songs:", error);
+      }
+    };
+
+    loadInitialSongs();
+  }, []);
 
   useEffect(() => {
     const loadSongs = async () => {
       try {
-        const fetchedSongs = await fetchSongs(searchTerm);
-        console.log("Fetched Songs:", fetchedSongs); // Debug log
+        let fetchedSongs: Song[] = [];
 
-        // Intercalar canciones de la API y mockSongs
+        if (searchTerm) {
+          fetchedSongs = await fetchSongsBySearchTerm(searchTerm);
+        } else {
+          fetchedSongs = await fetchSongs("");
+        }
+
         const combinedSongs: Song[] = [];
-        const maxLength = Math.max(fetchedSongs.length, mockSongs.length);
+        const maxLength = Math.max(fetchedSongs.length, initialSongs.length);
         for (let i = 0; i < maxLength; i++) {
           if (i < fetchedSongs.length) {
             combinedSongs.push(fetchedSongs[i]);
           }
-          if (i < mockSongs.length) {
-            combinedSongs.push(mockSongs[i]);
+          if (i < initialSongs.length) {
+            combinedSongs.push(initialSongs[i]);
           }
         }
 
-        // Limitar a las primeras 15 canciones
         setSongs(combinedSongs.slice(0, 15));
       } catch (error) {
         console.error("Error fetching songs:", error);
@@ -46,7 +93,7 @@ export default function SongList({
     };
 
     loadSongs();
-  }, [searchTerm]);
+  }, [searchTerm, initialSongs]);
 
   const handlePlay = useCallback(
     (song: Song) => {
@@ -91,7 +138,6 @@ export default function SongList({
   }, []);
 
   const filteredSongs = useFilterSongs(songs, searchTerm, selectedGenre);
-  console.log("Filtered Songs:", filteredSongs); // Debug log
 
   return (
     <div className="w-full">
@@ -106,8 +152,8 @@ export default function SongList({
             duration={formatDuration(song.duration)}
             md5_image={song.md5_image}
             preview={song.preview}
-            artist={song.artist.name}
-            artistImage={song.artist.picture_medium}
+            artist={song.artist?.name || "Unknown Artist"}
+            artistImage={song.artist?.picture_medium || ""}
             isFavorite={song.isFavorite}
             isSelected={selectedSong?.id === song.id}
             onPlay={() => handlePlay(song)}
@@ -119,10 +165,10 @@ export default function SongList({
         <Player
           currentSong={{
             ...selectedSong,
-            artist: selectedSong.artist.name,
+            artist: selectedSong.artist?.name || "Unknown Artist",
           }}
           genres={selectedSong.album.genres || ""}
-          artistImage={selectedSong.artist.picture_medium}
+          artistImage={selectedSong.artist?.picture_medium || ""}
           isFavorite={selectedSong.isFavorite}
           isPlaying={isPlaying}
           onPlayPause={handlePlayPause}

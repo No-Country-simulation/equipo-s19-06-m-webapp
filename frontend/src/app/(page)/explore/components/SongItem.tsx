@@ -8,7 +8,7 @@ interface SongItemProps {
   title_short: string;
   duration: string;
   preview: string;
-  md5_image: string;
+  md5_image: string | null;
   artist: string;
   artistImage: string;
   genres: string;

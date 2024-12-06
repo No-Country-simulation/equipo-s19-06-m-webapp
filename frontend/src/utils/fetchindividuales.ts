@@ -1,6 +1,4 @@
-
-//Primera ruta api deezer
-
+/*Primera ruta
 export const fetchSongs = async (track: string) => {
     const genres = ["pop", "rock", "electronica", "clasica", "hip-hop", "rap", "k-pop"];
 
@@ -20,7 +18,7 @@ export const fetchSongs = async (track: string) => {
     const data = await response.json();
     //console.log('API Response:', data); // Debug log
 
-    // Acceder al arreglo de canciones dentro de la estructura de datos
+    // Asegurarse de acceder al arreglo de canciones dentro de la estructura de datos
     const songs = data.data.data || [];
     //console.log('Extracted Songs:', songs); // Debug log
 
@@ -33,7 +31,9 @@ export const fetchSongs = async (track: string) => {
 };
 
 
-//Nueva ruta
+*/
+// Nueva ruta implementada
+
 /*
 export const fetchSongs = async (track: string) => {
     const response = await fetch(`http://144.33.15.219:8080/search/?track=${encodeURIComponent(track)}&page=0&size=15`, {
@@ -87,37 +87,3 @@ export const fetchSongs = async (track: string) => {
     }
 };
 */
-
-
-//Ruta para traer canciones por genero
-export const fetchSongsByGenre = async (genre: string) => {
-    const url = `http://144.33.15.219:8080/tracks?genre=${genre}`;
-    return fetchSongsList(url);
-};
-
-export const fetchSongsBySearchTerm = async (searchTerm: string) => {
-    const url = `http://144.33.15.219:8080/search?track=${encodeURIComponent(searchTerm)}`;
-    return fetchSongsList(url);
-};
-
-const fetchSongsList = async (url: string) => {
-    const response = await fetch(url, {
-        headers: {
-            'accept': 'application/json'
-        }
-    });
-
-    if (!response.ok) {
-        throw new Error('Error fetching songs');
-    }
-
-    const data = await response.json();
-    const songs = data.data || [];
-
-    if (songs.length > 0) {
-        return songs;
-    } else {
-        console.warn('No songs found');
-        return [];
-    }
-};
