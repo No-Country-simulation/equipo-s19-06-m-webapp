@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
-  { label: "Explorar", href: "/explorar" },
+  { label: "Explorar", href: "/explore" },
 ];
 
 const Header = () => {
@@ -40,20 +40,22 @@ const Header = () => {
             <Link
               key={label}
               href={href}
-              className={`text-xl transition-colors ${pathname === href
+              className={`text-xl transition-colors ${
+                pathname === href
                   ? "text-primary"
                   : "text-white hover:text-primary"
-                }`}
+              }`}
             >
               {label}
             </Link>
           ))}
           <Link
             href="/profile"
-            className={`text-3xl transition-colors ${pathname === "/profile"
+            className={`text-3xl transition-colors ${
+              pathname === "/profile"
                 ? "text-primary"
                 : "text-white hover:text-primary"
-              }`}
+            }`}
           >
             <UserCircle className="w-8 h-8" />
           </Link>
@@ -96,10 +98,11 @@ const Header = () => {
                 <Link
                   key={label}
                   href={href}
-                  className={`text-2xl transition-colors ${pathname === href
+                  className={`text-2xl transition-colors ${
+                    pathname === href
                       ? "text-primary"
                       : "text-white hover:text-primary"
-                    }`}
+                  }`}
                   onClick={toggleMenu}
                 >
                   {label}
@@ -107,10 +110,11 @@ const Header = () => {
               ))}
               <Link
                 href="/profile"
-                className={`transition-colors ${pathname === "/profile"
+                className={`transition-colors ${
+                  pathname === "/profile"
                     ? "text-primary"
                     : "text-white hover:text-primary"
-                  }`}
+                }`}
                 onClick={toggleMenu}
               >
                 <UserCircle className="w-12 h-12" />

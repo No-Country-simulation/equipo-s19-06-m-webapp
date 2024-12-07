@@ -2,7 +2,6 @@ package com.web.app.service.api;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
 import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
-import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
 import com.web.app.dto.search.SearchDeezerResponse;
 import org.springframework.stereotype.Service;

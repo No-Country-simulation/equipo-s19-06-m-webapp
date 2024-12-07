@@ -1,9 +1,8 @@
 package com.web.app.service.impl;
 
 import com.web.app.dto.deezer.album.AlbumDeezerResponse;
-import com.web.app.dto.deezer.album.ShortAlbumDeezerResponse;
+import com.web.app.dto.deezer.album.AlbumDeezerSummaryResponse;
 import com.web.app.dto.deezer.artist.ArtistDeezerResponse;
-import com.web.app.dto.deezer.artist.ShortArtistDeezerResponse;
 import com.web.app.exception.albumExc.AlbumNotFoundException;
 import com.web.app.exception.artistExc.ArtistNotFoundException;
 import com.web.app.exception.trackExc.TrackNotFoundException;
@@ -18,7 +17,6 @@ import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.deezer.track.TrackDeezerResponse;
-import com.web.app.dto.track.TrackRequest;
 import com.web.app.dto.track.TrackResponse;
 import com.web.app.mapper.TrackMapper;
 import com.web.app.model.Track;
@@ -32,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,52 +58,18 @@ public class TrackServiceImpl implements TrackService {
                 throw new TrackNotFoundException("Pista no encontrada para id: " + id);
             }
 
-            // Busca el artista con numeros de fans de la pista en la base de datos
+            // Busca o crea el artista
             long artistId = response.artist().id();
-            Artist artist = artistRepository.findById(artistId).orElseGet(() -> {
+            Artist artist = createDeezerArtist(artistId);
 
-                // Si no lo encuentra, busca en la Api Deezer
-                ArtistDeezerResponse artistDeezerResponse = deezerClient.findArtistById(artistId);
-                if(artistDeezerResponse.id() == null)
-                    throw new ArtistNotFoundException("Artista no encontrado para id: " + id);
-
-                // Guarda artista
-                Artist deezerArtist = artistMapper.toArtist(artistDeezerResponse);
-                artistRepository.save(deezerArtist);
-
-                return deezerArtist;
-            });
-
-            // Busca el album con los generos de la pista en la base de datos
+            // Busca o crea el album
             long albumId = response.album().id();
-            Album album = albumRepository.findById(albumId).orElseGet(() -> {
-
-                // Si no lo encuentra, busca en la Api Deezer
-                AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(albumId);
-                if(albumDeezerResponse.id() == null)
-                    throw new AlbumNotFoundException("Album no encontrado para id: " + id);
-                // Quita cancionas de la respuesta con el album para no crear todos
-                ShortAlbumDeezerResponse shortAlbumDeezerResponse = albumMapper.toShortAlbumDeezerResponse(albumDeezerResponse);
-
-                // Crea el album con los generos
-                Album deezerAlbum = albumMapper.toAlbum(shortAlbumDeezerResponse);
-                List<Genre> deezerGenres = albumDeezerResponse.genres().data()
-                        .stream().map(deezerGenre -> {
-                            Genre genre = genreMapper.toGenre(deezerGenre);
-                            genre.setAlbum(deezerAlbum);
-                            return genre;
-                        }).toList();
-                deezerAlbum.setGenres(deezerGenres);
-                deezerAlbum.setArtist(artist);
-                albumRepository.save(deezerAlbum);
-
-                return deezerAlbum;
-            });
+            Album album = createDeezerAlbum(albumId, artist);
 
             // Sube la pista a cloudinary y guarda su url
             String previewUrl = cloudinaryService.uploadVideo(response.title(), response.id().toString(), response.preview());
 
-            // Crea la pista y lo asocia a album
+            // Crea la pista y lo asocia a album y artista
             Track deezerTrack = trackMapper.toTrack(response);
             deezerTrack.setPreviewUrl(previewUrl);
             deezerTrack.setAlbum(album);
@@ -115,6 +78,48 @@ public class TrackServiceImpl implements TrackService {
         URI response = uriUtil.buildResourceUri("/tracks/" + id);
 
         return ExtendedBaseResponse.of(BaseResponse.created("Pista creada."), response);
+    }
+
+    // Busca el artista en la base de datos o crea el artista con la Api Deezer
+    private Artist createDeezerArtist(long artistId) {
+        return artistRepository.findById(artistId).orElseGet(() -> {
+            // Busca en la Api Deezer
+            ArtistDeezerResponse artistDeezerResponse = deezerClient.findArtistById(artistId);
+            if (artistDeezerResponse.id() == null) {
+                throw new ArtistNotFoundException("Artist not found for id: " + artistId);
+            }
+            Artist artist = artistMapper.toArtist(artistDeezerResponse);
+            artistRepository.save(artist);
+            return artist;
+        });
+    }
+
+    // Busca el album en la base de datos o crea el album con la Api Deezer
+    @Transactional
+    private Album createDeezerAlbum(long albumId, Artist artist) {
+        return albumRepository.findById(albumId).orElseGet(() -> {
+            // Busca en la Api Deezer
+            AlbumDeezerResponse albumDeezerResponse = deezerClient.findAlbumById(albumId);
+            if (albumDeezerResponse.id() == null) {
+                throw new AlbumNotFoundException("Album not found for id: " + albumId);
+            }
+            // Quita las pistas para no crear todas las pistas
+            AlbumDeezerSummaryResponse albumDeezerSummaryResponse = albumMapper.toAlbumDeezerSummaryResponse(albumDeezerResponse);
+
+            // Crea el album y lo asocia las pistas y generos
+            Album album = albumMapper.toAlbum(albumDeezerSummaryResponse);
+            List<Genre> genres = albumDeezerResponse.genres().data().stream()
+                    .map(deezerGenre -> {
+                        Genre genre = genreMapper.toGenre(deezerGenre);
+                        genre.setAlbum(album);
+                        return genre;
+                    }).toList();
+            album.setGenres(genres);
+            album.setArtist(artist);
+            albumRepository.save(album);
+
+            return album;
+        });
     }
 
     @Override
