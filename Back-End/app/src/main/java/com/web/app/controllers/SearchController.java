@@ -28,11 +28,7 @@ public class SearchController {
     @ApiResponses( value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Busqueda por API Deezer Exitoso.",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
-                    })
+                    description = "Busqueda por API Deezer Exitoso.")
     })
     @GetMapping
     public ExtendedBaseResponse<SearchDeezerResponse> findBySearchDeezer(
