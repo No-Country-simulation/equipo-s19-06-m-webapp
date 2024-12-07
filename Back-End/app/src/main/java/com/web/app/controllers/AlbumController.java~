@@ -42,8 +42,16 @@ public class AlbumController {
                                             "}" )
                     )
             ),
-            @ApiResponse(responseCode = "404", description = "Album no encontrado.", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content)
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Album no encontrado.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error interno del servidor.",
+                    content = @Content
+            )
     })
     @PostMapping("/import/{id}")
     public ResponseEntity<ExtendedBaseResponse<URI>> createDeezerAlbum (
@@ -57,8 +65,15 @@ public class AlbumController {
     @Operation(summary = "Busca un album.",
             description = "Busca un album por id en la base de datos.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Album encontrado."),
-            @ApiResponse(responseCode = "404", description = "Album no encontrado.", content = @Content)
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Album encontrado."
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Album no encontrado.",
+                    content = @Content
+            )
     })
     @GetMapping("/{id}")
     public ResponseEntity<ExtendedBaseResponse<AlbumResponse>> findAlbum (

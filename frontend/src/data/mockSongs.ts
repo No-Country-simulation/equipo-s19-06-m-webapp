@@ -13,7 +13,7 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -22,16 +22,17 @@ export const mockSongs: Song[] = [
             id: "1",
             title: "Acoustic Dreams",
             cover: "/album-1.jpg",
-            cover_small: "/album-1-small.jpg",
-            cover_medium: "/album-1-medium.jpg",
-            cover_big: "/album-1-big.jpg",
-            cover_xl: "/album-1-xl.jpg",
+            cover_small: "/bg-1.jpg",
+            cover_medium: "/bg-1.jpg",
+            cover_big: "/bg-1.jpg",
+            cover_xl: "/bg-1.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Pop",
-        imageUrl: "/bg-1.jpg"
+
+
     },
     {
         id: "2",
@@ -45,7 +46,7 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -59,11 +60,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Rap",
-        imageUrl: "/bg-1.jpg"
+
+
     },
     {
         id: "3",
@@ -77,7 +79,7 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -91,11 +93,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Pop",
-        imageUrl: "/bg-1.jpg"
+
+
     },
     {
         id: "4",
@@ -109,7 +112,7 @@ export const mockSongs: Song[] = [
             name: "Orchestra Waves",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -123,11 +126,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Pop",
-        imageUrl: "/bg-1.jpg"
+
+
     },
     {
         id: "5",
@@ -141,7 +145,7 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -155,11 +159,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Electrónica",
-        imageUrl: "/bg-1.jpg"
+
+
     },
     {
         id: "6",
@@ -173,8 +178,8 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
-            picture_big: "/artist-1-big.jpg",
+            picture_medium: "/bg-1.jpg",
+            picture_big: "/bg-1.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
         },
@@ -187,11 +192,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Pop",
-        imageUrl: "/bg-1.jpg"
+
+
     }, {
         id: "7",
         title: "Latin Fiesta",
@@ -203,8 +209,8 @@ export const mockSongs: Song[] = [
             id: "7",
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
-            picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_small: "/bg-1.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -218,11 +224,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "K-pop",
-        imageUrl: "/bg-1.jpg"
+
+
     }, {
         id: "8",
         title: "Acoustic Dream",
@@ -234,8 +241,8 @@ export const mockSongs: Song[] = [
             id: "8",
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
-            picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
+            picture_small: "/bg-1.jpg",
+            picture_medium: "/bg-1.jpg",
             picture_big: "/artist-1-big.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
@@ -249,11 +256,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "Pop",
-        imageUrl: "/bg-1.jpg"
+
+
     }, {
         id: "9",
         title: "Nightfall Symphony",
@@ -266,8 +274,8 @@ export const mockSongs: Song[] = [
             name: "Acoustic Soul",
             picture: "/artist-1.jpg",
             picture_small: "/artist-1-small.jpg",
-            picture_medium: "/artist-1-medium.jpg",
-            picture_big: "/artist-1-big.jpg",
+            picture_medium: "/bg-1.jpg",
+            picture_big: "/bg-1.jpg",
             picture_xl: "/artist-1-xl.jpg",
             tracklist: "/artist-1-tracklist"
         },
@@ -280,11 +288,12 @@ export const mockSongs: Song[] = [
             cover_big: "/album-1-big.jpg",
             cover_xl: "/album-1-xl.jpg",
             md5_image: "def456",
-            tracklist: "/album-1-tracklist"
+            tracklist: "/album-1-tracklist",
+            genres: "Pop"
         },
         isFavorite: false,
-        genre: "clásica",
-        imageUrl: "/bg-1.jpg"
+
+
     },
 
 

@@ -2,7 +2,7 @@ package com.web.app.controllers;
 
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.search.SearchDeezerResponse;
-import com.web.app.dto.search.db.SearchDBResponseProjection;
+import com.web.app.dto.search.db.SearchDBResultDTO;
 import com.web.app.service.impl.SearchServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,11 +28,7 @@ public class SearchController {
     @ApiResponses( value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Busqueda por API Deezer Exitoso.",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExtendedBaseResponse.class))
-                    })
+                    description = "Busqueda por API Deezer Exitoso.")
     })
     @GetMapping
     public ExtendedBaseResponse<SearchDeezerResponse> findBySearchDeezer(
@@ -53,10 +49,15 @@ public class SearchController {
                     responseCode = "200",
                     description = "Busqueda por DB.")
     })
-    @GetMapping("/{search}")
-    public ExtendedBaseResponse<List<SearchDBResponseProjection>> findBySearchDB(
+    @GetMapping("/")
+    public ExtendedBaseResponse<List<SearchDBResultDTO>> findBySearchDB(
             @Schema(example = "nuev")
-            @PathVariable()  String search) {
-        return searchService.searchDB(search);
+            @RequestParam()  String track,
+            @Schema(example = "0")
+            @RequestParam(required = false) Integer page,
+            @Schema(example = "15")
+            @RequestParam() Integer size)
+    {
+        return searchService.searchDB(track, page, size);
     }
 }

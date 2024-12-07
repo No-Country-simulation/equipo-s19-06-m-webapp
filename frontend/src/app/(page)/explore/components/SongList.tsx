@@ -1,10 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SongItem from "./SongItem";
 import Player from "@/components/ui/Player";
+import {
+  fetchSongsByGenre,
+  fetchSongsBySearchTerm,
+  fetchSongs,
+} from "@/utils/fetchSongs";
 import { useFilterSongs } from "@/hooks/useFilterSongs";
-import { mockSongs } from "@/data/mockSongs";
 import { Song } from "@/types/ui/Song";
-import { formatDuration } from "@/app/utils/formatDuration";
+import { formatDuration } from "@/utils/formatDuration";
+//import { mockSongs } from "@/data/mockSongs";
 
 interface SongListProps {
   searchTerm?: string;
@@ -17,8 +22,78 @@ export default function SongList({
 }: SongListProps) {
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [songs, setSongs] = useState<Song[]>(mockSongs);
-  const filteredSongs = useFilterSongs(songs, searchTerm, selectedGenre);
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [initialSongs, setInitialSongs] = useState<Song[]>([]);
+
+  useEffect(() => {
+    const genres = [
+      "pop",
+      "rock",
+      "electronica",
+      "clasica",
+      "hip-hop",
+      "rap",
+      "k-pop",
+    ];
+
+    const loadInitialSongs = async () => {
+      try {
+        const promises = genres.map((genre) => fetchSongsByGenre(genre));
+        const results = await Promise.all(promises);
+        const allSongs = results.flat();
+
+        const randomFetchedSongs = await fetchSongs("");
+
+        const combinedSongs: Song[] = [];
+        const maxLength = Math.max(allSongs.length, randomFetchedSongs.length);
+        for (let i = 0; i < maxLength; i++) {
+          if (i < allSongs.length) {
+            combinedSongs.push(allSongs[i]);
+          }
+          if (i < randomFetchedSongs.length) {
+            combinedSongs.push(randomFetchedSongs[i]);
+          }
+        }
+
+        setInitialSongs(combinedSongs);
+      } catch (error) {
+        console.error("Error fetching initial songs:", error);
+      }
+    };
+
+    loadInitialSongs();
+  }, []);
+
+  useEffect(() => {
+    const loadSongs = async () => {
+      try {
+        let fetchedSongs: Song[] = [];
+
+        if (searchTerm) {
+          fetchedSongs = await fetchSongsBySearchTerm(searchTerm);
+        } else {
+          fetchedSongs = await fetchSongs("");
+        }
+
+        const combinedSongs: Song[] = [];
+        const maxLength = Math.max(fetchedSongs.length, initialSongs.length);
+        for (let i = 0; i < maxLength; i++) {
+          if (i < fetchedSongs.length) {
+            combinedSongs.push(fetchedSongs[i]);
+          }
+          if (i < initialSongs.length) {
+            combinedSongs.push(initialSongs[i]);
+          }
+        }
+
+        setSongs(combinedSongs.slice(0, 15));
+      } catch (error) {
+        console.error("Error fetching songs:", error);
+      }
+    };
+
+    loadSongs();
+  }, [searchTerm, initialSongs]);
 
   const handlePlay = useCallback(
     (song: Song) => {
@@ -38,33 +113,31 @@ export default function SongList({
 
   const handleNext = useCallback(() => {
     if (!selectedSong) return;
-    const currentIndex = filteredSongs.findIndex(
-      (song) => song.id === selectedSong.id
-    );
-    if (currentIndex < filteredSongs.length - 1) {
-      setSelectedSong(filteredSongs[currentIndex + 1]);
+    const currentIndex = songs.findIndex((song) => song.id === selectedSong.id);
+    if (currentIndex < songs.length - 1) {
+      setSelectedSong(songs[currentIndex + 1]);
       setIsPlaying(true);
     }
-  }, [selectedSong, filteredSongs]);
+  }, [selectedSong, songs]);
 
   const handlePrevious = useCallback(() => {
     if (!selectedSong) return;
-    const currentIndex = filteredSongs.findIndex(
-      (song) => song.id === selectedSong.id
-    );
+    const currentIndex = songs.findIndex((song) => song.id === selectedSong.id);
     if (currentIndex > 0) {
-      setSelectedSong(filteredSongs[currentIndex - 1]);
+      setSelectedSong(songs[currentIndex - 1]);
       setIsPlaying(true);
     }
-  }, [selectedSong, filteredSongs]);
+  }, [selectedSong, songs]);
 
-  const toggleFavorite = useCallback((songId: string) => {
+  const toggleFavoriteHandler = useCallback((songId: string) => {
     setSongs((prevSongs) =>
       prevSongs.map((song) =>
         song.id === songId ? { ...song, isFavorite: !song.isFavorite } : song
       )
     );
   }, []);
+
+  const filteredSongs = useFilterSongs(songs, searchTerm, selectedGenre);
 
   return (
     <div className="w-full">
@@ -75,15 +148,16 @@ export default function SongList({
             id={song.id}
             title={song.title}
             title_short={song.title_short}
-            genre={song.genre}
+            genres={song.album.genres || ""}
             duration={formatDuration(song.duration)}
             md5_image={song.md5_image}
             preview={song.preview}
-            artist={song.artist.name}
+            artist={song.artist?.name || "Unknown Artist"}
+            artistImage={song.artist?.picture_medium || ""}
             isFavorite={song.isFavorite}
             isSelected={selectedSong?.id === song.id}
             onPlay={() => handlePlay(song)}
-            onFavoriteToggle={() => toggleFavorite(song.id)}
+            onFavoriteToggle={() => toggleFavoriteHandler(song.id)}
           />
         ))}
       </div>
@@ -91,15 +165,17 @@ export default function SongList({
         <Player
           currentSong={{
             ...selectedSong,
-            artist: selectedSong.artist.name, // Asegúrate de usar el nombre
+            artist: selectedSong.artist?.name || "Unknown Artist",
           }}
+          genres={selectedSong.album.genres || ""}
+          artistImage={selectedSong.artist?.picture_medium || ""}
           isFavorite={selectedSong.isFavorite}
           isPlaying={isPlaying}
           onPlayPause={handlePlayPause}
           onNext={handleNext}
           onPrevious={handlePrevious}
           onFavoriteToggle={() =>
-            selectedSong && toggleFavorite(selectedSong.id)
+            selectedSong && toggleFavoriteHandler(selectedSong.id)
           }
         />
       )}

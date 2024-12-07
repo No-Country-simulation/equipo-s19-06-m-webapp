@@ -1,7 +1,7 @@
 package com.web.app.service.impl;
 
-import com.web.app.dto.search.db.SearchDBResponse;
-import com.web.app.dto.search.db.SearchDBResponseProjection;
+import com.web.app.dto.search.db.SearchDBResultDTO;
+import com.web.app.mapper.SearchMapper;
 import com.web.app.repository.TrackRepository;
 import com.web.app.service.api.DeezerClient;
 import com.web.app.dto.BaseResponse;
@@ -17,15 +17,16 @@ import java.util.List;
 public class SearchServiceImpl {
     private final DeezerClient deezerClient;
     private final TrackRepository trackRepository;
+    private final SearchMapper searchMapper;
 
     public ExtendedBaseResponse<SearchDeezerResponse> searchDeezaer(String artist, String track, String album) {
         SearchDeezerResponse response = deezerClient.searchDeezerAPI(artist, track, album);
         return ExtendedBaseResponse.of(BaseResponse.ok("Busqueda por Deezer Exitoso"), response);
     }
 
-    public ExtendedBaseResponse<List<SearchDBResponseProjection>> searchDB(String data) {
-        List<SearchDBResponseProjection> response = trackRepository.findMusicBySearchTerm(data);
-        System.out.println("canciones"+response);
-        return ExtendedBaseResponse.of(BaseResponse.ok("Busqueda por Base de Datos Exitosa"), response);
+    public ExtendedBaseResponse<List<SearchDBResultDTO>> searchDB(String data,Integer page, Integer size) {
+        List<Object[]> response = trackRepository.findMusicBySearchTerm(data, page, size);
+        return ExtendedBaseResponse.of(BaseResponse.ok("Busqueda por Base de Datos Exitosa")
+                , searchMapper.mapToSearchDBResultDTO(response));
     }
 }
