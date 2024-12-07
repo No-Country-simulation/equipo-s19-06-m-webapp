@@ -71,5 +71,6 @@ public class PlaylistController {
     })    public ResponseEntity<ExtendedBaseResponse<PlaylistDto>> getPlaylistById(@PathVariable Long id){
        return ResponseEntity.ok(playlistService.getPlaylistById(id));
     }
+    
 
 }
