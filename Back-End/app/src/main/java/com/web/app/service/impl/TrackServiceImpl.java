@@ -55,7 +55,7 @@ public class TrackServiceImpl implements TrackService {
         if (!artistRepository.existsById(id)) {
             // Si no lo encuentra, busca en la Api Deezer
             TrackDeezerResponse response = deezerClient.findTrackById(id);
-            if(response.id() == null) {
+            if (response.id() == null) {
                 throw new TrackNotFoundException("Pista no encontrada para id: " + id);
             }
 
@@ -128,7 +128,7 @@ public class TrackServiceImpl implements TrackService {
         Track track = trackRepository.findById(id)
                 .orElseThrow(() -> new TrackNotFoundException("Pista no encontrado para id: " + id));
 
-        TrackResponse response = trackMapper.toTrackResponse(track);
+        TrackResponse response = trackMapper.toTrackResponse(track, null);
         return ExtendedBaseResponse.of(BaseResponse.ok("Pista encontrada"), response);
     }
 
@@ -136,21 +136,26 @@ public class TrackServiceImpl implements TrackService {
     public ExtendedBaseResponse<List<TrackResponse>> getAllTracks() {
         List<Track> tracks = trackRepository.findAll();
         List<TrackResponse> trackResponses = tracks.stream()
-                .map(trackMapper::toTrackResponse)
+                .map(track -> trackMapper.toTrackResponse(track
+                        , track.getAlbum().getGenres().getFirst().getName()))
                 .collect(Collectors.toList());
         return ExtendedBaseResponse.of(BaseResponse.ok("Todas las pistas encontradas"), trackResponses);
     }
 
     public ExtendedBaseResponse<List<TrackResponse>> getTracksByGenre(String genre) {
         List<Album> albums = albumRepository.findByGenres_NameIgnoreCase(genre);
+        List<Track> tracks;
+        List<TrackResponse> trackResponses = null;
 
-        List<Track> tracks = albums.stream()
+        tracks = albums.stream()
                 .flatMap(album -> album.getTracks().stream())
                 .collect(Collectors.toList());
 
-        List<TrackResponse> trackResponses = tracks.stream()
-                .map(trackMapper::toTrackResponse)
+        trackResponses = tracks.stream()
+                .map(track -> trackMapper.toTrackResponse(track
+                        , genre))
                 .collect(Collectors.toList());
+
 
         return ExtendedBaseResponse.of(
                 BaseResponse.ok("Pistas encontradas por género: " + genre),

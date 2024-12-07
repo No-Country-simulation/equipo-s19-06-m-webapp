@@ -1,10 +1,10 @@
 package com.web.app.dto.album;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.web.app.dto.artist.ArtistSummaryResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
 
 public record AlbumSummaryResponse(
         @Schema(example = "15103893")
@@ -17,11 +17,12 @@ public record AlbumSummaryResponse(
         String releaseDate,
 
         @Schema(example = "https://api.deezer.com/album/15103893/image")
-        String pictureUrl,
+        String picture_url,
 
         @ArraySchema(schema = @Schema(example = "Electro"))
-        List<String> genres,
+        String genre,
 
+        @JsonIgnore
         ArtistSummaryResponse artist
 ) {
 }
