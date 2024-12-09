@@ -128,7 +128,7 @@ public class TrackServiceImpl implements TrackService {
         Track track = trackRepository.findById(id)
                 .orElseThrow(() -> new TrackNotFoundException("Pista no encontrado para id: " + id));
 
-        TrackResponse response = trackMapper.toTrackResponse(track, null);
+        TrackResponse response = trackMapper.toTrackResponse(track, track.getAlbum().getGenres().getFirst().getName());
         return ExtendedBaseResponse.of(BaseResponse.ok("Pista encontrada"), response);
     }
 
