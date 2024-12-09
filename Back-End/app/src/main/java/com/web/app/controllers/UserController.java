@@ -1,9 +1,7 @@
 package com.web.app.controllers;
 
 import com.web.app.dto.ExtendedBaseResponse;
-import com.web.app.dto.user.DeleteImagesUserDto;
-import com.web.app.dto.user.UpDateImagesUserDto;
-import com.web.app.dto.user.UserDto;
+import com.web.app.dto.user.*;
 import com.web.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -104,5 +102,31 @@ public class UserController {
     public ResponseEntity<ExtendedBaseResponse<UserDto>> findUserById(@PathVariable Long id) {
         ExtendedBaseResponse<UserDto> response = userService.findUserById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(
+            summary = "Actualizar datos de un usuario",
+            description = "Permite actualizar los datos de un usuario proporcionado su ID y los nuevos valores."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuario actualizado exitosamente.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdatedUserDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuario no encontrado.",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Error al actualizar los datos del usuario.",
+                    content = @Content
+            )
+    })
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ExtendedBaseResponse<UpdatedUserDto> updateUser(@Valid @RequestBody UpdateUserDto updateUserDto) {
+        return userService.updateUser(updateUserDto);
     }
 }

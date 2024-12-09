@@ -1,9 +1,7 @@
 package com.web.app.service;
 
 import com.web.app.dto.ExtendedBaseResponse;
-import com.web.app.dto.user.UpDateImagesUserDto;
-import com.web.app.dto.user.DeleteImagesUserDto;
-import com.web.app.dto.user.UserDto;
+import com.web.app.dto.user.*;
 
 public interface UserService {
 
@@ -12,5 +10,7 @@ public interface UserService {
     ExtendedBaseResponse<String> deleteImagesUser(DeleteImagesUserDto deleteImagesUser);
 
     ExtendedBaseResponse<UserDto> findUserById(Long id);
+
+    ExtendedBaseResponse<UpdatedUserDto> updateUser(UpdateUserDto updateUserDto);
 
 }
