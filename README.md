@@ -97,10 +97,6 @@ Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este pr
       <p><b><a href="https://www.linkedin.com/in/jhonatan-steven-jacome-/">Jhonatan Jácome</a></b></p>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/d010e8d5-b4b3-46a2-a157-837c70a0c09c" width="100">
-      <p><b><a href="https://www.linkedin.com/in/martin-salvio">Martin Salvio</a></b></p>
-    </td>
-    <td align="center">
       <img src="https://github.com/user-attachments/assets/55773d29-7a81-4f05-a71f-0ddb726c079b" width="100">
       <p><b><a href="https://www.linkedin.com/in/samudev/">Samuel Figueroa</a></b></p>
     </td>
