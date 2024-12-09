@@ -22,10 +22,17 @@ Soundbit es un innovador reproductor de música 8D diseñado para sumergirte en 
 
   <table>
     <tr>
+      <th>UX/UI</th>
       <th>Frontend</th>
       <th>Backend</th>
     </tr>
     <tr>
+      <td>
+        <ul>
+          <li>Illustrator</li>
+          <li>Figma</li>
+        </ul>
+      </td>
       <td>
         <ul>
           <li>React 18</li>
