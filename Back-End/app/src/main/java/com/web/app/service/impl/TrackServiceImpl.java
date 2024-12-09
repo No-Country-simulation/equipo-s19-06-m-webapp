@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -136,8 +137,16 @@ public class TrackServiceImpl implements TrackService {
     public ExtendedBaseResponse<List<TrackResponse>> getAllTracks() {
         List<Track> tracks = trackRepository.findAll();
         List<TrackResponse> trackResponses = tracks.stream()
-                .map(track -> trackMapper.toTrackResponse(track
-                        , track.getAlbum().getGenres().getFirst().getName()))
+                .map(track -> {
+                    String genre = null;
+                    try {
+                        genre = track.getAlbum().getGenres().getFirst().getName();
+                        return trackMapper.toTrackResponse(track, genre);
+                    } catch (NoSuchElementException e) {
+                        // Genero no encontrado, se muestra como vacio
+                        return trackMapper.toTrackResponse(track, genre);
+                    }
+                })
                 .collect(Collectors.toList());
         return ExtendedBaseResponse.of(BaseResponse.ok("Todas las pistas encontradas"), trackResponses);
     }
