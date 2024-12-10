@@ -1,33 +1,34 @@
-const registerUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth/register`;
 import { RegisterFormValues } from "../components/RegisterModal";
 
-export interface AuthResponse {
-    token: string;
-    user: {
-        id: string;
-        username: string;
-    };
-}
+export interface RegisterForm {
+    username: string;
+    email: string;
+    contact: string;
+    password: string;
+};
 
-export const registerUser = async (formData: RegisterFormValues): Promise<AuthResponse | null> => {
+export interface ApiResponse {
+    success: boolean;
+    message: string;
+};
+
+export const registerUser = async (formData: RegisterFormValues): Promise<ApiResponse> => {
     try {
-        const response = await fetch(registerUrl, {
+        const response = await fetch("http://144.33.15.219:8080/swagger-ui/index.html#/auth/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(formData)
         });
-
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Error al registrar el usuario');
+            console.error('Error al registrar el usuario');
         }
-
-        const data: AuthResponse = await response.json();
-        return data;
-    } catch (error) {
+        const result: ApiResponse = await response.json();
+        console.log(result);
+        return result;
+    } catch (error: any) {
         console.error('Error al registrar el usuario:', error);
-        return null;
-    }
+        return { success: false, message: 'Error al registrar el usuario' };
+    };
 };

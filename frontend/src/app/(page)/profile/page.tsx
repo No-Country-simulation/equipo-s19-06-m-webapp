@@ -11,7 +11,7 @@ import { EyeOff } from "lucide-react";
 
 const profileLinks: ProfileLink[] = [
   { label: "Editar perfil", href: "/settings" },
-  { label: "Biblioteca", href: "/library" },
+  // { label: "Biblioteca", href: "/library" },
   { label: "Cerrar sesión", href: "/logout" }
 ];
 
@@ -50,7 +50,7 @@ const Profile = () => {
           </div>
         </div>
       </section>
-      <section className="flex flex-col md:flex-row items-center justify-between w-90">
+      <section className="flex flex-col md:flex-row items-center justify-center w-90">
         {profileLinks.map(({ label, href }) => (
           <Link
             key={label}

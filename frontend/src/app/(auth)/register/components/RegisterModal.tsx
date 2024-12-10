@@ -15,6 +15,7 @@ const registerSchema = z
     .object({
         username: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
         email: z.string().email("Ingresa un correo válido"),
+        contact: z.string().regex(/^\+\d{1,3}\s?\d{4,14}$/, "El número de teléfono debe incluir el código de área"),
         password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
         confirmPassword: z.string(),
     })
@@ -44,12 +45,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
 
     const onSubmit = async (data: RegisterFormValues) => {
         try {
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                console.error('Token no encontrado');
-                return;
-            }
             const authResponse = await registerUser(data);
             if (authResponse) {
                 console.log('Registro exitoso:', authResponse);
@@ -94,7 +89,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
 
                     <div className="space-y-1">
                         <Label htmlFor="email" className="text-primary text-xl">
-                            Mail:
+                            Email:
                         </Label>
                         <Input
                             id="email"
@@ -104,6 +99,21 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                         />
                         {errors.email && (
                             <p className="text-red-500 text-xl">{errors.email.message}</p>
+                        )}
+                    </div>
+
+                    <div className="space-y-1">
+                        <Label htmlFor="contact" className="text-primary text-xl">
+                            Número de teléfono:
+                        </Label>
+                        <Input
+                            id="contact"
+                            type="tel"
+                            {...register("contact")}
+                            aria-invalid={!!errors.contact}
+                        />
+                        {errors.contact && (
+                            <p className="text-red-500 text-xl">{errors.contact.message}</p>
                         )}
                     </div>
 
@@ -134,7 +144,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
 
                     <div className="space-y-1 relative">
                         <Label htmlFor="confirmPassword" className="text-primary text-xl">
-                            Confirmar Contraseña:
+                            Confirmar contraseña:
                         </Label>
                         <div className="relative">
                             <Input
