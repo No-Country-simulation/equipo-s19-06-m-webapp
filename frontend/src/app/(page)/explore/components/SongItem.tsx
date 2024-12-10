@@ -1,6 +1,6 @@
 import React from "react";
-import Image from "next/image";
 import { Heart } from "lucide-react";
+import Image from "next/image";
 
 interface SongItemProps {
   id: string;
@@ -12,10 +12,8 @@ interface SongItemProps {
   artist: string;
   artistImage: string;
   genres: string;
-
   isSelected: boolean;
   isFavorite: boolean;
-
   onFavoriteToggle: () => void;
   onPlay: () => void;
 }
@@ -30,6 +28,8 @@ const SongItem: React.FC<SongItemProps> = ({
   onFavoriteToggle,
   onPlay,
 }) => {
+  const defaultImage = "URL_DE_IMAGEN_DEFAULT";
+
   return (
     <div
       onClick={onPlay}
@@ -43,10 +43,12 @@ const SongItem: React.FC<SongItemProps> = ({
       <div className="grid grid-cols-[48px_40px_1fr_auto] sm:grid-cols-[78px_100px_2fr_180px_100px] items-center gap-2">
         <div className="h-12 w-12 rounded overflow-hidden relative">
           <Image
-            src={artistImage}
+            src={artistImage || defaultImage}
             alt="Album art"
-            layout="fill"
-            className="object-cover"
+            className="object-cover rounded-md"
+            width={150}
+            height={150}
+            decoding="async"
           />
         </div>
 

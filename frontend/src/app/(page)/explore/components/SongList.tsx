@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SongItem from "./SongItem";
 import Player from "@/components/ui/Player";
-import {
-  fetchSongsByGenre,
-  fetchSongsBySearchTerm,
-  fetchSongs,
-} from "@/utils/fetchSongs";
+import { fetchSongsList } from "@/utils/fetchSongsList";
 import { useFilterSongs } from "@/hooks/useFilterSongs";
 import { Song } from "@/types/ui/Song";
 import { formatDuration } from "@/utils/formatDuration";
-//import { mockSongs } from "@/data/mockSongs";
 
 interface SongListProps {
   searchTerm?: string;
@@ -22,78 +17,24 @@ export default function SongList({
 }: SongListProps) {
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [songs, setSongs] = useState<Song[]>([]);
-  const [initialSongs, setInitialSongs] = useState<Song[]>([]);
-
-  useEffect(() => {
-    const genres = [
-      "pop",
-      "rock",
-      "electronica",
-      "clasica",
-      "hip-hop",
-      "rap",
-      "k-pop",
-    ];
-
-    const loadInitialSongs = async () => {
-      try {
-        const promises = genres.map((genre) => fetchSongsByGenre(genre));
-        const results = await Promise.all(promises);
-        const allSongs = results.flat();
-
-        const randomFetchedSongs = await fetchSongs("");
-
-        const combinedSongs: Song[] = [];
-        const maxLength = Math.max(allSongs.length, randomFetchedSongs.length);
-        for (let i = 0; i < maxLength; i++) {
-          if (i < allSongs.length) {
-            combinedSongs.push(allSongs[i]);
-          }
-          if (i < randomFetchedSongs.length) {
-            combinedSongs.push(randomFetchedSongs[i]);
-          }
-        }
-
-        setInitialSongs(combinedSongs);
-      } catch (error) {
-        console.error("Error fetching initial songs:", error);
-      }
-    };
-
-    loadInitialSongs();
-  }, []);
+  const [allSongs, setAllSongs] = useState<Song[]>([]);
 
   useEffect(() => {
     const loadSongs = async () => {
       try {
-        let fetchedSongs: Song[] = [];
-
-        if (searchTerm) {
-          fetchedSongs = await fetchSongsBySearchTerm(searchTerm);
-        } else {
-          fetchedSongs = await fetchSongs("");
-        }
-
-        const combinedSongs: Song[] = [];
-        const maxLength = Math.max(fetchedSongs.length, initialSongs.length);
-        for (let i = 0; i < maxLength; i++) {
-          if (i < fetchedSongs.length) {
-            combinedSongs.push(fetchedSongs[i]);
-          }
-          if (i < initialSongs.length) {
-            combinedSongs.push(initialSongs[i]);
-          }
-        }
-
-        setSongs(combinedSongs.slice(0, 15));
+        const fetchedSongs = await fetchSongsList();
+        console.log("Fetched Songs:", fetchedSongs); // Debug log
+        setAllSongs(fetchedSongs);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
     };
 
     loadSongs();
-  }, [searchTerm, initialSongs]);
+  }, []);
+
+  // Llamar a useFilterSongs directamente dentro del componente
+  const filteredSongs = useFilterSongs(allSongs, searchTerm, selectedGenre);
 
   const handlePlay = useCallback(
     (song: Song) => {
@@ -113,36 +54,38 @@ export default function SongList({
 
   const handleNext = useCallback(() => {
     if (!selectedSong) return;
-    const currentIndex = songs.findIndex((song) => song.id === selectedSong.id);
-    if (currentIndex < songs.length - 1) {
-      setSelectedSong(songs[currentIndex + 1]);
+    const currentIndex = filteredSongs.findIndex(
+      (song) => song.id === selectedSong.id
+    );
+    if (currentIndex < filteredSongs.length - 1) {
+      setSelectedSong(filteredSongs[currentIndex + 1]);
       setIsPlaying(true);
     }
-  }, [selectedSong, songs]);
+  }, [selectedSong, filteredSongs]);
 
   const handlePrevious = useCallback(() => {
     if (!selectedSong) return;
-    const currentIndex = songs.findIndex((song) => song.id === selectedSong.id);
+    const currentIndex = filteredSongs.findIndex(
+      (song) => song.id === selectedSong.id
+    );
     if (currentIndex > 0) {
-      setSelectedSong(songs[currentIndex - 1]);
+      setSelectedSong(filteredSongs[currentIndex - 1]);
       setIsPlaying(true);
     }
-  }, [selectedSong, songs]);
+  }, [selectedSong, filteredSongs]);
 
   const toggleFavoriteHandler = useCallback((songId: string) => {
-    setSongs((prevSongs) =>
+    setAllSongs((prevSongs) =>
       prevSongs.map((song) =>
         song.id === songId ? { ...song, isFavorite: !song.isFavorite } : song
       )
     );
   }, []);
 
-  const filteredSongs = useFilterSongs(songs, searchTerm, selectedGenre);
-
   return (
     <div className="w-full">
       <div className="mb-24">
-        {filteredSongs.map((song) => (
+        {filteredSongs.slice(0, 10).map((song) => (
           <SongItem
             key={song.id}
             id={song.id}
@@ -152,8 +95,8 @@ export default function SongList({
             duration={formatDuration(song.duration)}
             md5_image={song.md5_image}
             preview={song.preview}
-            artist={song.artist?.name || "Unknown Artist"}
-            artistImage={song.artist?.picture_medium || ""}
+            artist={song.artist.name}
+            artistImage={song.artist.picture_medium}
             isFavorite={song.isFavorite}
             isSelected={selectedSong?.id === song.id}
             onPlay={() => handlePlay(song)}
@@ -165,10 +108,10 @@ export default function SongList({
         <Player
           currentSong={{
             ...selectedSong,
-            artist: selectedSong.artist?.name || "Unknown Artist",
+            artist: selectedSong.artist.name,
           }}
           genres={selectedSong.album.genres || ""}
-          artistImage={selectedSong.artist?.picture_medium || ""}
+          artistImage={selectedSong.artist.picture_medium}
           isFavorite={selectedSong.isFavorite}
           isPlaying={isPlaying}
           onPlayPause={handlePlayPause}

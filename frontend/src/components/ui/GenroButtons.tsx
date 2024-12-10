@@ -1,7 +1,7 @@
 "use client";
 
 interface GenreButtonsProps {
-  onGenreChange: (genre: string) => void;
+  onGenreChange: (genres: string) => void;
   selectedGenre: string;
 }
 
@@ -12,7 +12,8 @@ const genres = [
   "Rock",
   "Rap",
   "K-pop",
-  "Clásica",
+  "Clássica",
+  "Dance",
 ];
 
 export default function GenreButtons({
@@ -21,21 +22,21 @@ export default function GenreButtons({
 }: GenreButtonsProps) {
   return (
     <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-      {genres.map((genre) => (
+      {genres.map((genres) => (
         <button
-          key={genre}
-          onClick={() => onGenreChange(genre)}
+          key={genres}
+          onClick={() => onGenreChange(genres)}
           className={`
             w-[150px] h-[50px] md:w-[200px] md:h-[60px] rounded-full text-lg font-bold border-2
             transition-all duration-200
             ${
-              selectedGenre === genre
+              selectedGenre === genres
                 ? "bg-primary text-black border-black"
                 : "bg-black text-primary border-primary hover:bg-primary hover:text-black hover:border-black"
             }
           `}
         >
-          {genre}
+          {genres}
         </button>
       ))}
     </div>

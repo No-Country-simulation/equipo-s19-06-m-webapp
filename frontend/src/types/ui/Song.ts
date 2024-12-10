@@ -38,19 +38,35 @@ export interface Album {
 
 }
 
-export interface newSong {
-    id: string;
+export type RawSong = {
+    id: string | number;
     title: string;
-    duration: number;    
+    duration: number | string;
     preview: string;
+    md5_image: string | null;
     artist: {
-        id: string;
+        id: string | number;
         name: string;
         picture_medium: string;
+        picture_url: string;
+        picture: string | null;
+        picture_small: string | null;
+        picture_big: string | null;
+        picture_xl: string | null;
+        tracklist: string | null;
     };
     album: {
-        id: string;
+        id: string | number;
         title: string;
-        genres: string[];
+        genres: string | null;
+        genre: string | null;
+        cover: string | null;
+        cover_small: string | null;
+        cover_medium: string | null;
+        cover_big: string | null;
+        cover_xl: string | null;
+        md5_image: string | null;
+        tracklist: string | null;
     };
-}
+};
+
