@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react"; // Importa íconos de lucide-react (o react-icons si prefieres)
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
     email: z.string().email("Ingresa un correo válido"),
@@ -22,7 +22,7 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
-    const [showPassword, setShowPassword] = useState(false); // Estado para controlar visibilidad de la contraseña
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
+import { registerUser } from '@/app/(auth)/register/services/authService';
 
 const registerSchema = z
     .object({
@@ -22,7 +23,8 @@ const registerSchema = z
         path: ["confirmPassword"],
     });
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
+export type RegisterFormValues = z.infer<typeof registerSchema>;
+
 
 interface RegisterModalProps {
     onClose: () => void;
@@ -40,9 +42,24 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         resolver: zodResolver(registerSchema),
     });
 
-    const onSubmit = (data: RegisterFormValues) => {
-        console.log("Datos del registro:", data);
-        onClose();
+    const onSubmit = async (data: RegisterFormValues) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('Token no encontrado');
+                return;
+            }
+            const authResponse = await registerUser(data);
+            if (authResponse) {
+                console.log('Registro exitoso:', authResponse);
+                onClose();
+            } else {
+                console.error('Error al registrar el usuario');
+            }
+        } catch (error) {
+            console.error('Error al registrar el usuario:', error);
+        }
     };
 
     return (
@@ -60,7 +77,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Campo de nombre de usuario */}
                     <div className="space-y-1">
                         <Label htmlFor="username" className="text-primary text-xl">
                             Nombre de usuario:
@@ -76,7 +92,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                         )}
                     </div>
 
-                    {/* Campo de correo */}
                     <div className="space-y-1">
                         <Label htmlFor="email" className="text-primary text-xl">
                             Mail:
@@ -92,7 +107,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                         )}
                     </div>
 
-                    {/* Campo de contraseña */}
                     <div className="space-y-1 relative">
                         <Label htmlFor="password" className="text-primary text-xl">
                             Contraseña:
@@ -118,7 +132,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                         )}
                     </div>
 
-                    {/* Campo de confirmación de contraseña */}
                     <div className="space-y-1 relative">
                         <Label htmlFor="confirmPassword" className="text-primary text-xl">
                             Confirmar Contraseña:

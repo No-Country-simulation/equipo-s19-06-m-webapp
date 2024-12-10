@@ -8,7 +8,7 @@ import { NavLink } from "@/types/ui/Header";
 import { usePathname } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import LoginModal from "@/app/(auth)/login/components/LoginModal"; // Importa tus modales
+import LoginModal from "@/app/(auth)/login/components/LoginModal";
 import RegisterModal from "@/app/(auth)/register/components/RegisterModal";
 
 const navLinks: NavLink[] = [
@@ -156,7 +156,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* Modales */}
       {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
       {isRegisterOpen && <RegisterModal onClose={() => setIsRegisterOpen(false)} />}
     </header>
