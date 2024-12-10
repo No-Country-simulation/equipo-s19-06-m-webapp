@@ -6,6 +6,10 @@ import Image from "next/image";
 import { UserCircle, Menu, X } from "lucide-react";
 import { NavLink } from "@/types/ui/Header";
 import { usePathname } from "next/navigation";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import LoginModal from "@/app/(auth)/login/components/LoginModal"; // Importa tus modales
+import RegisterModal from "@/app/(auth)/register/components/RegisterModal";
 
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
@@ -14,6 +18,8 @@ const navLinks: NavLink[] = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const pathname = usePathname();
 
   const toggleMenu = () => {
@@ -40,25 +46,38 @@ const Header = () => {
             <Link
               key={label}
               href={href}
-              className={`text-xl transition-colors ${
-                pathname === href
-                  ? "text-primary"
-                  : "text-white hover:text-primary"
-              }`}
+              className={`text-xl transition-colors ${pathname === href
+                ? "text-primary"
+                : "text-white hover:text-primary"
+                }`}
             >
               {label}
             </Link>
           ))}
-          <Link
-            href="/profile"
-            className={`text-3xl transition-colors ${
-              pathname === "/profile"
-                ? "text-primary"
-                : "text-white hover:text-primary"
-            }`}
-          >
-            <UserCircle className="w-8 h-8" />
-          </Link>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="text-3xl text-white">
+                <UserCircle className="w-8 h-8" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="bg-primary text-black">
+              <Button
+                variant="link"
+                className="w-full justify-center"
+                onClick={() => setIsLoginOpen(true)}
+              >
+                Iniciar sesión
+              </Button>
+              <Button
+                variant="link"
+                className="w-full justify-center"
+                onClick={() => setIsRegisterOpen(true)}
+              >
+                Registrarse
+              </Button>
+            </PopoverContent>
+          </Popover>
         </nav>
 
         <button
@@ -98,31 +117,48 @@ const Header = () => {
                 <Link
                   key={label}
                   href={href}
-                  className={`text-2xl transition-colors ${
-                    pathname === href
-                      ? "text-primary"
-                      : "text-white hover:text-primary"
-                  }`}
+                  className={`text-2xl transition-colors ${pathname === href
+                    ? "text-primary"
+                    : "text-white hover:text-primary"
+                    }`}
                   onClick={toggleMenu}
                 >
                   {label}
                 </Link>
               ))}
-              <Link
-                href="/profile"
-                className={`transition-colors ${
-                  pathname === "/profile"
-                    ? "text-primary"
-                    : "text-white hover:text-primary"
-                }`}
-                onClick={toggleMenu}
-              >
-                <UserCircle className="w-12 h-12" />
-              </Link>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="text-3xl text-white">
+                    <UserCircle className="w-8 h-8" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent align="center" className="bg-primary text-black">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="w-full justify-center"
+                    onClick={() => setIsLoginOpen(true)}
+                  >
+                    Iniciar sesión
+                  </Button>
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="w-full justify-center"
+                    onClick={() => setIsRegisterOpen(true)}
+                  >
+                    Registrarse
+                  </Button>
+                </PopoverContent>
+              </Popover>
             </nav>
           </div>
         </div>
       )}
+
+      {/* Modales */}
+      {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
+      {isRegisterOpen && <RegisterModal onClose={() => setIsRegisterOpen(false)} />}
     </header>
   );
 };
