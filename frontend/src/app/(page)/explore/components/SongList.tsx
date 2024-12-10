@@ -5,7 +5,6 @@ import { fetchSongsList } from "@/utils/fetchSongsList";
 import { useFilterSongs } from "@/hooks/useFilterSongs";
 import { Song } from "@/types/ui/Song";
 import { formatDuration } from "@/utils/formatDuration";
-import { fetchSearchSongs } from "@/utils/fetchSearchSongs";
 
 interface SongListProps {
   searchTerm?: string;
@@ -19,22 +18,20 @@ export default function SongList({
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [allSongs, setAllSongs] = useState<Song[]>([]);
-  const [songs, setSongs] = useState<Song[]>([]);
+
   useEffect(() => {
     const loadSongs = async () => {
       try {
-        // const fetchedSongs = await fetchSongsList();
-        // console.log("Fetched Songs:", fetchedSongs); // Debug log
-        // setAllSongs(fetchedSongs);
-        setSongs(await fetchSearchSongs(searchTerm));
-        console.log(songs)
+        const fetchedSongs = await fetchSongsList();
+        console.log("Fetched Songs:", fetchedSongs); // Debug log
+        setAllSongs(fetchedSongs);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
     };
 
     loadSongs();
-  }, [searchTerm]);
+  }, []);
 
   // Llamar a useFilterSongs directamente dentro del componente
   const filteredSongs = useFilterSongs(allSongs, searchTerm, selectedGenre);
@@ -85,11 +82,10 @@ export default function SongList({
     );
   }, []);
 
-console.log(songs)
   return (
     <div className="w-full">
       <div className="mb-24">
-        {songs.map((song) => (
+        {filteredSongs.slice(0, 10).map((song) => (
           <SongItem
             key={song.id}
             id={song.id}
@@ -129,4 +125,3 @@ console.log(songs)
     </div>
   );
 }
-
