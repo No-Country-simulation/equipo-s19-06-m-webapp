@@ -15,8 +15,11 @@ const registerSchema = z
     .object({
         username: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
         email: z.string().email("Ingresa un correo válido"),
-        contact: z.string().regex(/^\+\d{1,3}\s?\d{4,14}$/, "El número de teléfono debe incluir el código de área"),
-        password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+        contact: z.string().regex(/^[0-9]+$/, "El número de contacto debe contener solo dígitos"),
+        password: z.string().regex(
+            /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
+            "Debe tener al menos 8 caracteres, incluir 1 dígito, 1 minúscula, 1 mayúscula, 1 carácter especial y no tener espacios"
+        ),
         confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -45,17 +48,22 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
 
     const onSubmit = async (data: RegisterFormValues) => {
         try {
-            const authResponse = await registerUser(data);
-            if (authResponse) {
-                console.log('Registro exitoso:', authResponse);
+            const { confirmPassword, ...formData } = data;
+            const ApiResponse = await registerUser(formData);
+            if (ApiResponse) {
+                console.log('Registro exitoso:', ApiResponse);
+                localStorage.setItem("authToken", ApiResponse.token);
                 onClose();
             } else {
-                console.error('Error al registrar el usuario');
+                alert('Ocurrió un error al registrar el usuario. Intenta nuevamente.');
             }
         } catch (error) {
+            alert('Error inesperado. Por favor, intenta más tarde.');
             console.error('Error al registrar el usuario:', error);
         }
     };
+
+
 
     return (
         <Dialog open onOpenChange={onClose}>
