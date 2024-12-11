@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { formatDuration } from "@/utils/formatDuration";
+import { formatDuration } from "@/app/(page)/explore/services/formatDuration";
 import {
   SkipBack,
   Rewind,

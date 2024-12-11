@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SongItem from "./SongItem";
 import Player from "@/components/ui/Player";
-import { fetchSongsList } from "@/utils/fetchSongsList";
+import { fetchSongsList } from "@/app/(page)/explore/services/fetchSongsList";
 import { useFilterSongs } from "@/hooks/useFilterSongs";
 import { Song } from "@/types/ui/Song";
-import { formatDuration } from "@/utils/formatDuration";
+import { formatDuration } from "@/app/(page)/explore/services/formatDuration";
 
 interface SongListProps {
   searchTerm?: string;
