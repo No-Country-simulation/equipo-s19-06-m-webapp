@@ -10,10 +10,12 @@ const genres = [
   "Electrónica",
   "Pop",
   "Rock",
-  "Rap",
+  "Rap/Hip Hop",
   "K-pop",
   "Clássica",
   "Dance",
+  "Alternativo",
+  "Electro",
 ];
 
 export default function GenreButtons({

@@ -4,7 +4,7 @@
 
 ![logo](https://github.com/user-attachments/assets/dd50317f-d066-4d69-b325-7692c9d9cda7) 
   
-Soundbit es un innovador reproductor de música 8D diseñado para sumergirte en una experiencia auditiva única. Disfruta de tus canciones favoritas con efectos de audio envolventes que te transportarán a un mundo de sonido en movimiento.
+**Soundbit** es un innovador reproductor de música 8D diseñado para sumergirte en una experiencia auditiva única. Disfruta de tus canciones favoritas con efectos de audio envolventes que te transportarán a un mundo de sonido en movimiento.
 
 </div>
 
@@ -67,7 +67,7 @@ Soundbit es un innovador reproductor de música 8D diseñado para sumergirte en 
 
 ## 🤝 Colaboradores
 
-Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este proyecto no sería posible sin su talento, dedicación y esfuerzo. ¡Gracias por hacer de SoundBit una realidad! 🚀🎶
+Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este proyecto no sería posible sin su talento, dedicación y esfuerzo. ¡Gracias por hacer de **Soundbit** una realidad! 🚀🎶
 
 ---
 
