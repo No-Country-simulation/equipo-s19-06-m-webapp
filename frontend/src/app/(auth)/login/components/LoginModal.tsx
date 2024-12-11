@@ -8,7 +8,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from 'lucide-react';
+import { loginUser } from '../services/authService';
+import { LoginRequestDto } from "../services/authService";
 
 const loginSchema = z.object({
     email: z.string().email("Ingresa un correo válido"),
@@ -32,9 +34,24 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         resolver: zodResolver(loginSchema),
     });
 
-    const onSubmit = (data: LoginFormValues) => {
-        console.log("Datos del formulario:", data);
-        onClose();
+    const onSubmit = async (data: LoginFormValues) => {
+        console.log("Iniciando proceso de inicio de sesión con:", data);
+        try {
+            const apiResponse = await loginUser(data as LoginRequestDto);
+            console.log("Respuesta del servicio de inicio de sesión:", apiResponse);
+            if (apiResponse) {
+                console.log('Inicio de sesión exitoso:', apiResponse);
+                localStorage.setItem("authToken", apiResponse.token);
+                alert('¡Inicio de sesión exitoso! Bienvenido/a a Soundbit.');
+                onClose();
+            } else {
+                alert('Ocurrió un error al iniciar sesión. Verifica tus credenciales e intenta nuevamente.');
+            }
+        } catch (error) {
+            console.log("Error detallado:", error);
+            alert('Error inesperado. Por favor, intenta más tarde.');
+            console.error('Error al iniciar sesión:', error);
+        }
     };
 
     return (
@@ -52,7 +69,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
                     </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Campo de correo */}
                     <div className="space-y-1">
                         <Label htmlFor="email" className="text-primary text-xl">
                             Mail:
@@ -68,7 +84,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
                         )}
                     </div>
 
-                    {/* Campo de contraseña */}
                     <div className="space-y-1 relative">
                         <Label htmlFor="password" className="text-primary text-xl">
                             Contraseña:
@@ -104,3 +119,4 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
 };
 
 export default LoginModal;
+
