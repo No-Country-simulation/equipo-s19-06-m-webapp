@@ -9,7 +9,7 @@ import {
   Square,
   FastForward,
   SkipForward,
-  Heart,
+  X,
 } from "lucide-react";
 
 interface PlayerProps {
@@ -28,7 +28,7 @@ interface PlayerProps {
   onNext?: () => void;
   onPrevious?: () => void;
   onFavoriteToggle: (songId: string) => void;
-  isFavorite: boolean;
+  onClose: () => void;
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -39,11 +39,13 @@ const Player: React.FC<PlayerProps> = ({
   onPlayPause,
   onNext,
   onPrevious,
-  onFavoriteToggle,
+
+  onClose,
 }) => {
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("00:00");
   const [error, setError] = useState<string | null>(null);
+  const [isPlayerVisible, setIsPlayerVisible] = useState(true);
   const playerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -174,6 +176,11 @@ const Player: React.FC<PlayerProps> = ({
     }
   };
 
+  const handlePlayerClose = () => {
+    setIsPlayerVisible(false);
+    onClose();
+  };
+
   const formatTime = (time: number): string => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -182,7 +189,7 @@ const Player: React.FC<PlayerProps> = ({
       .padStart(2, "0")}`;
   };
 
-  if (!currentSong) return null;
+  if (!currentSong || !isPlayerVisible) return null;
 
   return (
     <div
@@ -206,16 +213,13 @@ const Player: React.FC<PlayerProps> = ({
             <p className="text-primary/60 text-sm">{currentSong.artist}</p>
             <p className="text-primary/60 text-sm">{genres}</p>
           </div>
-          <Heart
-            className={`w-6 h-6 cursor-pointer transition-colors
-              ${
-                currentSong.isFavorite
-                  ? "text-primary fill-primary"
-                  : "text-primary/60 hover:text-primary"
-              }
-            `}
-            onClick={() => onFavoriteToggle(currentSong.id)}
-          />
+          <div className="flex items-center space-x-2">
+            <X
+              className="text-primary/60 cursor-pointer hover:text-primary"
+              size={44}
+              onClick={handlePlayerClose}
+            />
+          </div>
         </div>
 
         <div className="flex items-center justify-center gap-4 mb-4">
@@ -252,7 +256,7 @@ const Player: React.FC<PlayerProps> = ({
             className="text-primary cursor-pointer"
             size={47}
             style={{ strokeWidth: 2, fill: "currentColor" }}
-            onClick={handleStop} // Cambia a handleStop
+            onClick={handleStop}
           />
           <FastForward
             className="text-primary cursor-pointer"

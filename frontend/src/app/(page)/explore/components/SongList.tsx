@@ -23,7 +23,7 @@ export default function SongList({
     const loadSongs = async () => {
       try {
         const fetchedSongs = await fetchSongsList();
-        console.log("Fetched Songs:", fetchedSongs); // Debug log
+        //console.log("Fetched Songs:", fetchedSongs); // Debug log
         setAllSongs(fetchedSongs);
       } catch (error) {
         console.error("Error fetching songs:", error);
@@ -51,6 +51,9 @@ export default function SongList({
   const handlePlayPause = useCallback(() => {
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
+  const handlePlayerClose = () => {
+    setSelectedSong(null);
+  };
 
   const handleNext = useCallback(() => {
     if (!selectedSong) return;
@@ -112,7 +115,6 @@ export default function SongList({
           }}
           genres={selectedSong.album.genres || ""}
           artistImage={selectedSong.artist.picture_medium}
-          isFavorite={selectedSong.isFavorite}
           isPlaying={isPlaying}
           onPlayPause={handlePlayPause}
           onNext={handleNext}
@@ -120,6 +122,7 @@ export default function SongList({
           onFavoriteToggle={() =>
             selectedSong && toggleFavoriteHandler(selectedSong.id)
           }
+          onClose={handlePlayerClose}
         />
       )}
     </div>
