@@ -41,7 +41,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
             console.log("Respuesta del servicio de inicio de sesión:", apiResponse);
             if (apiResponse) {
                 console.log('Inicio de sesión exitoso:', apiResponse);
-                localStorage.setItem("authToken", apiResponse.token);
+                localStorage.setItem("token", apiResponse.data.token);
+                localStorage.setItem("userId", apiResponse.data.id.toString());
                 alert('¡Inicio de sesión exitoso! Bienvenido/a a Soundbit.');
                 onClose();
             } else {
@@ -71,7 +72,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-1">
                         <Label htmlFor="email" className="text-primary text-xl">
-                            Mail:
+                            
+                            Email:
                         </Label>
                         <Input
                             id="email"
