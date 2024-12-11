@@ -53,6 +53,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
             if (ApiResponse) {
                 console.log('Registro exitoso:', ApiResponse);
                 localStorage.setItem("authToken", ApiResponse.token);
+                alert('¡Registro exitoso! Bienvenido/a a Soundbit.');
                 onClose();
             } else {
                 alert('Ocurrió un error al registrar el usuario. Intenta nuevamente.');
