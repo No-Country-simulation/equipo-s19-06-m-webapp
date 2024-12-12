@@ -53,7 +53,7 @@ const Profile = () => {
       console.log("Usuario obtenido:", data);
       return data;
     } catch (error) {
-      console.error("Error al obtener los datos del usuario:", error.message);
+      //console.error("Error al obtener los datos del usuario:", error.message);
       return null;
     }
   };

@@ -1,7 +1,7 @@
 import { Song, Artist, Album, RawSong } from "@/types/ui/Song";
 
 export const fetchSongsList = async (): Promise<Song[]> => {
-    const response = await fetch("http://144.33.15.219:8080/tracks", {
+    const response = await fetch("/api/tracks", {
         headers: {
             accept: "application/json",
         },

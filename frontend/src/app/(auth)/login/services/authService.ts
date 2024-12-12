@@ -11,22 +11,22 @@ export interface AuthResponseDto {
 
 export const loginUser = async (credentials: LoginRequestDto): Promise<AuthResponseDto | null> => {
   try {
-    console.log("Iniciando solicitud de inicio de sesión con:", credentials);
-    const response = await fetch("http://144.33.15.219:8080/auth/login", {
+   // console.log("Iniciando solicitud de inicio de sesión con:", credentials);
+    const response = await fetch("/api/auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
     });
-    console.log("Respuesta completa:", response);
-    console.log("Estado de la respuesta:", response.status);
+    //console.log("Respuesta completa:", response);
+    //console.log("Estado de la respuesta:", response.status);
 
     const result = await response.json();
-    console.log("Datos de la respuesta completa:", result);
+    //console.log("Datos de la respuesta completa:", result);
 
     if (!response.ok || result.isError) {
-      console.error("Error en la respuesta:", result);
+      // console.error("Error en la respuesta:", result);
       throw new Error(result.message || "Error al iniciar sesión");
     }
 
@@ -37,7 +37,7 @@ export const loginUser = async (credentials: LoginRequestDto): Promise<AuthRespo
       token: result.data.token
     };
 
-    console.log("Datos del usuario procesados:", userData);
+    //console.log("Datos del usuario procesados:", userData);
     return userData;
   } catch (error: any) {
     console.error("Error al iniciar sesión:", error.message);

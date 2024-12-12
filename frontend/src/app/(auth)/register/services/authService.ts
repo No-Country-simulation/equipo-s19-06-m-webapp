@@ -9,28 +9,33 @@ export interface ApiResponse {
 export const registerUser = async (formData: Omit<RegisterFormValues, 'confirmPassword'>): Promise<ApiResponse | null> => {
     try {
         console.log("Datos enviados al backend:", formData);
-
-        const response = await fetch("http://144.33.15.219:8080/auth/register", {
+        const response = await fetch("/api/auth/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData), 
+            body: JSON.stringify(formData),
         });
+        console.log("Estado de la respuesta:", response.status);
 
-        console.log("Estado de la respuesta:", response.status); 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Error en la respuesta:", errorData);
-            throw new Error(errorData.message || "Error al registrar el usuario");
+        const result = await response.json();
+        console.log("Respuesta completa:", result);
+
+        if (!response.ok || result.isError) {
+            console.error("Error en la respuesta:", result);
+            throw new Error(result.message || "Error al registrar el usuario");
         }
 
-        const result: ApiResponse = await response.json();
-        console.log("Respuesta procesada:", result); 
-        return result;
+        const userData: ApiResponse = {
+            id: result.data.id,
+            username: result.data.username,
+            token: result.data.token
+        };
+
+        console.log("Respuesta procesada:", userData);
+        return userData;
     } catch (error: any) {
         console.error("Error al registrar el usuario:", error.message);
         return null;
     }
 };
-

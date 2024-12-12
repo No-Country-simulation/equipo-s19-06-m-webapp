@@ -42,13 +42,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
-    console.log("Iniciando proceso de inicio de sesión con:", data);
+    //console.log("Iniciando proceso de inicio de sesión con:", data);
     try {
       const apiResponse = await loginUser(data as LoginRequestDto);
-      console.log("Respuesta del servicio de inicio de sesión:", apiResponse);
+      //console.log("Respuesta del servicio de inicio de sesión:", apiResponse);
 
       if (apiResponse) {
-        console.log("Inicio de sesión exitoso:", apiResponse);
+        //console.log("Inicio de sesión exitoso:", apiResponse);
         localStorage.setItem("token", apiResponse.token);
         localStorage.setItem("userId", apiResponse.id.toString());
         localStorage.setItem("username", apiResponse.username);
