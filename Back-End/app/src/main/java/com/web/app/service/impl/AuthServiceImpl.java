@@ -4,6 +4,7 @@ import com.web.app.dto.BaseResponse;
 import com.web.app.dto.ExtendedBaseResponse;
 import com.web.app.dto.user.*;
 import com.web.app.jwt.JwtService;
+import com.web.app.mapper.UserMapper;
 import com.web.app.model.Role;
 import com.web.app.model.User;
 import com.web.app.repository.UserRepository;
@@ -26,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final UserMapper userMapper;
 
     public ExtendedBaseResponse<AuthResponseDto> login(LoginRequestDto request) {
         String email = request.email();
@@ -43,16 +45,11 @@ public class AuthServiceImpl implements AuthService {
         );
 
         String token = jwtService.getToken(user);
-
-        var response = new AuthResponseDto(
-                user.getId(),
-                user.getUsername(),
-                token
-        );
+        var response = userMapper.toAuthResponse(user);
 
         return ExtendedBaseResponse.of(
                 BaseResponse.ok("Login exitoso."),
-                response
+                new AuthResponseDto(response.id(), response.username(), token)
         );
     }
 
@@ -77,16 +74,11 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         String token = jwtService.getToken(user);
-
-        var response = new AuthResponseDto(
-                user.getId(),
-                user.getUsername(),
-                token
-        );
+        var response = userMapper.toAuthResponse(user);
 
         return ExtendedBaseResponse.of(
                 BaseResponse.created("Usuario creado exitosamente."),
-                response
+                new AuthResponseDto(response.id(), response.username(), token)
         );
     }
 

@@ -1,5 +1,6 @@
 package com.web.app.mapper;
 
+import com.web.app.dto.user.AuthResponseDto;
 import com.web.app.dto.user.UpdatedUserDto;
 import com.web.app.dto.user.UserDto;
 import com.web.app.model.User;
@@ -23,6 +24,11 @@ public interface UserMapper {
     @Mapping(source = "user.id", target = "userId")
     @Mapping(target = "username", expression = "java(mapUsername(user))")
     UpdatedUserDto toUpdatedUser(User user);
+
+    @Mapping(source = "user.id", target = "id")
+    @Mapping(target = "username", expression = "java(mapUsername(user))")
+    @Mapping(target = "token", ignore = true)
+    AuthResponseDto toAuthResponse(User user);
 
     default String mapUsername(User user) {
         return user.getName();
