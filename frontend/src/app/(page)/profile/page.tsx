@@ -13,7 +13,7 @@ import { EyeOff } from "lucide-react";
 const profileLinks: ProfileLink[] = [
   { label: "Editar perfil", href: "/settings" },
   // { label: "Biblioteca", href: "/library" },
-  { label: "Cerrar sesión", href: "/logout" }
+  { label: "Cerrar sesión", href: "/" },
 ];
 
 const Profile = () => {
@@ -30,30 +30,32 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No existe el token de autenticación");
-      };
+      }
       const userId = localStorage.getItem("userId");
       if (!userId) {
         throw new Error("No se encontró el ID del usuario");
-      };
+      }
       const response = await fetch(`http://144.33.15.219:8080/user/${userId}`, {
         method: "GET",
         headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error en la respuesta:", errorData);
-        throw new Error(errorData.message || "Error al obtener los datos del usuario");
-      };
+        throw new Error(
+          errorData.message || "Error al obtener los datos del usuario"
+        );
+      }
       const data = await response.json();
-      console.log("Usuario obtenido:", data); 
+      console.log("Usuario obtenido:", data);
       return data;
     } catch (error) {
       console.error("Error al obtener los datos del usuario:", error.message);
       return null;
-    };
+    }
   };
   useEffect(() => {
     getUser();
@@ -69,9 +71,7 @@ const Profile = () => {
             height={227}
             className="object-contain w-full h-auto rounded-full border-4 border-primary"
           />
-          <h3 className="m-2 font-bold">
-          user.username
-          </h3>
+          <h3 className="m-2 font-bold">user.username</h3>
         </div>
         <div className="w-90 md:w-36 lg:w-48 xl:w-64 text-left mx-10">
           <h3 className="m-2">
@@ -79,11 +79,10 @@ const Profile = () => {
           </h3>
           <div className="flex items-center">
             <h3 className="m-2">
-              <span className="font-bold">Contraseña:</span> { clicked ? "user.password" : "******" }
+              <span className="font-bold">Contraseña:</span>{" "}
+              {clicked ? "user.password" : "******"}
             </h3>
-            <div onClick={handleClick}>
-              { clicked ? <EyeOff /> : <Eye /> }
-            </div>
+            <div onClick={handleClick}>{clicked ? <EyeOff /> : <Eye />}</div>
           </div>
         </div>
       </section>

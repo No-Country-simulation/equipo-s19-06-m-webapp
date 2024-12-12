@@ -1,19 +1,17 @@
 export interface LoginRequestDto {
-    email: string;
-    password: string;
-  }
-  
-  export interface AuthResponseDto {
-    id: number;
-    username: string;
-    token: string;
-  }  
+  email: string;
+  password: string;
+}
+
+export interface AuthResponseDto {
+  id: number;
+  username: string;
+  token: string;
+}
 
 export const loginUser = async (credentials: LoginRequestDto): Promise<AuthResponseDto | null> => {
   try {
     console.log("Iniciando solicitud de inicio de sesión con:", credentials);
-    console.log("Datos enviados al backend:", credentials);
-
     const response = await fetch("http://144.33.15.219:8080/auth/login", {
       method: 'POST',
       headers: {
@@ -21,21 +19,28 @@ export const loginUser = async (credentials: LoginRequestDto): Promise<AuthRespo
       },
       body: JSON.stringify(credentials),
     });
-
     console.log("Respuesta completa:", response);
     console.log("Estado de la respuesta:", response.status);
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Error en la respuesta:", errorData);
-      throw new Error(errorData.message || "Error al iniciar sesión");
+
+    const result = await response.json();
+    console.log("Datos de la respuesta completa:", result);
+
+    if (!response.ok || result.isError) {
+      console.error("Error en la respuesta:", result);
+      throw new Error(result.message || "Error al iniciar sesión");
     }
 
-    const result: AuthResponseDto = await response.json();
-    console.log("Datos de la respuesta procesada:", result);
-    return result;
+    // Extract user data from the nested data property
+    const userData: AuthResponseDto = {
+      id: result.data.id,
+      username: result.data.username,
+      token: result.data.token
+    };
+
+    console.log("Datos del usuario procesados:", userData);
+    return userData;
   } catch (error: any) {
     console.error("Error al iniciar sesión:", error.message);
     return null;
   }
 };
-
