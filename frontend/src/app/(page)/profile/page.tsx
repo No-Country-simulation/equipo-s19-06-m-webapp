@@ -2,22 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 // import { getUser } from "@/app/(page)/profile/services/userService";
-import { ProfileLink } from "@/types/ui/Profile";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import { EyeOff } from "lucide-react";
 
-const profileLinks: ProfileLink[] = [
-  { label: "Editar perfil", href: "/settings" },
-  // { label: "Biblioteca", href: "/library" },
-  { label: "Cerrar sesión", href: "/" },
-];
-
 const Profile = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [clicked, setClicked] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -35,7 +29,7 @@ const Profile = () => {
       if (!userId) {
         throw new Error("No se encontró el ID del usuario");
       }
-      const response = await fetch(`http://144.33.15.219:8080/user/${userId}`, {
+      const response = await fetch(`/api/user/${userId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,14 +42,22 @@ const Profile = () => {
         throw new Error(
           errorData.message || "Error al obtener los datos del usuario"
         );
-      }
+      };
       const data = await response.json();
+      setUsername(data.username);
+      setEmail(data.email);
+      setPassword(data.password);
       console.log("Usuario obtenido:", data);
       return data;
     } catch (error) {
       //console.error("Error al obtener los datos del usuario:", error.message);
       return null;
     }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+    console.log("Sesión finalizada con éxito");
   };
   useEffect(() => {
     getUser();
@@ -65,7 +67,7 @@ const Profile = () => {
       <section className="flex flex-col md:flex-row items-center text-white text-xl">
         <div className="w-90 md:w-36 lg:w-48 xl:w-64 text-center">
           <Image
-            src="/avatar.jpg"
+            src="/profile.jpg"
             alt="avatar"
             width={834}
             height={227}
@@ -87,19 +89,28 @@ const Profile = () => {
         </div>
       </section>
       <section className="flex flex-col md:flex-row items-center justify-center w-90">
-        {profileLinks.map(({ label, href }) => (
-          <Link
-            key={label}
-            href={href}
-            className={`text-lg transition-colors m-2 ${
-              pathname === href
-                ? "text-primary"
-                : "text-white hover:text-primary"
-            }`}
-          >
-            <Button>{label}</Button>
-          </Link>
-        ))}
+        <Link
+          key="Editar perfil"
+          href="/settings"
+          className={`text-lg transition-colors m-2 ${
+            pathname === "/settings"
+              ? "text-primary"
+              : "text-white hover:text-primary"
+          }`}
+        >
+          <Button>Editar perfil</Button>
+        </Link>
+        <Link
+          key="Cerrar sesión"
+          onCLick={handleLogout}
+          className={`text-lg transition-colors m-2 ${
+            pathname === "/profile"
+              ? "text-primary"
+              : "text-white hover:text-primary"
+          }`}
+        >
+          <Button>Cerrar sesión</Button>
+        </Link>
       </section>
     </div>
   );
