@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { getUser } from "@/app/(page)/profile/services/userService";
 import { Eye } from "lucide-react";
