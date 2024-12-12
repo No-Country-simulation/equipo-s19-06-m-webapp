@@ -27,7 +27,7 @@ export const getUser = async (): Promise<{ username: string, email: string, user
 
         const { username, email, userImage, contact } = result.data;
         return { username, email, userImage, contact };
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error al obtener los datos del usuario:", error.message);
         return null;
     }
