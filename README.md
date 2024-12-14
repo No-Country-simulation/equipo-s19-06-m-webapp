@@ -1,4 +1,4 @@
-<div align='center'> 
+<div align="center"> 
 
 # 🎵 Soundbit - 8D Music Player
 
@@ -126,9 +126,25 @@ Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este pr
       <p><b><a href="https://www.linkedin.com/in/pedro-cereghetti-48448824a/">Pedro Cereghetti</a></b></p>
     </td>
   </tr>
-</table>
 
-## 🌌 Instalación y uso (en proceso)
+---
+
+## 🌌 Instalación y uso
+
+```bash
+1. cd backend
+2. npm install
+3. cd ..
+4. cd frontend
+5. npm install
+6. npm run dev
+```
+
+---
+
+## 🔗 Link
+
+https://soundbitmusic.vercel.app
 
 ---
 
