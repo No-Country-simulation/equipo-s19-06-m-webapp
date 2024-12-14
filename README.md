@@ -1,4 +1,4 @@
-<div align="center"> 
+<div align='center'> 
 
 # 🎵 Soundbit - 8D Music Player
 
@@ -126,6 +126,7 @@ Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este pr
       <p><b><a href="https://www.linkedin.com/in/pedro-cereghetti-48448824a/">Pedro Cereghetti</a></b></p>
     </td>
   </tr>
+</table>
 
 ---
 
