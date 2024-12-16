@@ -15,11 +15,11 @@ const AboutPage = () => {
                     <p> Para disfrutar de Soundbit, todo lo que necesitas son unos auriculares. Nuestro formato 8D está optimizado para sumergirte en un entorno sonoro inmersivo, haciendo que cada nota y cada ritmo se desplacen a tu alrededor con precisión y realismo.</p>
                 </div>
                 <div>
-                    <h3 className='text-primary font-bold text-xl lg:text-2xl'>Nuestra Misión</h3>
+                    <h3 className='text-primary font-bold text-xl lg:text-2xl'>Nuestra misión</h3>
                     <p>Revolucionar la forma en que las personas experimentan la música, creando momentos inolvidables a través de un sonido inmersivo y único.</p>
                 </div>
                 <div>
-                    <h3 className='text-primary font-bold text-xl lg:text-2xl'>Nuestros Valores</h3>
+                    <h3 className='text-primary font-bold text-xl lg:text-2xl'>Nuestros valores</h3>
                     <p>Estamos en constante evolución para ofrecerte las mejores experiencias auditivas. Cada canción en Soundbit es procesada para garantizar un sonido impecable. Queremos que todos puedan disfrutar del poder del 8D, sin importar dónde estén. Creemos en la capacidad de la música para unir a las personas y despertar emociones.</p>
                 </div>
                 <div className='mt-4'>

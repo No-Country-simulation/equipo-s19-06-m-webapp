@@ -6,19 +6,29 @@ import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "Soundbit",
-  description: "Música, Reproductor de música, artistas, canciones, álbumes",
+  description: "Soundbit es un innovador reproductor de música 8D diseñado para sumergirte en una experiencia auditiva única. Disfruta de tus canciones favoritas con efectos de audio envolventes que te transportarán a un mundo de sonido en movimiento.",
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico"
   },
+  openGraph: {
+    title: "Soundbit",
+    description: "Soundbit es un innovador reproductor de música 8D diseñado para sumergirte en una experiencia auditiva única. Disfruta de tus canciones favoritas con efectos de audio envolventes que te transportarán a un mundo de sonido en movimiento.",
+    url: "https://soundbitmusic.vercel.app",
+    images: [
+      {
+        url: ""
+      }
+    ]
+  }
 };
 
 const globalFont = Roboto({ subsets: ["latin"], weight: "400" });
 
 interface RootLayoutProps {
   children: React.ReactNode;
-}
+};
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
@@ -32,4 +42,4 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </body>
     </html>
   );
-}
+};

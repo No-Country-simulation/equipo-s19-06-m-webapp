@@ -133,7 +133,7 @@ Un agradecimiento especial al increíble equipo detrás de **Soundbit**. Este pr
 ## 🌌 Instalación y uso
 
 ```bash
-1. cd backend
+1. cd Back-End
 2. npm install
 3. cd ..
 4. cd frontend

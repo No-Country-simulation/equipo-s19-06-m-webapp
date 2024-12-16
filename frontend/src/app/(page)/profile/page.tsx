@@ -5,14 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { getUser } from "@/app/(page)/profile/services/userService";
-// import { ProfileLink } from "@/types/ui/Profile";
 import { Button } from "@/components/ui/button";
-
-// const profileLinks: ProfileLink[] = [
-//   { label: "Editar perfil", href: "/settings" },
-//   { label: "Biblioteca", href: "/library" },
-//   { label: "Cerrar sesión", href: "/" },
-// ];
 
 const Profile = () => {
   const pathname = usePathname();
@@ -28,7 +21,7 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.clear();
     alert("Sesión finalizada con éxito");
-    router.push("/")
+    router.push("/");
   };
   useEffect(() => {
     const fetchUserData = async () => {

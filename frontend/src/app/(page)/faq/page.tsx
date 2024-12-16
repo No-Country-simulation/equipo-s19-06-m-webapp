@@ -11,7 +11,7 @@ const FaqPage = () => {
     return (
         <article className='flex flex-col text-left text-white w-full md:w-5/6 mx-auto py-4 px-2'>
             <div className="font-bold px-2 py-6">
-                <h2 className='text-xl lg:text-3xl text-center font-bold pb-4'>Preguntas Frecuentes</h2>
+                <h2 className='text-xl lg:text-3xl text-center font-bold pb-4'>Preguntas frecuentes</h2>
             </div>
             <div className="flex flex-col gap-4 bg-black text-base md:text-xl rounded-3xl opacity-90 p-8">
                 <Accordion type="single" collapsible>
@@ -30,8 +30,8 @@ const FaqPage = () => {
                             ¿Qué necesito para usar Soundbit?
                         </AccordionTrigger>
                         <AccordionContent>
-                            Para disfrutar de Soundbit, necesitas: <br />
-                            <strong>Auriculares:</strong> El formato 8D está
+                            Para disfrutar de Soundbit, necesitas
+                            <strong>auriculares</strong>; el formato 8D está
                             diseñado para usarse exclusivamente con auriculares,
                             lo que garantiza el efecto envolvente.
                         </AccordionContent>
@@ -63,8 +63,8 @@ const FaqPage = () => {
 
                     <AccordionItem value="item-5">
                         <AccordionTrigger>
-                            ¿Soundbit funciona con todos los tipos de
-                            auriculares?
+                            ¿Soundbit funciona con cualquier
+                            auricular?
                         </AccordionTrigger>
                         <AccordionContent>
                             Sí, puedes usar cualquier auricular para disfrutar
