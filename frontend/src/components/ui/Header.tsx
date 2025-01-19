@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import Image from "next/image";
 import { UserCircle, Menu, X } from "lucide-react";
 import { NavLink } from "@/types/ui/Header";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import LoginModal from "@/app/(auth)/login/components/LoginModal";
@@ -17,15 +18,19 @@ const navLinks: NavLink[] = [
 ];
 
 const Header = () => {
+  const { isAuth, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const pathname = usePathname();
-
+  const router = useRouter();
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
+    setIsMenuOpen(prev => !prev);
   };
-
+  const closePopover = () => {
+    setIsPopoverOpen(false);
+  };
   return (
     <header className="bg-black p-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -40,7 +45,6 @@ const Header = () => {
             />
           </div>
         </Link>
-
         <nav className="hidden sm:flex items-center gap-8">
           {navLinks.map(({ label, href }) => (
             <Link
@@ -54,32 +58,65 @@ const Header = () => {
               {label}
             </Link>
           ))}
-
-          <Popover>
+          <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
             <PopoverTrigger asChild>
               <button className="text-3xl text-white">
                 <UserCircle className="w-8 h-8" />
               </button>
             </PopoverTrigger>
             <PopoverContent align="end" className="bg-primary text-black">
-              <Button
-                variant="link"
-                className="w-full justify-center"
-                onClick={() => setIsLoginOpen(true)}
-              >
-                Iniciar sesión
-              </Button>
-              <Button
-                variant="link"
-                className="w-full justify-center"
-                onClick={() => setIsRegisterOpen(true)}
-              >
-                Registrarse
-              </Button>
+              { isAuth ?
+                <>
+                  <Link
+                    key="Profile"
+                    href="/profile"
+                  >
+                    <Button
+                      variant="link"
+                      className="w-full justify-center"
+                      onClick={closePopover}
+                    >
+                      Mi perfil
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="link"
+                    className="w-full justify-center"
+                    onClick={() => {
+                      closePopover();
+                      logout();
+                    }}
+                  >
+                    Cerrar sesión
+                  </Button>
+                </>
+              :
+                <>
+                  <Button
+                    variant="link"
+                    className="w-full justify-center"
+                    onClick={() => {
+                      setIsLoginOpen(true);
+                      closePopover();
+                    }}
+                  >
+                    Iniciar sesión
+                  </Button>
+                  <Button
+                    variant="link"
+                    className="w-full justify-center"
+                    onClick={() => {
+                      setIsRegisterOpen(true);
+                      closePopover();
+                    }}
+                  >
+                    Registrarse
+                  </Button>
+                </>
+              }
             </PopoverContent>
           </Popover>
         </nav>
-
         <button
           onClick={toggleMenu}
           className="sm:hidden text-white"
@@ -88,7 +125,6 @@ const Header = () => {
           <Menu className="w-6 h-6" />
         </button>
       </div>
-
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 sm:hidden bg-black animate-fade duration-300">
           <div className="flex flex-col h-full w-full p-4">
@@ -133,29 +169,61 @@ const Header = () => {
                   </button>
                 </PopoverTrigger>
                 <PopoverContent align="center" className="bg-primary text-black">
-                  <Button
-                    variant="link"
-                    size="sm"
-                    className="w-full justify-center"
-                    onClick={() => setIsLoginOpen(true)}
-                  >
-                    Iniciar sesión
-                  </Button>
-                  <Button
-                    variant="link"
-                    size="sm"
-                    className="w-full justify-center"
-                    onClick={() => setIsRegisterOpen(true)}
-                  >
-                    Registrarse
-                  </Button>
+                  { isAuth ?
+                    <>
+                      <Link
+                        key="Profile"
+                        href="/profile"
+                      >
+                        <Button
+                          variant="link"
+                          className="w-full justify-center"
+                          onClick={toggleMenu}
+                        >
+                          Mi perfil
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="link"
+                        className="w-full justify-center"
+                        onClick={() => {
+                          logout();
+                          toggleMenu();
+                        }}
+                      >
+                        Cerrar sesión
+                      </Button>
+                    </>
+                  :
+                    <>
+                      <Button
+                        variant="link"
+                        className="w-full justify-center"
+                        onClick={() => {
+                          setIsLoginOpen(true);
+                          toggleMenu();
+                        }}
+                      >
+                        Iniciar sesión
+                      </Button>
+                      <Button
+                        variant="link"
+                        className="w-full justify-center"
+                        onClick={() => {
+                          setIsRegisterOpen(true);
+                          toggleMenu();
+                        }}
+                      >
+                        Registrarse
+                      </Button>
+                    </>
+                  }
                 </PopoverContent>
               </Popover>
             </nav>
           </div>
         </div>
       )}
-
       {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
       {isRegisterOpen && <RegisterModal onClose={() => setIsRegisterOpen(false)} />}
     </header>

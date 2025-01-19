@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/contexts/authContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -20,54 +16,43 @@ import { LoginRequestDto } from "../services/authService";
 
 const loginSchema = z.object({
   email: z.string().email("Ingresa un correo válido"),
-  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres")
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 interface LoginModalProps {
   onClose: () => void;
-}
+};
 
 const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
+  const { login } = useAuth();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema)
   });
-
   const onSubmit = async (data: LoginFormValues) => {
-    //console.log("Iniciando proceso de inicio de sesión con:", data);
     try {
       const apiResponse = await loginUser(data as LoginRequestDto);
-      //console.log("Respuesta del servicio de inicio de sesión:", apiResponse);
-
       if (apiResponse) {
-        //console.log("Inicio de sesión exitoso:", apiResponse);
-        localStorage.setItem("token", apiResponse.token);
+        login(apiResponse.token);
         localStorage.setItem("userId", apiResponse.id.toString());
         localStorage.setItem("username", apiResponse.username);
-
         alert("¡Inicio de sesión exitoso! Bienvenido/a a Soundbit.");
-        onClose(); // Close the modal
-        router.push("/profile"); // Navigate to profile page
+        onClose();
+        router.push("/");
       } else {
         alert(
           "Ocurrió un error al iniciar sesión. Verifica tus credenciales e intenta nuevamente."
         );
-      }
+      };
     } catch (error) {
       console.log("Error detallado:", error);
       alert("Error inesperado. Por favor, intenta más tarde.");
       console.error("Error al iniciar sesión:", error);
-    }
+    };
   };
-
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="bg-black border border-cyan-500 text-white">
@@ -97,7 +82,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
               <p className="text-red-500 text-xl">{errors.email.message}</p>
             )}
           </div>
-
           <div className="space-y-1 relative">
             <Label htmlFor="password" className="text-primary text-xl">
               Contraseña:
@@ -122,7 +106,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
               <p className="text-red-500 text-xl">{errors.password.message}</p>
             )}
           </div>
-
           <Button type="submit" className="w-full">
             Iniciar sesión
           </Button>

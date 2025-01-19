@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import { AuthProvider } from "@/contexts/authContext";
 
 export const metadata: Metadata = {
   title: "Soundbit",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     url: "https://soundbitmusic.vercel.app",
     images: [
       {
-        url: ""
+        url: "/meta.jpg"
       }
     ]
   }
@@ -36,9 +37,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`${globalFont.className} bg-primary flex flex-col min-h-screen`}
       >
-        <Header />
-        <main className="flex-grow w-full h-full">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="flex-grow w-full h-full">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,52 +21,41 @@ const registerSchema = z
             /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
             "Debe tener al menos 8 caracteres, incluir 1 dígito, 1 minúscula, 1 mayúscula, 1 carácter especial y no tener espacios"
         ),
-        confirmPassword: z.string(),
+        confirmPassword: z.string()
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: "Las contraseñas no coinciden",
-        path: ["confirmPassword"],
+        path: ["confirmPassword"]
     });
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 
-
 interface RegisterModalProps {
     onClose: () => void;
-}
+};
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<RegisterFormValues>({
-        resolver: zodResolver(registerSchema),
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>({
+        resolver: zodResolver(registerSchema)
     });
-
     const onSubmit = async (data: RegisterFormValues) => {
         try {
             const { confirmPassword, ...formData } = data;
             const ApiResponse = await registerUser(formData);
             if (ApiResponse) {
-                console.log('Registro exitoso:', ApiResponse);
-                localStorage.setItem("authToken", ApiResponse.token);
-                alert('¡Registro exitoso! Bienvenido/a a Soundbit.');
+                localStorage.setItem("token", ApiResponse.token);
+                alert("¡Registro exitoso! Bienvenido/a a Soundbit.");
                 onClose();
             } else {
-                alert('Ocurrió un error al registrar el usuario. Intenta nuevamente.');
-            }
+                alert("Ocurrió un error al registrar el usuario. Intenta nuevamente.");
+            };
         } catch (error) {
-            alert('Error inesperado. Por favor, intenta más tarde.');
-            console.error('Error al registrar el usuario:', error);
-        }
+            alert("Error inesperado. Por favor, intenta más tarde.");
+            console.error("Error al registrar el usuario:", error);
+        };
     };
-
-
-
     return (
         <Dialog open onOpenChange={onClose}>
             <DialogContent className="bg-black border border-cyan-500 text-white">
@@ -95,7 +85,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                             <p className="text-red-500 text-xl">{errors.username.message}</p>
                         )}
                     </div>
-
                     <div className="space-y-1">
                         <Label htmlFor="email" className="text-primary text-xl">
                             Email:
@@ -110,7 +99,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                             <p className="text-red-500 text-xl">{errors.email.message}</p>
                         )}
                     </div>
-
                     <div className="space-y-1">
                         <Label htmlFor="contact" className="text-primary text-xl">
                             Número de teléfono:
@@ -125,7 +113,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                             <p className="text-red-500 text-xl">{errors.contact.message}</p>
                         )}
                     </div>
-
                     <div className="space-y-1 relative">
                         <Label htmlFor="password" className="text-primary text-xl">
                             Contraseña:
@@ -150,7 +137,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                             <p className="text-red-500 text-xl">{errors.password.message}</p>
                         )}
                     </div>
-
                     <div className="space-y-1 relative">
                         <Label htmlFor="confirmPassword" className="text-primary text-xl">
                             Confirmar contraseña:
@@ -175,7 +161,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                             <p className="text-red-500 text-xl">{errors.confirmPassword.message}</p>
                         )}
                     </div>
-
                     <Button type="submit" className="w-full">
                         Registrarse
                     </Button>
